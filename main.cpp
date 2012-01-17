@@ -3,6 +3,11 @@
  * Author: Guillaume
  *
  * Created on January 16, 2012, 9:37 PM
+ * 
+ * The OpenGL initialization will be put into a GLRenderer class of some sort
+ * later.
+ * 
+ * This is only a skeleton, using mostly C-style code.
  */
 
 #include <windows.h>
