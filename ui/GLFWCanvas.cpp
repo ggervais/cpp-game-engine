@@ -5,27 +5,35 @@
  * Created on January 17, 2012, 7:05 PM
  */
 
-#include "Window.hpp"
+#include "GLFWCanvas.hpp"
 
-Window::Window(std::string title, int width, int height) : title(title), width(width), height(height) {
+GLFWCanvas::GLFWCanvas(std::string title, int width, int height, bool fullscreen) : 
+        Canvas(title, width, height, fullscreen) 
+{
     init();
 }
 
-Window::Window(const Window& orig) {
+GLFWCanvas::GLFWCanvas(const GLFWCanvas& orig) :
+        Canvas(orig)
+{
 }
 
-Window::~Window() {
-    std::cout << "Deleting window." << std::endl;
+GLFWCanvas::~GLFWCanvas() {
+    std::cout << "Deleting canvas." << std::endl;
     glfwTerminate();
 }
 
-void Window::repaint() {
+void GLFWCanvas::repaint() {
     glfwSwapBuffers();
 }
 
-bool Window::init() {
+void GLFWCanvas::sayType() {
+    std::cout << "Type is GLFWCanvas" << std::endl;
+}
+
+bool GLFWCanvas::init() {
     
-    std::cout << "Creating window with title \"" << title << "\" and size " << width << "x" << height << "." << std::endl;
+    std::cout << "Creating canvas with title \"" << title << "\" and size " << width << "x" << height << "." << std::endl;
     
     int redBits = 8;
     int greenBits = 8;
@@ -44,8 +52,5 @@ bool Window::init() {
         std::cerr << "Failed to open window!" << std::endl;
         glfwTerminate();
     }
-    
-    glfwSetWindowTitle("Guillaume Gervais' C++ Game Engine");
-    glfwSwapInterval(1);
 }
 

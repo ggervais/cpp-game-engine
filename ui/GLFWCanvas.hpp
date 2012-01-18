@@ -8,20 +8,17 @@
 #ifndef WINDOW_HPP
 #define	WINDOW_HPP
 
-#include <iostream>
 #include <GL/glfw.h>
+#include "Canvas.hpp"
 
-class Window {
+class GLFWCanvas : public Canvas {
 public:
-    Window(std::string title, int width, int height);
-    Window(const Window& orig);
-    virtual ~Window();
-    
+    GLFWCanvas(std::string title, int width, int height, bool fullscreen);
+    GLFWCanvas(const GLFWCanvas& orig);
+    virtual ~GLFWCanvas();
+    void sayType();
     void repaint();
 private:
-    std::string title;
-    int width;
-    int height;
     
     bool init();
 };
