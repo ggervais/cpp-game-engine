@@ -12,6 +12,14 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <logicalFolder name="f2" displayName="game" projectFiles="true">
+      </logicalFolder>
+      <logicalFolder name="f3" displayName="render" projectFiles="true">
+      </logicalFolder>
+      <logicalFolder name="f1" displayName="ui" projectFiles="true">
+        <itemPath>ui/Window.cpp</itemPath>
+        <itemPath>ui/Window.hpp</itemPath>
+      </logicalFolder>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -36,8 +44,9 @@
       <compileType>
         <linkerTool>
           <linkerLibItems>
-            <linkerLibLibItem>glew32</linkerLibLibItem>
+            <linkerLibLibItem>glfw</linkerLibLibItem>
             <linkerLibLibItem>opengl32</linkerLibLibItem>
+            <linkerLibLibItem>glew32</linkerLibLibItem>
             <linkerLibLibItem>freeglut</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
