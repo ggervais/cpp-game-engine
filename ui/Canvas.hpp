@@ -15,6 +15,8 @@ class Canvas {
 
 public:
     Viewport &getViewport();
+    virtual void centerCursor() = 0;
+    virtual void repaint() = 0;
     
 protected:
     Canvas(std::string title, int width, int height, bool fullscreen);

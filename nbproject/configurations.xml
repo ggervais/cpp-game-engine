@@ -13,6 +13,8 @@
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="render" displayName="render" projectFiles="true">
+        <itemPath>render/GLRenderer.cpp</itemPath>
+        <itemPath>render/GLRenderer.hpp</itemPath>
         <itemPath>render/Renderer.cpp</itemPath>
         <itemPath>src/render/Renderer.hpp</itemPath>
         <itemPath>render/Viewport.cpp</itemPath>

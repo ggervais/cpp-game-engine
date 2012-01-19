@@ -19,3 +19,8 @@ Renderer::Renderer(const Renderer& orig) :
 
 Renderer::~Renderer() {}
 
+void Renderer::render() {
+    doRender();
+    canvas->centerCursor();
+    canvas->repaint();
+}

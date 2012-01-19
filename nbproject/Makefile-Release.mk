@@ -34,6 +34,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/render/GLRenderer.o \
 	${OBJECTDIR}/ui/Canvas.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/render/Renderer.o \
@@ -64,6 +65,11 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/cpp-game-engine.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/cpp-game-engine ${OBJECTFILES} ${LDLIBSOPTIONS} 
+
+${OBJECTDIR}/render/GLRenderer.o: render/GLRenderer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/render
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/render/GLRenderer.o render/GLRenderer.cpp
 
 ${OBJECTDIR}/ui/Canvas.o: ui/Canvas.cpp 
 	${MKDIR} -p ${OBJECTDIR}/ui

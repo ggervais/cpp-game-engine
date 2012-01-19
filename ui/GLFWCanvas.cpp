@@ -27,13 +27,13 @@ void GLFWCanvas::repaint() {
     glfwSwapBuffers();
 }
 
-void GLFWCanvas::sayType() {
-    std::cout << "Type is GLFWCanvas" << std::endl;
+void GLFWCanvas::resizeCanvas(GLsizei width, GLsizei height) {
+    glfwViewport->updateDimensions(width, height);
 }
 
-void GLFWCanvas::resizeCanvas(GLsizei width, GLsizei height) {
-    std::cout << "Resize" << std::endl;
-    glfwViewport->updateDimensions(width, height);
+void GLFWCanvas::centerCursor() {
+    Viewport &viewport = getViewport();
+    glfwSetMousePos(viewport.getWidth() / 2, viewport.getHeight() / 2);
 }
 
 bool GLFWCanvas::init() {

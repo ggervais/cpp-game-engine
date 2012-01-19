@@ -18,8 +18,8 @@ public:
     GLFWCanvas(std::string title, int width, int height, bool fullscreen);
     GLFWCanvas(const GLFWCanvas& orig);
     virtual ~GLFWCanvas();
-    void sayType();
     void repaint();
+    void centerCursor();
     
     static void GLFWCALL resizeCanvas(GLsizei width, GLsizei height);
     
