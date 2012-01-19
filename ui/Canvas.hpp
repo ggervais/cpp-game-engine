@@ -9,11 +9,12 @@
 #define	CANVAS_HPP
 
 #include <iostream>
+#include "../render/Viewport.hpp"
 
 class Canvas {
 
 public:
-    virtual void sayType() = 0;
+    Viewport &getViewport();
     
 protected:
     Canvas(std::string title, int width, int height, bool fullscreen);
@@ -21,9 +22,9 @@ protected:
     virtual ~Canvas();
     
     std::string title;
-    int width;
-    int height;
-    bool fullscreen;
+    
+private:
+    Viewport viewport;
 };
 
 #endif	/* CANVAS_HPP */

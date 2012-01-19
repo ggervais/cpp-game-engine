@@ -8,22 +8,21 @@
 #include "Canvas.hpp"
 
 Canvas::Canvas(std::string title, int width, int height, bool fullscreen) : 
-        title(title), 
-        width(width), 
-        height(height), 
-        fullscreen(fullscreen) 
+        title(title),
+        viewport(width, height, fullscreen)
 {
     std::cout << "Constructing canvas" << std::endl;
 }
 
 Canvas::Canvas(const Canvas& orig) : 
         title(orig.title), 
-        width(orig.width), 
-        height(orig.height), 
-        fullscreen(orig.fullscreen)
+        viewport(orig.viewport)
 {}
 
 Canvas::~Canvas() {
     std::cout << "Destroying canvas" << std::endl;
 }
 
+Viewport &Canvas::getViewport() {
+    return this->viewport;
+}

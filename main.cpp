@@ -59,10 +59,6 @@ int main(int argc, char* argv[]) {
     std::cout << "GLSL version: " << glslVersion << std::endl;
     std::cout << "OpenGL extensions: " << glExtensions << std::endl;
     
-    
-    glfwSetWindowTitle("Guillaume Gervais' C++ Game Engine");
-    glfwSwapInterval(1);
-    
     while (running) {
         render(canvas);
         running = !glfwGetKey(GLFW_KEY_ESC) && glfwGetWindowParam(GLFW_OPENED);

@@ -9,9 +9,7 @@
 
 Renderer::Renderer(Canvas *canvas) :
         canvas(canvas)
-{
-    canvas->sayType();
-}
+{}
 
 Renderer::Renderer(const Renderer& orig) :
         canvas(orig.canvas)

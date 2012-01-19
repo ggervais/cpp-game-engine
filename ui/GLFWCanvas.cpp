@@ -31,9 +31,20 @@ void GLFWCanvas::sayType() {
     std::cout << "Type is GLFWCanvas" << std::endl;
 }
 
+void GLFWCanvas::resizeCanvas(GLsizei width, GLsizei height) {
+    std::cout << "Resize" << std::endl;
+    glfwViewport->updateDimensions(width, height);
+}
+
 bool GLFWCanvas::init() {
     
-    std::cout << "Creating canvas with title \"" << title << "\" and size " << width << "x" << height << "." << std::endl;
+    
+    Viewport &viewport = getViewport();
+    
+    std::cout << "Creating canvas with title \"" << title << "\" and size " << viewport.getWidth() << "x" << viewport.getHeight() << "." << std::endl;
+    
+    // Hack for GLFW.
+    glfwViewport = &viewport;
     
     int redBits = 8;
     int greenBits = 8;
@@ -47,10 +58,17 @@ bool GLFWCanvas::init() {
     glfwOpenWindowHint(GLFW_FSAA_SAMPLES, 4);
     
     // Create a window
-    if(!glfwOpenWindow(width, height, redBits, greenBits, blueBits, alphaBits, depthBits, stencilBits, GLFW_WINDOW))
-    {
+    if(!glfwOpenWindow(viewport.getWidth(), viewport.getHeight(), redBits, greenBits, blueBits, alphaBits, depthBits, stencilBits, (viewport.isFullscreen() ? GLFW_FULLSCREEN : GLFW_WINDOW))) {
         std::cerr << "Failed to open window!" << std::endl;
         glfwTerminate();
+        return false;
     }
+    
+    glfwSetWindowTitle("Guillaume Gervais' C++ Game Engine");
+    glfwSwapInterval(1);
+    
+    glfwSetWindowSizeCallback(GLFWCanvas::resizeCanvas);
+    
+    return true;
 }
 

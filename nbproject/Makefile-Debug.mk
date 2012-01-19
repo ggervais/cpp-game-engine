@@ -37,6 +37,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/ui/Canvas.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/render/Renderer.o \
+	${OBJECTDIR}/render/Viewport.o \
 	${OBJECTDIR}/ui/GLFWCanvas.o
 
 
@@ -78,6 +79,11 @@ ${OBJECTDIR}/render/Renderer.o: render/Renderer.cpp
 	${MKDIR} -p ${OBJECTDIR}/render
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/render/Renderer.o render/Renderer.cpp
+
+${OBJECTDIR}/render/Viewport.o: render/Viewport.cpp 
+	${MKDIR} -p ${OBJECTDIR}/render
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/render/Viewport.o render/Viewport.cpp
 
 ${OBJECTDIR}/ui/GLFWCanvas.o: ui/GLFWCanvas.cpp 
 	${MKDIR} -p ${OBJECTDIR}/ui
