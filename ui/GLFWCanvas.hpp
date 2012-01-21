@@ -20,12 +20,11 @@ public:
     virtual ~GLFWCanvas();
     void repaint();
     void centerCursor();
-    
+    bool init();
     static void GLFWCALL resizeCanvas(GLsizei width, GLsizei height);
     
 private:
     
-    bool init();
 };
 
 #endif	/* WINDOW_HPP */

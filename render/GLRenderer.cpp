@@ -9,9 +9,7 @@
 
 GLRenderer::GLRenderer(Canvas *canvas) :
         Renderer(canvas)
-{
-    init();
-}
+{}
 
 GLRenderer::GLRenderer(const GLRenderer& orig) :
         Renderer(orig)
@@ -22,6 +20,8 @@ GLRenderer::~GLRenderer() {
 }
 
 bool GLRenderer::init() {
+   
+    this->canvas->init();
     
     std::cout << "GLRenderer init." << std::endl;
     

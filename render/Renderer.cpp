@@ -19,6 +19,8 @@ Renderer::Renderer(const Renderer& orig) :
 
 Renderer::~Renderer() {}
 
+bool Renderer::init() {}
+
 void Renderer::render() {
     doRender();
     canvas->centerCursor();

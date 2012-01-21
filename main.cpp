@@ -16,6 +16,7 @@
 #include <GL/glew.h>
 #include <GL/glfw.h>
 
+#include "game/Game.hpp"
 #include "ui/GLFWCanvas.hpp"
 #include "render/GLRenderer.hpp"
 
@@ -30,16 +31,12 @@
  */
 int main(int argc, char* argv[]) {
 
-    // Flag to keep our main loop running
-    bool running = true;
-
-    GLFWCanvas canvas("Guillaume Gervais' C++ Game Engine", 640, 480, false);
+    GLFWCanvas canvas("Guillaume Gervais' C++ Game Engine", 1440, 900, false);
     GLRenderer renderer(&canvas);
-    
-    while (running) {
-        renderer.render();
-        running = !glfwGetKey(GLFW_KEY_ESC) && glfwGetWindowParam(GLFW_OPENED);
-    }
+   
+    Game game(&renderer);
+    game.init();
+    game.mainLoop();
     
     return EXIT_SUCCESS;
 }

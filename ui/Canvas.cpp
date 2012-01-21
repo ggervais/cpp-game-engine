@@ -26,3 +26,5 @@ Canvas::~Canvas() {
 Viewport &Canvas::getViewport() {
     return this->viewport;
 }
+
+bool Canvas::init() {}

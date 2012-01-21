@@ -9,9 +9,7 @@
 
 GLFWCanvas::GLFWCanvas(std::string title, int width, int height, bool fullscreen) : 
         Canvas(title, width, height, fullscreen) 
-{
-    init();
-}
+{}
 
 GLFWCanvas::GLFWCanvas(const GLFWCanvas& orig) :
         Canvas(orig)

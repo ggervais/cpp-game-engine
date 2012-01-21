@@ -39,7 +39,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/render/Renderer.o \
 	${OBJECTDIR}/render/Viewport.o \
-	${OBJECTDIR}/ui/GLFWCanvas.o
+	${OBJECTDIR}/ui/GLFWCanvas.o \
+	${OBJECTDIR}/game/Game.o
 
 
 # C Compiler Flags
@@ -95,6 +96,11 @@ ${OBJECTDIR}/ui/GLFWCanvas.o: ui/GLFWCanvas.cpp
 	${MKDIR} -p ${OBJECTDIR}/ui
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/ui/GLFWCanvas.o ui/GLFWCanvas.cpp
+
+${OBJECTDIR}/game/Game.o: game/Game.cpp 
+	${MKDIR} -p ${OBJECTDIR}/game
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/game/Game.o game/Game.cpp
 
 # Subprojects
 .build-subprojects:

@@ -16,6 +16,7 @@ public:
     Renderer(Canvas *canvas);
     Renderer(const Renderer& orig);
     virtual ~Renderer();
+    virtual bool init();
     void render();
 protected:
     virtual void doRender() = 0;
