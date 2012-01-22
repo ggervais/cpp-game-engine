@@ -26,3 +26,7 @@ void Renderer::render() {
     canvas->centerCursor();
     canvas->repaint();
 }
+
+bool Renderer::isWindowOpened() {
+    return canvas->isWindowOpened();
+}

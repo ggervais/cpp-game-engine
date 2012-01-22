@@ -18,7 +18,9 @@
 
 #include "game/Game.hpp"
 #include "ui/GLFWCanvas.hpp"
+#include "timing/GLFWTimer.hpp"
 #include "render/GLRenderer.hpp"
+#include "input/GLFWInput.hpp"
 
 #ifdef __APPLE__
 #  include <GLUT/glut.h>
@@ -33,8 +35,10 @@ int main(int argc, char* argv[]) {
 
     GLFWCanvas canvas("Guillaume Gervais' C++ Game Engine", 1440, 900, false);
     GLRenderer renderer(&canvas);
+    GLFWTimer timer(0.017);
+    GLFWInput input;
    
-    Game game(&renderer);
+    Game game(&renderer, &timer, &input);
     game.init();
     game.mainLoop();
     

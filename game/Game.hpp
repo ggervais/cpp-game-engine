@@ -9,11 +9,12 @@
 #define	GAME_HPP
 
 #include "../render/Renderer.hpp"
+#include "../timing/Timer.hpp"
+#include "../input/Input.hpp"
 
 class Game {
 public:
-    Game(Renderer *renderer);
-    //Game(Renderer &renderer, Input 8input);
+    Game(Renderer *renderer, Timer *timer, Input *input);
     Game(const Game& orig);
     virtual ~Game();
     void init();
@@ -21,6 +22,8 @@ public:
 private:
     static const int QUANTUM = 17;
     Renderer *renderer;
+    Timer *timer;
+    Input *input;
 };
 
 #endif	/* GAME_HPP */

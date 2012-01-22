@@ -17,6 +17,7 @@ public:
     Renderer(const Renderer& orig);
     virtual ~Renderer();
     virtual bool init();
+    bool isWindowOpened();
     void render();
 protected:
     virtual void doRender() = 0;

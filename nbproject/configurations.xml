@@ -16,6 +16,12 @@
         <itemPath>game/Game.cpp</itemPath>
         <itemPath>game/Game.hpp</itemPath>
       </logicalFolder>
+      <logicalFolder name="f3" displayName="input" projectFiles="true">
+        <itemPath>input/GLFWInput.cpp</itemPath>
+        <itemPath>input/GLFWInput.hpp</itemPath>
+        <itemPath>input/Input.cpp</itemPath>
+        <itemPath>input/Input.hpp</itemPath>
+      </logicalFolder>
       <logicalFolder name="render" displayName="render" projectFiles="true">
         <itemPath>render/GLRenderer.cpp</itemPath>
         <itemPath>render/GLRenderer.hpp</itemPath>
@@ -23,6 +29,12 @@
         <itemPath>src/render/Renderer.hpp</itemPath>
         <itemPath>render/Viewport.cpp</itemPath>
         <itemPath>render/Viewport.hpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="timing" projectFiles="true">
+        <itemPath>timing/GLFWTimer.cpp</itemPath>
+        <itemPath>timing/GLFWTimer.hpp</itemPath>
+        <itemPath>timing/Timer.cpp</itemPath>
+        <itemPath>timing/Timer.hpp</itemPath>
       </logicalFolder>
       <logicalFolder name="ui" displayName="ui" projectFiles="true">
         <itemPath>ui/Canvas.cpp</itemPath>

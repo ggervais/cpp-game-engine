@@ -6,14 +6,17 @@
  */
 
 #include "Game.hpp"
-#include <GL/glfw.h>
 
-Game::Game(Renderer *renderer) :
-        renderer(renderer)
+Game::Game(Renderer *renderer, Timer *timer, Input *input) :
+        renderer(renderer), timer(timer), input(input)
 {
 }
 
-Game::Game(const Game& orig) {
+Game::Game(const Game& orig) :
+        renderer(orig.renderer),
+        timer(orig.timer),
+        input(orig.input)
+{
 }
 
 Game::~Game() {
@@ -25,25 +28,25 @@ void Game::init() {
 
 void Game::mainLoop() {
     
-    double quantumInSeconds = QUANTUM / 1000.0;
-    double currentTime = glfwGetTime();
+    double quantum = this->timer->getQuantum();
+    double currentTime = this->timer->getTime();
     double previousTime = currentTime;
     
     bool running = true;
     
     while (running) {
         
-        currentTime = glfwGetTime();
+        currentTime = this->timer->getTime();
         double timeDifference = currentTime - previousTime;
         
-        if (timeDifference > quantumInSeconds) {
+        if (timeDifference > quantum) {
             this->renderer->render();
             previousTime = currentTime;
         } else {
-            double sleepTime = quantumInSeconds - timeDifference;
-            glfwSleep(sleepTime);
+            double sleepTime = quantum - timeDifference;
+            this->timer->sleep(sleepTime);
         }
         
-        running = !glfwGetKey(GLFW_KEY_ESC) && glfwGetWindowParam(GLFW_OPENED);
+        running = !this->input->isEscapePressed() && this->renderer->isWindowOpened();
     }
 }

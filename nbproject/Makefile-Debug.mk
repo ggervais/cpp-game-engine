@@ -35,9 +35,13 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/render/GLRenderer.o \
+	${OBJECTDIR}/timing/GLFWTimer.o \
 	${OBJECTDIR}/ui/Canvas.o \
 	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/input/GLFWInput.o \
 	${OBJECTDIR}/render/Renderer.o \
+	${OBJECTDIR}/input/Input.o \
+	${OBJECTDIR}/timing/Timer.o \
 	${OBJECTDIR}/render/Viewport.o \
 	${OBJECTDIR}/ui/GLFWCanvas.o \
 	${OBJECTDIR}/game/Game.o
@@ -72,6 +76,11 @@ ${OBJECTDIR}/render/GLRenderer.o: render/GLRenderer.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/render/GLRenderer.o render/GLRenderer.cpp
 
+${OBJECTDIR}/timing/GLFWTimer.o: timing/GLFWTimer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/timing
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/timing/GLFWTimer.o timing/GLFWTimer.cpp
+
 ${OBJECTDIR}/ui/Canvas.o: ui/Canvas.cpp 
 	${MKDIR} -p ${OBJECTDIR}/ui
 	${RM} $@.d
@@ -82,10 +91,25 @@ ${OBJECTDIR}/main.o: main.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
 
+${OBJECTDIR}/input/GLFWInput.o: input/GLFWInput.cpp 
+	${MKDIR} -p ${OBJECTDIR}/input
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/input/GLFWInput.o input/GLFWInput.cpp
+
 ${OBJECTDIR}/render/Renderer.o: render/Renderer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/render
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/render/Renderer.o render/Renderer.cpp
+
+${OBJECTDIR}/input/Input.o: input/Input.cpp 
+	${MKDIR} -p ${OBJECTDIR}/input
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/input/Input.o input/Input.cpp
+
+${OBJECTDIR}/timing/Timer.o: timing/Timer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/timing
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/timing/Timer.o timing/Timer.cpp
 
 ${OBJECTDIR}/render/Viewport.o: render/Viewport.cpp 
 	${MKDIR} -p ${OBJECTDIR}/render

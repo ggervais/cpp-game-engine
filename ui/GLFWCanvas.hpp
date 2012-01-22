@@ -21,6 +21,7 @@ public:
     void repaint();
     void centerCursor();
     bool init();
+    bool isWindowOpened() const;
     static void GLFWCALL resizeCanvas(GLsizei width, GLsizei height);
     
 private:

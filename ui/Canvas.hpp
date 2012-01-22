@@ -17,6 +17,7 @@ public:
     Viewport &getViewport();
     virtual void centerCursor() = 0;
     virtual void repaint() = 0;
+    virtual bool isWindowOpened() const = 0;
     virtual bool init();
     
 protected:

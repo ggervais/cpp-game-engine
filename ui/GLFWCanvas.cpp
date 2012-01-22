@@ -70,3 +70,6 @@ bool GLFWCanvas::init() {
     return true;
 }
 
+bool GLFWCanvas::isWindowOpened() const {
+    return glfwGetWindowParam(GLFW_OPENED);
+}
