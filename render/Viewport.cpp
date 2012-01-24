@@ -7,7 +7,20 @@
 
 #include "Viewport.hpp"
 
-Viewport::Viewport(int width, int height, bool fullscreen) : width(width), height(height), fullscreen(fullscreen), dirty(true) {
+Viewport::Viewport(int x, int y, int width, int height, bool fullscreen) : 
+        width(width), 
+        height(height), 
+        fullscreen(fullscreen), 
+        dirty(true) {
+}
+
+Viewport::Viewport(int width, int height, bool fullscreen) : 
+        x(0), 
+        y(0), 
+        width(width), 
+        height(height), 
+        fullscreen(fullscreen), 
+        dirty(true) {
 }
 
 Viewport::Viewport(const Viewport& orig) {
@@ -40,4 +53,12 @@ int Viewport::getHeight() const {
 
 int Viewport::getWidth() const {
     return width;
+}
+
+int Viewport::getX() const {
+    return this->x;
+}
+
+int Viewport::getY() const {
+    return this->y;
 }

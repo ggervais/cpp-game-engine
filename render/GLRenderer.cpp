@@ -58,3 +58,11 @@ void GLRenderer::doRender() {
     glClearColor(1, 0, 1, 1);
 }
 
+void GLRenderer::updateViewport() {
+    Viewport &viewport = this->canvas->getViewport();
+    if (viewport.isDirty()) {
+        glViewport(viewport.getX(), viewport.getY(), viewport.getWidth(), viewport.getHeight());
+        viewport.setDirty(false);
+    }
+}
+

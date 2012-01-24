@@ -22,6 +22,8 @@ Renderer::~Renderer() {}
 bool Renderer::init() {}
 
 void Renderer::render() {
+    
+    updateViewport();
     doRender();
     canvas->centerCursor();
     canvas->repaint();

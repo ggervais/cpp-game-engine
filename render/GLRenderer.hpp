@@ -19,6 +19,7 @@ public:
     bool init();
     virtual ~GLRenderer();
 private:
+    void updateViewport();
     void doRender();
 };
 

@@ -20,6 +20,7 @@ public:
     bool isWindowOpened();
     void render();
 protected:
+    virtual void updateViewport() = 0;
     virtual void doRender() = 0;
     Canvas *canvas;
     
