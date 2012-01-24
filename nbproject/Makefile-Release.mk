@@ -40,6 +40,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/input/GLFWInput.o \
 	${OBJECTDIR}/render/Renderer.o \
+	${OBJECTDIR}/math/Vector3D.o \
 	${OBJECTDIR}/input/Input.o \
 	${OBJECTDIR}/timing/Timer.o \
 	${OBJECTDIR}/render/Viewport.o \
@@ -100,6 +101,11 @@ ${OBJECTDIR}/render/Renderer.o: render/Renderer.cpp
 	${MKDIR} -p ${OBJECTDIR}/render
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/render/Renderer.o render/Renderer.cpp
+
+${OBJECTDIR}/math/Vector3D.o: math/Vector3D.cpp 
+	${MKDIR} -p ${OBJECTDIR}/math
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/math/Vector3D.o math/Vector3D.cpp
 
 ${OBJECTDIR}/input/Input.o: input/Input.cpp 
 	${MKDIR} -p ${OBJECTDIR}/input

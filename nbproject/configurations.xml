@@ -22,6 +22,10 @@
         <itemPath>input/Input.cpp</itemPath>
         <itemPath>input/Input.hpp</itemPath>
       </logicalFolder>
+      <logicalFolder name="f4" displayName="math" projectFiles="true">
+        <itemPath>math/Vector3D.cpp</itemPath>
+        <itemPath>math/Vector3D.hpp</itemPath>
+      </logicalFolder>
       <logicalFolder name="render" displayName="render" projectFiles="true">
         <itemPath>render/GLRenderer.cpp</itemPath>
         <itemPath>render/GLRenderer.hpp</itemPath>
