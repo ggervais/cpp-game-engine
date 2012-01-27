@@ -19,6 +19,9 @@ public:
     void makeIdentity();
     static Matrix4x4 createIdentity();
     
+    Matrix4x4 inverse() throw(int);
+    Matrix4x4 transpose();
+    
     void set(int i, int j, float v);
     float get(int i, int j) const;
     

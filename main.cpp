@@ -57,6 +57,21 @@ int main(int argc, char* argv[]) {
     std::cout << m2 << std::endl;
     std::cout << (m1 * m2) << std::endl;
     
+    Matrix4x4 mult = m1 * m2;
+    std::cout << mult.inverse() << std::endl;
+    std::cout << mult.transpose() << std::endl;
+    
+    Matrix4x4 nonInversable;
+    nonInversable.set(0,0,0);
+    nonInversable.set(0,1,0);
+    nonInversable.set(0,2,0);
+    nonInversable.set(0,3,0);
+    
+    try {
+        std::cout << nonInversable.inverse() << std::endl;
+    } catch(int e) {
+        std::cout << "Exception! " << e << std::endl;
+    }
     GLFWCanvas canvas("Guillaume Gervais' C++ Game Engine", 1440, 900, false);
     GLRenderer renderer(&canvas);
     GLFWTimer timer(0.017);

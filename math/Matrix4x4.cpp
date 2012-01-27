@@ -64,6 +64,113 @@ const Matrix4x4 Matrix4x4::operator*(const Matrix4x4 &b) const {
     return result;
 }
 
+Matrix4x4 Matrix4x4::transpose() {
+    Matrix4x4 result;
+    
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            result.set(i, j, get(j, i));
+        }
+    }
+    
+    return result;
+}
+
+Matrix4x4 Matrix4x4::inverse() throw(int) {
+    float a11 = get(0, 0);
+    float a12 = get(0, 1);
+    float a13 = get(0, 2);
+    float a14 = get(0, 3);
+    float a21 = get(1, 0);
+    float a22 = get(1, 1);
+    float a23 = get(1, 2);
+    float a24 = get(1, 3);
+    float a31 = get(2, 0);
+    float a32 = get(2, 1);
+    float a33 = get(2, 2);
+    float a34 = get(2, 3);
+    float a41 = get(3, 0);
+    float a42 = get(3, 1);
+    float a43 = get(3, 2);
+    float a44 = get(3, 3);
+    
+    float det = a11*a22*a33*a44 + a11*a23*a34*a42 + a11*a24*a32*a43
+              + a12*a21*a34*a43 + a12*a23*a31*a44 + a12*a24*a33*a41
+              + a13*a21*a32*a44 + a13*a22*a34*a41 + a13*a24*a31*a42
+              + a14*a21*a33*a42 + a14*a22*a31*a43 + a14*a23*a32*a41
+              - a11*a22*a34*a43 - a11*a23*a32*a44 - a11*a24*a33*a42
+              - a12*a21*a33*a44 - a12*a23*a34*a41 - a12*a24*a31*a43
+              - a13*a21*a34*a42 - a13*a22*a31*a44 - a13*a24*a32*a41
+              - a14*a21*a32*a43 - a14*a22*a33*a41 - a14*a23*a31*a42;
+    
+    
+    if (det == 0) {
+        // TODO define exception!
+        throw 1;
+    }
+    
+    float b11 = a22*a33*a44 + a23*a34*a42 + a24*a32*a43 - a22*a34*a43 - a23*a32*a44 - a24*a33*a42;
+    float b12 = a12*a34*a43 + a13*a32*a44 + a14*a33*a42 - a12*a33*a44 - a13*a34*a42 - a14*a32*a43;
+    float b13 = a12*a23*a44 + a13*a24*a42 + a14*a22*a43 - a12*a24*a43 - a13*a22*a44 - a14*a23*a42;
+    float b14 = a12*a24*a33 + a13*a22*a34 + a14*a23*a32 - a12*a23*a34 - a13*a24*a32 - a14*a22*a33;
+
+    float b21 = a21*a34*a43 + a23*a31*a44 + a24*a33*a41 - a21*a33*a44 - a23*a34*a41 - a24*a31*a43;
+    float b22 = a11*a33*a44 + a13*a34*a41 + a14*a31*a43 - a11*a34*a43 - a13*a31*a44 - a14*a33*a41;
+    float b23 = a11*a24*a43 + a13*a21*a44 + a14*a23*a41 - a11*a23*a44 - a13*a24*a41 - a14*a21*a43;
+    float b24 = a11*a23*a34 + a13*a24*a31 + a14*a21*a33 - a11*a24*a33 - a13*a21*a34 - a14*a23*a31;
+
+    float b31 = a21*a32*a44 + a22*a34*a41 + a24*a31*a42 - a21*a34*a42 - a22*a31*a44 - a24*a32*a41;
+    float b32 = a11*a34*a42 + a12*a31*a44 + a14*a32*a41 - a11*a32*a44 - a12*a34*a41 - a14*a31*a42;
+    float b33 = a11*a22*a44 + a12*a24*a41 + a14*a21*a42 - a11*a24*a42 - a12*a21*a44 - a14*a22*a41;
+    float b34 = a11*a24*a32 + a12*a21*a34 + a14*a22*a31 - a11*a22*a34 - a12*a24*a31 - a14*a21*a32;
+
+    float b41 = a21*a33*a42 + a22*a31*a43 + a23*a32*a41 - a21*a32*a43 - a22*a33*a41 - a23*a31*a42;
+    float b42 = a11*a32*a43 + a12*a33*a41 + a13*a31*a42 - a11*a33*a42 - a12*a31*a43 - a13*a32*a41;
+    float b43 = a11*a23*a42 + a12*a21*a43 + a13*a22*a41 - a11*a22*a43 - a12*a23*a41 - a13*a21*a42;
+    float b44 = a11*a22*a33 + a12*a23*a31 + a13*a21*a32 - a11*a23*a32 - a12*a21*a33 - a13*a22*a31;
+    
+    b11 *= (1 / det);
+    b12 *= (1 / det);
+    b13 *= (1 / det);
+    b14 *= (1 / det);
+    b21 *= (1 / det);
+    b22 *= (1 / det);
+    b23 *= (1 / det);
+    b24 *= (1 / det);
+    b31 *= (1 / det);
+    b32 *= (1 / det);
+    b33 *= (1 / det);
+    b34 *= (1 / det);
+    b41 *= (1 / det);
+    b42 *= (1 / det);
+    b43 *= (1 / det);
+    b44 *= (1 / det);
+    
+    Matrix4x4 inverse;
+    
+    inverse.set(0, 0, b11);
+    inverse.set(0, 1, b12);
+    inverse.set(0, 2, b13);
+    inverse.set(0, 3, b14);
+
+    inverse.set(1, 0, b21);
+    inverse.set(1, 1, b22);
+    inverse.set(1, 2, b23);
+    inverse.set(1, 3, b24);
+
+    inverse.set(2, 0, b31);
+    inverse.set(2, 1, b32);
+    inverse.set(2, 2, b33);
+    inverse.set(2, 3, b34);
+
+    inverse.set(3, 0, b41);
+    inverse.set(3, 1, b42);
+    inverse.set(3, 2, b43);
+    inverse.set(3, 3, b44);
+    
+    return inverse;
+}
+
 Matrix4x4& Matrix4x4::operator*=(const Matrix4x4 &b) {
     Matrix4x4 temp;
 
