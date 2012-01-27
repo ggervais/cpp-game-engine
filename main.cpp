@@ -22,6 +22,7 @@
 #include "render/GLRenderer.hpp"
 #include "input/GLFWInput.hpp"
 #include "math/Vector3D.hpp"
+#include "math/Matrix4x4.hpp"
 
 #ifdef __APPLE__
 #  include <GLUT/glut.h>
@@ -43,6 +44,18 @@ int main(int argc, char* argv[]) {
     std::cout << cross << std::endl;
     std::cout << v1.dot(v2) << std::endl;
     std::cout << (v1 + v2) << std::endl;
+    
+    Matrix4x4 m1;
+    m1.set(0,0,2);
+    m1.set(2,3,4);
+    
+    Matrix4x4 m2;
+    m2.set(3,3,5);
+    m2.set(2,1,9);
+            
+    std::cout << m1 << std::endl;
+    std::cout << m2 << std::endl;
+    std::cout << (m1 * m2) << std::endl;
     
     GLFWCanvas canvas("Guillaume Gervais' C++ Game Engine", 1440, 900, false);
     GLRenderer renderer(&canvas);

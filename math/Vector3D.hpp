@@ -9,6 +9,7 @@
 #define	VECTOR3D_HPP
 
 #include <iostream>
+#include <math.h>
 
 class Vector3D {
 public:
@@ -40,6 +41,11 @@ public:
     float *get();
     float dot(Vector3D &other);
     
+    float length();
+    float lengthSquared();
+    
+    void normalize();
+    Vector3D normalized();
 private:
     float v[3];
 };

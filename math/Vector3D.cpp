@@ -31,6 +31,22 @@ float Vector3D::dot(Vector3D &other) {
     return x()*other.x() + y()*other.y() + z()*other.z();
 }
 
+void Vector3D::normalize() {
+    float l = length();
+    if (l > 0) {
+        v[0] = (v[0] / l);
+        v[1] = (v[1] / l);
+        v[2] = (v[2] / l);
+    }
+}
+
+Vector3D Vector3D::normalized() {
+    Vector3D vector(*this);
+    vector.normalize();
+    return vector;
+}
+
+
 Vector3D::~Vector3D() {
 }
 
@@ -60,6 +76,14 @@ void Vector3D::z(float z) {
 
 float *Vector3D::get() {
     return v;
+}
+
+float Vector3D::lengthSquared() {
+    return v[0]*v[0] + v[1]*v[1] + v[2]*v[2];
+}
+
+float Vector3D::length() {
+    return sqrt(lengthSquared());
 }
 
 Vector3D& Vector3D::operator=(const Vector3D &other) {

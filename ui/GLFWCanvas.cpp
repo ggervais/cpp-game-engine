@@ -25,7 +25,7 @@ void GLFWCanvas::repaint() {
     glfwSwapBuffers();
 }
 
-void GLFWCanvas::resizeCanvas(GLsizei width, GLsizei height) {
+void GLFWCALL GLFWCanvas::resizeCanvas(GLsizei width, GLsizei height) {
     glfwViewport->updateDimensions(width, height);
 }
 

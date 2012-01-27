@@ -22,7 +22,7 @@ public:
     void centerCursor();
     bool init();
     bool isWindowOpened() const;
-    static void GLFWCALL resizeCanvas(GLsizei width, GLsizei height);
+    static void GLFWCALL resizeCanvas(GLsizei width, int height);
     
 private:
     

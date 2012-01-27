@@ -38,6 +38,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/timing/GLFWTimer.o \
 	${OBJECTDIR}/ui/Canvas.o \
 	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/math/Matrix4x4.o \
 	${OBJECTDIR}/input/GLFWInput.o \
 	${OBJECTDIR}/render/Renderer.o \
 	${OBJECTDIR}/math/Vector3D.o \
@@ -91,6 +92,11 @@ ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/math/Matrix4x4.o: math/Matrix4x4.cpp 
+	${MKDIR} -p ${OBJECTDIR}/math
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/math/Matrix4x4.o math/Matrix4x4.cpp
 
 ${OBJECTDIR}/input/GLFWInput.o: input/GLFWInput.cpp 
 	${MKDIR} -p ${OBJECTDIR}/input
