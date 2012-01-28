@@ -79,6 +79,14 @@ int main(int argc, char* argv[]) {
     Matrix4x4 projection = Matrix4x4::createProjection(4.0/3.0f, 0.785398163, 1.0, 1000.0);
     std::cout << "Own projection: " << std::endl << projection << std::endl;
     
+    Vector3D eye(1, 1, 0);
+    Vector3D lookAt(0, 0, 0);
+    Vector3D up(0, 1, 0);
+    
+    Matrix4x4 view = Matrix4x4::createView(eye, lookAt, up);
+    std::cout << "Own view: " << std::endl << view << std::endl;
+    
+    
     GLFWCanvas canvas("Guillaume Gervais' C++ Game Engine", 1440, 900, false);
     GLRenderer renderer(&canvas);
     GLFWTimer timer(0.017);

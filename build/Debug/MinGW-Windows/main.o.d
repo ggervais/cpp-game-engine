@@ -4,7 +4,7 @@ build/Debug/MinGW-Windows/main.o: main.cpp game/Game.hpp \
  game/../input/Input.hpp ui/GLFWCanvas.hpp ui/Canvas.hpp \
  timing/GLFWTimer.hpp timing/Timer.hpp render/GLRenderer.hpp \
  render/Renderer.hpp input/GLFWInput.hpp input/Input.hpp \
- math/Vector3D.hpp math/Matrix4x4.hpp
+ math/Vector3D.hpp math/Matrix4x4.hpp math/Vector3D.hpp
 
 game/Game.hpp:
 
@@ -37,3 +37,5 @@ input/Input.hpp:
 math/Vector3D.hpp:
 
 math/Matrix4x4.hpp:
+
+math/Vector3D.hpp:

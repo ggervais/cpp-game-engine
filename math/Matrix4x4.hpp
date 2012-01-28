@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <math.h>
+#include "Vector3D.hpp"
 
 class Matrix4x4 {
 public:
@@ -20,6 +21,7 @@ public:
     void makeIdentity();
     static Matrix4x4 createIdentity();
     static Matrix4x4 createProjection(float angle, float aspectRatio, float near, float far);
+    static Matrix4x4 createView(Vector3D &eye, Vector3D &lookAt, Vector3D &up);
     
     Matrix4x4 inverse(bool *success);
     Matrix4x4 transpose();
@@ -28,7 +30,7 @@ public:
     float get(int i, int j) const;
     
     Matrix4x4& operator*=(const Matrix4x4 &b);
-    const Matrix4x4 operator*(const Matrix4x4 &b) const;
+    Matrix4x4 operator*(const Matrix4x4 &b) const;
     friend std::ostream &operator<<(std::ostream &out, const Matrix4x4 &matrix);
     Matrix4x4& operator=(const Matrix4x4 &other);
 private:

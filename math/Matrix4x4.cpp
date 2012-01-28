@@ -6,6 +6,7 @@
  */
 
 #include "Matrix4x4.hpp"
+#include "Vector3D.hpp"
 
 Matrix4x4::Matrix4x4() {
     makeIdentity();
@@ -63,6 +64,29 @@ Matrix4x4 Matrix4x4::createProjection(float angle, float aspectRatio, float near
     return result;
 }
 
+Matrix4x4 Matrix4x4::createView(Vector3D &eye, Vector3D &lookAt, Vector3D &up) {
+    Matrix4x4 result;
+    
+    Vector3D forward = (lookAt - eye).normalized();
+    Vector3D upNormalized = up.normalized();
+    Vector3D right = forward * upNormalized;
+    Vector3D realUp = right * forward;
+    
+    result.set(0, 0, right.x());
+    result.set(1, 0, right.y());
+    result.set(2, 0, right.z());
+    
+    result.set(0, 1, realUp.x());
+    result.set(1, 1, realUp.y());
+    result.set(2, 1, realUp.z());
+    
+    result.set(0, 2, -forward.x());
+    result.set(1, 2, -forward.y());
+    result.set(2, 2, -forward.z());
+    
+    return result;
+}
+
 float Matrix4x4::get(int i, int j) const {
     int index = i * 4 + j;
     return m[index];
@@ -73,7 +97,7 @@ void Matrix4x4::set(int i, int j, float v) {
     m[index] = v;
 }
 
-const Matrix4x4 Matrix4x4::operator*(const Matrix4x4 &b) const {
+Matrix4x4 Matrix4x4::operator*(const Matrix4x4 &b) const {
     Matrix4x4 result = *this;
     result *= b;
     return result;

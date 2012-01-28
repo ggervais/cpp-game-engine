@@ -129,19 +129,19 @@ Vector3D& Vector3D::operator*=(const Vector3D &other) {
     return *this;
 }
 
-const Vector3D Vector3D::operator+(const Vector3D &other) const {
+Vector3D Vector3D::operator+(const Vector3D &other) const {
     Vector3D result = *this;
     result += other;
     return result;
 }
 
-const Vector3D Vector3D::operator-(const Vector3D &other) const {
+Vector3D Vector3D::operator-(const Vector3D &other) const {
     Vector3D result = *this;
     result -= other;
     return result;
 }
 
-const Vector3D Vector3D::operator*(const Vector3D &other) const {
+Vector3D Vector3D::operator*(const Vector3D &other) const {
     Vector3D result = *this;
     result *= other;
     return result;
