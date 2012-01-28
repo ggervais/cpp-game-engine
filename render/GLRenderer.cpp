@@ -59,17 +59,28 @@ bool GLRenderer::init() {
 
 void GLRenderer::doRender() {
     
+    float PI = 3.14159265;
+    
     rotation += 1;
     
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glClearColor(1, 0, 1, 1);
+    glClearColor(0, 0, 0, 1);
     
     int width = this->canvas->getViewport().getWidth();
     int height = this->canvas->getViewport().getHeight();
     
     float aspectRatio = (float) width / (float) height;
     
-            
+    float near = 0.0001;
+    float far = 1000;
+    float fov = 45 * PI / 180;
+    
+    float top = near * tan(fov / 2.0);
+    float bottom = -top;
+    float right = top * aspectRatio;
+    float left = -right;
+    
+    
     Matrix4x4 projectionMatrix = Matrix4x4::createProjection(0.785398163, aspectRatio, 0.0001, 1000);
     Matrix4x4 projCol = Matrix4x4::createColumnMajor(projectionMatrix);
     const float *projection = projCol.get();
@@ -79,20 +90,57 @@ void GLRenderer::doRender() {
     glMultMatrixf(projection);
     
     
-    Matrix4x4 viewMatrix = Matrix4x4::createView(Vector3D(0, 0, -10), Vector3D(0, 0, 0), Vector3D(0, 1, 0));
+    Matrix4x4 viewMatrix = Matrix4x4::createView(Vector3D(0, 9, 10), Vector3D(0, 0, 0), Vector3D(0, 1, 0));
     Matrix4x4 viewCol = Matrix4x4::createColumnMajor(viewMatrix);
     const float *view = viewCol.get();
     
+    std::cout << "MINE" << std::endl;
+    for (int i = 0; i < 16; i++) {
+        std::cout << view[i] << " ";
+        if ((i+1) % 4 == 0) {
+            std::cout << std::endl;
+        }
+    }
+    std::cout << std::endl;
+    
+    
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    
     glMultMatrixf(view);
+    //gluLookAt(0, 0, 1, 0, 0, 0, 0, 1, 0);
     
+    std::cout << "GL" << std::endl;
+    float glview[16];
+    glGetFloatv(GL_MODELVIEW_MATRIX, glview);
+    for (int i = 0; i < 16; i++) {
+        std::cout << glview[i] << " ";
+        if ((i+1) % 4 == 0) {
+            std::cout << std::endl;
+        }
+    }
+    std::cout << std::endl;
+    
+    //gluPerspective(45, aspectRatio, 0.0001, 1000);
+    
+    //glMultMatrixf(glview);
+    
+    glPushMatrix();
     
     glColor4f(0, 0, 0, 1);
     glBegin(GL_LINES);
+    
+    glColor4f(1, 0, 0, 1);
     glVertex3f(0, 0, 0);
     glVertex3f(1, 0, 0);
+    
+    glColor4f(0, 1, 0, 1);
+    glVertex3f(0, 0, 0);
+    glVertex3f(0, 1, 0);
+    
+    glColor4f(0, 0, 1, 1);
+    glVertex3f(0, 0, 0);
+    glVertex3f(0, 0, 1);
+    
     glEnd();
     
     /*gluPerspective(45, aspectRatio, 0.0001, 1000);
@@ -107,6 +155,8 @@ void GLRenderer::doRender() {
     glVertex3f(0.5, -0.5, 0);
     glVertex3f(0.5, 0.5, 0);
     glEnd();
+    
+    glPopMatrix();
 }
 
 void GLRenderer::updateViewport() {

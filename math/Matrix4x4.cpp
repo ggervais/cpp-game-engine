@@ -49,45 +49,75 @@ Matrix4x4 Matrix4x4::createIdentity() {
     return matrix;
 }
 
-Matrix4x4 Matrix4x4::createProjection(float angle, float aspectRatio, float near, float far) {
+Matrix4x4 Matrix4x4::createProjection(float fov, float aspectRatio, float near, float far) {
     Matrix4x4 result;
     
-    float tanOfAngle = tan(angle);
+    float top = near * tan(fov / 2.0);
+    float bottom = -top;
+    float right = top * aspectRatio;
+    float left = -right;
     
-    result.set(0, 0, 1 / tanOfAngle);
-    result.set(1, 1, aspectRatio / tanOfAngle);
+    float tanOfAngle = tan(fov);
+    
+    result.set(0, 0, 2 * near / (right - left));
+    result.set(1, 1, 2 * near / (top - bottom));
+    
+    result.set(0, 2, (right + left) / (right - left));
+    result.set(1, 2, (top + bottom) / (top - bottom));
+    result.set(2, 2, -(far + near) / (far - near));
+    result.set(2, 3, -(2 * far * near) / (far - near));
+    result.set(3, 2, -1);
+    result.set(3, 3, 0);
+    
+    /*
     result.set(2, 2, (far + near) / (far - near));
     result.set(2, 3, (-2 * far * near) / (far - near));
     result.set(3, 2, 1);
-    result.set(4, 4, 0);
+    result.set(4, 4, 0);*/
     
     return result;
 }
 
 Matrix4x4 Matrix4x4::createView(Vector3D eye, Vector3D lookAt, Vector3D up) {
-    Matrix4x4 result;
+    Matrix4x4 orientation;
     
-    Vector3D forward = (lookAt - eye).normalized();
-    Vector3D upNormalized = up.normalized();
-    Vector3D right = forward * upNormalized;
-    Vector3D realUp = right * forward;
+    std::cout << "E: " << eye << std::endl;
+    std::cout << "LA: " << lookAt << std::endl;
     
-    result.set(0, 0, right.x());
-    result.set(1, 0, right.y());
-    result.set(2, 0, right.z());
-    result.set(0, 3, -eye.dot(right));
+    Vector3D zAxis = (lookAt - eye).normalized(); // Forward
+    Vector3D xAxis = (zAxis * up).normalized(); // Right
+    Vector3D yAxis = xAxis * zAxis; // Up
     
-    result.set(0, 1, realUp.x());
-    result.set(1, 1, realUp.y());
-    result.set(2, 1, realUp.z());
-    result.set(1, 3, -eye.dot(realUp));
+    orientation.set(0, 0, xAxis.x());
+    orientation.set(1, 0, xAxis.y());
+    orientation.set(2, 0, xAxis.z());
     
-    result.set(0, 2, -forward.x());
-    result.set(1, 2, -forward.y());
-    result.set(2, 2, -forward.z());
-    result.set(2, 3, -eye.dot(forward));
+    orientation.set(0, 1, yAxis.x());
+    orientation.set(1, 1, yAxis.y());
+    orientation.set(2, 1, yAxis.z());
     
-    return result;
+    orientation.set(0, 2, -zAxis.x());
+    orientation.set(1, 2, -zAxis.y());
+    orientation.set(2, 2, -zAxis.z());
+    
+    Matrix4x4 translation;
+    Vector3D minusEye(-eye.x(), -eye.y(), -eye.z());
+    
+    std::cout << "X: " << xAxis << std::endl;
+    std::cout << "Y: " << yAxis << std::endl;
+    std::cout << "Z: " << zAxis << std::endl;
+    std::cout << "ME: " << minusEye << std::endl;
+    
+    
+    orientation.set(0, 3, eye.dot(xAxis));
+    orientation.set(1, 3, eye.dot(yAxis));
+    orientation.set(2, 3, eye.dot(zAxis));
+    
+    //Matrix4x4 result = orientation * translation;
+    
+    //std::cout << "RES" << std::endl << result << std::endl;
+    
+    return orientation;
 }
 
 float Matrix4x4::get(int i, int j) const {

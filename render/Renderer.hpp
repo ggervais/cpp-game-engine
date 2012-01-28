@@ -12,6 +12,8 @@
 #include "../ui/Canvas.hpp"
 #include "../math/Matrix4x4.hpp"
 
+const float PI = 3.14159265;
+
 class Renderer {
 public:
     Renderer(Canvas *canvas);
