@@ -7,6 +7,8 @@
 
 #include "GLRenderer.hpp"
 
+float rotation;
+
 GLRenderer::GLRenderer(Canvas *canvas) :
         Renderer(canvas)
 {}
@@ -21,6 +23,8 @@ GLRenderer::~GLRenderer() {
 
 bool GLRenderer::init() {
    
+    rotation = 0;
+    
     this->canvas->init();
     
     std::cout << "GLRenderer init." << std::endl;
@@ -54,8 +58,55 @@ bool GLRenderer::init() {
 }
 
 void GLRenderer::doRender() {
+    
+    rotation += 1;
+    
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(1, 0, 1, 1);
+    
+    int width = this->canvas->getViewport().getWidth();
+    int height = this->canvas->getViewport().getHeight();
+    
+    float aspectRatio = (float) width / (float) height;
+    
+            
+    Matrix4x4 projectionMatrix = Matrix4x4::createProjection(0.785398163, aspectRatio, 0.0001, 1000);
+    Matrix4x4 projCol = Matrix4x4::createColumnMajor(projectionMatrix);
+    const float *projection = projCol.get();
+    
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glMultMatrixf(projection);
+    
+    
+    Matrix4x4 viewMatrix = Matrix4x4::createView(Vector3D(0, 0, 10), Vector3D(0, 0, 0), Vector3D(0, 1, 0));
+    Matrix4x4 viewCol = Matrix4x4::createColumnMajor(viewMatrix);
+    const float *view = viewCol.get();
+    
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    
+    glMultMatrixf(view);
+    
+    
+    glColor4f(0, 0, 0, 1);
+    glBegin(GL_LINES);
+    glVertex3f(0, 0, 0);
+    glVertex3f(1, 0, 0);
+    glEnd();
+    
+    /*gluPerspective(45, aspectRatio, 0.0001, 1000);
+    gluLookAt(0, 0, -2, 0, 0, 0, 0, 1, 0);*/
+            
+    
+    glRotatef(rotation, 0, 1, 0);
+    glColor4f(1,1,1,1);
+    glBegin(GL_QUADS);
+    glVertex3f(-0.5, 0.5, 0);
+    glVertex3f(-0.5, -0.5, 0);
+    glVertex3f(0.5, -0.5, 0);
+    glVertex3f(0.5, 0.5, 0);
+    glEnd();
 }
 
 void GLRenderer::updateViewport() {

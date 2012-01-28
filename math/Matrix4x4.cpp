@@ -64,7 +64,7 @@ Matrix4x4 Matrix4x4::createProjection(float angle, float aspectRatio, float near
     return result;
 }
 
-Matrix4x4 Matrix4x4::createView(Vector3D &eye, Vector3D &lookAt, Vector3D &up) {
+Matrix4x4 Matrix4x4::createView(Vector3D eye, Vector3D lookAt, Vector3D up) {
     Matrix4x4 result;
     
     Vector3D forward = (lookAt - eye).normalized();
@@ -84,6 +84,10 @@ Matrix4x4 Matrix4x4::createView(Vector3D &eye, Vector3D &lookAt, Vector3D &up) {
     result.set(1, 2, -forward.y());
     result.set(2, 2, -forward.z());
     
+    result.set(0, 3, eye.x());
+    result.set(1, 3, eye.y());
+    result.set(2, 3, eye.z());
+    
     return result;
 }
 
@@ -95,6 +99,18 @@ float Matrix4x4::get(int i, int j) const {
 void Matrix4x4::set(int i, int j, float v) {
     int index = i * 4 + j;
     m[index] = v;
+}
+
+const Matrix4x4 Matrix4x4::createColumnMajor(Matrix4x4 &orig) {
+    Matrix4x4 result;
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            int indexRowMajor = i * 4 + j;
+            int indexColMajor = j * 4 + i;
+            result.m[indexColMajor] = orig.m[indexRowMajor];
+        }
+    }
+    return result;
 }
 
 Matrix4x4 Matrix4x4::operator*(const Matrix4x4 &b) const {
@@ -311,6 +327,10 @@ Matrix4x4& Matrix4x4::operator*=(const Matrix4x4 &b) {
     }
     
     return *this;
+}
+
+const float *Matrix4x4::get() {
+    return m;
 }
 
 std::ostream &operator<<(std::ostream &out, const Matrix4x4 &matrix) {

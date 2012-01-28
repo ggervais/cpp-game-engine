@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include "../ui/Canvas.hpp"
+#include "../math/Matrix4x4.hpp"
 
 class Renderer {
 public:
