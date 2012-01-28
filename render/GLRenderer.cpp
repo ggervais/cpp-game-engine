@@ -79,7 +79,7 @@ void GLRenderer::doRender() {
     glMultMatrixf(projection);
     
     
-    Matrix4x4 viewMatrix = Matrix4x4::createView(Vector3D(0, 0, 10), Vector3D(0, 0, 0), Vector3D(0, 1, 0));
+    Matrix4x4 viewMatrix = Matrix4x4::createView(Vector3D(0, 0, -10), Vector3D(0, 0, 0), Vector3D(0, 1, 0));
     Matrix4x4 viewCol = Matrix4x4::createColumnMajor(viewMatrix);
     const float *view = viewCol.get();
     

@@ -75,18 +75,17 @@ Matrix4x4 Matrix4x4::createView(Vector3D eye, Vector3D lookAt, Vector3D up) {
     result.set(0, 0, right.x());
     result.set(1, 0, right.y());
     result.set(2, 0, right.z());
+    result.set(0, 3, -eye.dot(right));
     
     result.set(0, 1, realUp.x());
     result.set(1, 1, realUp.y());
     result.set(2, 1, realUp.z());
+    result.set(1, 3, -eye.dot(realUp));
     
     result.set(0, 2, -forward.x());
     result.set(1, 2, -forward.y());
     result.set(2, 2, -forward.z());
-    
-    result.set(0, 3, eye.x());
-    result.set(1, 3, eye.y());
-    result.set(2, 3, eye.z());
+    result.set(2, 3, -eye.dot(forward));
     
     return result;
 }
