@@ -10,6 +10,7 @@
 
 #include <GL/glew.h>
 #include "Renderer.hpp"
+#include <GL/glut.h>
 
 
 class GLRenderer : public Renderer {

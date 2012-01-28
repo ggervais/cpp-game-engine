@@ -9,6 +9,7 @@
 #define	MATRIX4X4_HPP
 
 #include <iostream>
+#include <math.h>
 
 class Matrix4x4 {
 public:
@@ -18,8 +19,9 @@ public:
     
     void makeIdentity();
     static Matrix4x4 createIdentity();
+    static Matrix4x4 createProjection(float angle, float aspectRatio, float near, float far);
     
-    Matrix4x4 inverse() throw(int);
+    Matrix4x4 inverse(bool *success);
     Matrix4x4 transpose();
     
     void set(int i, int j, float v);

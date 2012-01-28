@@ -48,6 +48,21 @@ Matrix4x4 Matrix4x4::createIdentity() {
     return matrix;
 }
 
+Matrix4x4 Matrix4x4::createProjection(float angle, float aspectRatio, float near, float far) {
+    Matrix4x4 result;
+    
+    float tanOfAngle = tan(angle);
+    
+    result.set(0, 0, 1 / tanOfAngle);
+    result.set(1, 1, aspectRatio / tanOfAngle);
+    result.set(2, 2, (far + near) / (far - near));
+    result.set(2, 3, (-2 * far * near) / (far - near));
+    result.set(3, 2, 1);
+    result.set(4, 4, 0);
+    
+    return result;
+}
+
 float Matrix4x4::get(int i, int j) const {
     int index = i * 4 + j;
     return m[index];
@@ -76,7 +91,10 @@ Matrix4x4 Matrix4x4::transpose() {
     return result;
 }
 
-Matrix4x4 Matrix4x4::inverse() throw(int) {
+Matrix4x4 Matrix4x4::inverse(bool *success) {
+    
+    Matrix4x4 inverse;
+    
     float a11 = get(0, 0);
     float a12 = get(0, 1);
     float a13 = get(0, 2);
@@ -105,8 +123,8 @@ Matrix4x4 Matrix4x4::inverse() throw(int) {
     
     
     if (det == 0) {
-        // TODO define exception!
-        throw 1;
+        *success = false;
+        return inverse; 
     }
     
     float b11 = a22*a33*a44 + a23*a34*a42 + a24*a32*a43 - a22*a34*a43 - a23*a32*a44 - a24*a33*a42;
@@ -146,8 +164,6 @@ Matrix4x4 Matrix4x4::inverse() throw(int) {
     b43 *= (1 / det);
     b44 *= (1 / det);
     
-    Matrix4x4 inverse;
-    
     inverse.set(0, 0, b11);
     inverse.set(0, 1, b12);
     inverse.set(0, 2, b13);
@@ -167,6 +183,8 @@ Matrix4x4 Matrix4x4::inverse() throw(int) {
     inverse.set(3, 1, b42);
     inverse.set(3, 2, b43);
     inverse.set(3, 3, b44);
+    
+    *success = true;
     
     return inverse;
 }
