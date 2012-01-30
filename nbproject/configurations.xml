@@ -33,6 +33,8 @@
         <itemPath>render/GLRenderer.hpp</itemPath>
         <itemPath>render/Renderer.cpp</itemPath>
         <itemPath>src/render/Renderer.hpp</itemPath>
+        <itemPath>render/RendererObject.cpp</itemPath>
+        <itemPath>render/RendererObject.hpp</itemPath>
         <itemPath>render/Viewport.cpp</itemPath>
         <itemPath>render/Viewport.hpp</itemPath>
       </logicalFolder>

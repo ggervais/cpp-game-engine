@@ -79,45 +79,36 @@ Matrix4x4 Matrix4x4::createProjection(float fov, float aspectRatio, float near, 
 }
 
 Matrix4x4 Matrix4x4::createView(Vector3D eye, Vector3D lookAt, Vector3D up) {
-    Matrix4x4 orientation;
     
-    std::cout << "E: " << eye << std::endl;
-    std::cout << "LA: " << lookAt << std::endl;
+    Matrix4x4 result;
     
     Vector3D zAxis = (lookAt - eye).normalized(); // Forward
     Vector3D xAxis = (zAxis * up).normalized(); // Right
     Vector3D yAxis = xAxis * zAxis; // Up
     
-    orientation.set(0, 0, xAxis.x());
-    orientation.set(1, 0, xAxis.y());
-    orientation.set(2, 0, xAxis.z());
+    result.set(0, 0, xAxis.x());
+    result.set(0, 1, xAxis.y());
+    result.set(0, 2, xAxis.z());
+    result.set(0, 3, 0);
     
-    orientation.set(0, 1, yAxis.x());
-    orientation.set(1, 1, yAxis.y());
-    orientation.set(2, 1, yAxis.z());
+    result.set(1, 0, yAxis.x());
+    result.set(1, 1, yAxis.y());
+    result.set(1, 2, yAxis.z());
+    result.set(1, 3, 0);
     
-    orientation.set(0, 2, -zAxis.x());
-    orientation.set(1, 2, -zAxis.y());
-    orientation.set(2, 2, -zAxis.z());
+    result.set(2, 0, -zAxis.x());
+    result.set(2, 1, -zAxis.y());
+    result.set(2, 2, -zAxis.z());
+    result.set(2, 3, 0);
     
     Matrix4x4 translation;
     Vector3D minusEye(-eye.x(), -eye.y(), -eye.z());
     
-    std::cout << "X: " << xAxis << std::endl;
-    std::cout << "Y: " << yAxis << std::endl;
-    std::cout << "Z: " << zAxis << std::endl;
-    std::cout << "ME: " << minusEye << std::endl;
+    result.set(0, 3, eye.dot(xAxis));
+    result.set(1, 3, eye.dot(yAxis));
+    result.set(2, 3, eye.dot(zAxis));
     
-    
-    orientation.set(0, 3, eye.dot(xAxis));
-    orientation.set(1, 3, eye.dot(yAxis));
-    orientation.set(2, 3, eye.dot(zAxis));
-    
-    //Matrix4x4 result = orientation * translation;
-    
-    //std::cout << "RES" << std::endl << result << std::endl;
-    
-    return orientation;
+    return result;
 }
 
 float Matrix4x4::get(int i, int j) const {

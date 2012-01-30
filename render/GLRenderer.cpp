@@ -6,12 +6,12 @@
  */
 
 #include "GLRenderer.hpp"
+#include "RendererObject.hpp"
 
 float rotation;
 
 GLRenderer::GLRenderer(Canvas *canvas) :
-        Renderer(canvas)
-{}
+        Renderer(canvas) {}
 
 GLRenderer::GLRenderer(const GLRenderer& orig) :
         Renderer(orig)
@@ -86,45 +86,14 @@ void GLRenderer::doRender() {
     const float *projection = projCol.get();
     
     glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glMultMatrixf(projection);
-    
-    
-    Matrix4x4 viewMatrix = Matrix4x4::createView(Vector3D(0, 9, 10), Vector3D(0, 0, 0), Vector3D(0, 1, 0));
+    glLoadMatrixf(projection);
+    Matrix4x4 viewMatrix = Matrix4x4::createView(Vector3D(5, rotation / 10, 10), Vector3D(0, 0, 0), Vector3D(0, 1, 0));
     Matrix4x4 viewCol = Matrix4x4::createColumnMajor(viewMatrix);
     const float *view = viewCol.get();
     
-    std::cout << "MINE" << std::endl;
-    for (int i = 0; i < 16; i++) {
-        std::cout << view[i] << " ";
-        if ((i+1) % 4 == 0) {
-            std::cout << std::endl;
-        }
-    }
-    std::cout << std::endl;
-    
-    
     glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    glMultMatrixf(view);
-    //gluLookAt(0, 0, 1, 0, 0, 0, 0, 1, 0);
+    glLoadMatrixf(view);
     
-    std::cout << "GL" << std::endl;
-    float glview[16];
-    glGetFloatv(GL_MODELVIEW_MATRIX, glview);
-    for (int i = 0; i < 16; i++) {
-        std::cout << glview[i] << " ";
-        if ((i+1) % 4 == 0) {
-            std::cout << std::endl;
-        }
-    }
-    std::cout << std::endl;
-    
-    //gluPerspective(45, aspectRatio, 0.0001, 1000);
-    
-    //glMultMatrixf(glview);
-    
-    glPushMatrix();
     
     glColor4f(0, 0, 0, 1);
     glBegin(GL_LINES);
@@ -143,10 +112,12 @@ void GLRenderer::doRender() {
     
     glEnd();
     
+    
     /*gluPerspective(45, aspectRatio, 0.0001, 1000);
     gluLookAt(0, 0, -2, 0, 0, 0, 0, 1, 0);*/
             
     
+    glPushMatrix();
     glRotatef(rotation, 0, 1, 0);
     glColor4f(1,1,1,1);
     glBegin(GL_QUADS);
@@ -165,5 +136,21 @@ void GLRenderer::updateViewport() {
         glViewport(viewport.getX(), viewport.getY(), viewport.getWidth(), viewport.getHeight());
         viewport.setDirty(false);
     }
+}
+
+void GLRenderer::updateVertexBuffer(RendererObject<GLuint> &rendererObject, int size, float *array) {
+    GLuint vboId = *rendererObject.getValue();
+    std::cout << "VBO id is " << vboId << std::endl;
+    if (vboId == 0) {
+        glGenBuffers(1, &vboId);
+        glBindBuffer(GL_ARRAY_BUFFER, vboId);
+        glBufferData(GL_ARRAY_BUFFER, size, 0, GL_STREAM_DRAW);
+        std::cout << "Created VBO id=" << vboId << std::endl; 
+        rendererObject.setValue(&vboId);
+    } else {
+        glBindBuffer(GL_ARRAY_BUFFER, vboId);
+    }
+    std::cout << "The ID is " << vboId << std::endl;
+    glBufferSubData(vboId, 0, size, array);
 }
 

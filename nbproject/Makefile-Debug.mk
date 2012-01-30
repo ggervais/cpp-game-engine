@@ -46,7 +46,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/timing/Timer.o \
 	${OBJECTDIR}/render/Viewport.o \
 	${OBJECTDIR}/ui/GLFWCanvas.o \
-	${OBJECTDIR}/game/Game.o
+	${OBJECTDIR}/game/Game.o \
+	${OBJECTDIR}/render/RendererObject.o
 
 
 # C Compiler Flags
@@ -137,6 +138,11 @@ ${OBJECTDIR}/game/Game.o: game/Game.cpp
 	${MKDIR} -p ${OBJECTDIR}/game
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/game/Game.o game/Game.cpp
+
+${OBJECTDIR}/render/RendererObject.o: render/RendererObject.cpp 
+	${MKDIR} -p ${OBJECTDIR}/render
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/render/RendererObject.o render/RendererObject.cpp
 
 # Subprojects
 .build-subprojects:
