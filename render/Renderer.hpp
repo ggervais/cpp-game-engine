@@ -11,7 +11,6 @@
 #include <iostream>
 #include "../ui/Canvas.hpp"
 #include "../math/Matrix4x4.hpp"
-#include "RendererObject.hpp"
 
 const float PI = 3.14159265;
 
@@ -23,7 +22,8 @@ public:
     virtual bool init();
     bool isWindowOpened();
     void render();
-    virtual void updateVertexBuffer(RendererObject<int> &rendererObject, float *array) = 0;
+    virtual void createVertexBuffer() = 0;
+    virtual void deleteBuffer() = 0;
     
 protected:
     virtual void updateViewport() = 0;

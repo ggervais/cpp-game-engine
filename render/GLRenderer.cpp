@@ -138,19 +138,30 @@ void GLRenderer::updateViewport() {
     }
 }
 
+/*
 void GLRenderer::updateVertexBuffer(RendererObject<GLuint> &rendererObject, int size, float *array) {
-    GLuint vboId = *rendererObject.getValue();
+    GLuint vboId = rendererObject.getValue();
     std::cout << "VBO id is " << vboId << std::endl;
     if (vboId == 0) {
         glGenBuffers(1, &vboId);
         glBindBuffer(GL_ARRAY_BUFFER, vboId);
         glBufferData(GL_ARRAY_BUFFER, size, 0, GL_STREAM_DRAW);
         std::cout << "Created VBO id=" << vboId << std::endl; 
-        rendererObject.setValue(&vboId);
+        rendererObject.setValue(vboId);
     } else {
         glBindBuffer(GL_ARRAY_BUFFER, vboId);
     }
     std::cout << "The ID is " << vboId << std::endl;
     glBufferSubData(vboId, 0, size, array);
+}*/
+
+
+void createVertexBuffer() {
+    GLuint id = 0; // TEMP
+    glGenBuffers(1, &id);
 }
 
+void deleteBuffer() {
+    GLuint id = 0; // TEMP
+    glDeleteBuffers(1, &id);
+}

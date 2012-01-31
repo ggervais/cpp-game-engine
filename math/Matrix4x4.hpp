@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <math.h>
+#include "../utils/optional.hpp"
 #include "Vector3D.hpp"
 
 class Matrix4x4 {
@@ -25,7 +26,7 @@ public:
     static const Matrix4x4 createColumnMajor(Matrix4x4 &orig);
     const float *get();
     
-    Matrix4x4 inverse(bool *success);
+    optional<Matrix4x4> inverse();
     Matrix4x4 transpose();
     
     void set(int i, int j, float v);

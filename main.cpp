@@ -60,7 +60,10 @@ int main(int argc, char* argv[]) {
     bool inverseSuccess;
     
     Matrix4x4 mult = m1 * m2;
-    std::cout << mult.inverse(&inverseSuccess) << std::endl;
+    optional<Matrix4x4> inverse = mult.inverse();
+    if (inverse.valid()) {
+        std::cout << *inverse << std::endl;
+    }
     std::cout << mult.transpose() << std::endl;
     
     Matrix4x4 nonInversable;
@@ -69,12 +72,8 @@ int main(int argc, char* argv[]) {
     nonInversable.set(0,2,0);
     nonInversable.set(0,3,0);
     
-    std::cout << nonInversable.inverse(&inverseSuccess) << std::endl;
-    if (inverseSuccess) {
-        std::cout << "Inverse: " << nonInversable << std::endl;
-    } else {
-        std::cout << "Non-inversable: " << nonInversable << std::endl;
-    }
+    optional<Matrix4x4> inverseSafe = nonInversable.inverse();
+    std::cout << "Is valid? " << inverseSafe.valid() << std::endl;
     
     Matrix4x4 projection = Matrix4x4::createProjection(4.0/3.0f, 0.785398163, 1.0, 1000.0);
     std::cout << "Own projection: " << std::endl << projection << std::endl;
@@ -86,6 +85,9 @@ int main(int argc, char* argv[]) {
     Matrix4x4 view = Matrix4x4::createView(eye, lookAt, up);
     std::cout << "Own view: " << std::endl << view << std::endl;
     
+    
+    optional<int> value = 10;
+    std::cout << "Optional value is " << *value << std::endl;
     
     GLFWCanvas canvas("Guillaume Gervais' C++ Game Engine", 1440, 900, false);
     GLRenderer renderer(&canvas);

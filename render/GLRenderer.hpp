@@ -19,7 +19,6 @@ public:
     GLRenderer(const GLRenderer& orig);
     bool init();
     virtual ~GLRenderer();
-    void updateVertexBuffer(RendererObject<GLuint> &rendererObject, int size, float *array);
 private:
     void updateViewport();
     void doRender();

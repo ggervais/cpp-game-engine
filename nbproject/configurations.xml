@@ -50,6 +50,9 @@
         <itemPath>ui/GLFWCanvas.cpp</itemPath>
         <itemPath>ui/GLFWCanvas.hpp</itemPath>
       </logicalFolder>
+      <logicalFolder name="f5" displayName="utils" projectFiles="true">
+        <itemPath>utils/optional.hpp</itemPath>
+      </logicalFolder>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"

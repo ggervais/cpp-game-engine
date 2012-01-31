@@ -22,11 +22,13 @@ Renderer::~Renderer() {}
 bool Renderer::init() {}
 
 void Renderer::render() {
-    
+    std::cout << "Before render() (Renderer.hpp)." << std::endl;
     updateViewport();
     doRender();
     canvas->centerCursor();
     canvas->repaint();
+    std::cout << "After render() (Renderer.hpp)." << std::endl;
+    
 }
 
 bool Renderer::isWindowOpened() {

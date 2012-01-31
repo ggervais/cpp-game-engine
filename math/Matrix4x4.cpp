@@ -151,9 +151,10 @@ Matrix4x4 Matrix4x4::transpose() {
     return result;
 }
 
-Matrix4x4 Matrix4x4::inverse(bool *success) {
+optional<Matrix4x4> Matrix4x4::inverse() {
     
     Matrix4x4 inverse;
+    optional<Matrix4x4> result = inverse;
     
     float a11 = get(0, 0);
     float a12 = get(0, 1);
@@ -183,9 +184,10 @@ Matrix4x4 Matrix4x4::inverse(bool *success) {
     
     
     if (det == 0) {
-        *success = false;
-        return inverse; 
+        result.clear();
+        return result; 
     }
+    
     
     float b11 = a22*a33*a44 + a23*a34*a42 + a24*a32*a43 - a22*a34*a43 - a23*a32*a44 - a24*a33*a42;
     float b12 = a12*a34*a43 + a13*a32*a44 + a14*a33*a42 - a12*a33*a44 - a13*a34*a42 - a14*a32*a43;
@@ -244,9 +246,8 @@ Matrix4x4 Matrix4x4::inverse(bool *success) {
     inverse.set(3, 2, b43);
     inverse.set(3, 3, b44);
     
-    *success = true;
     
-    return inverse;
+    return result;
 }
 
 Matrix4x4& Matrix4x4::operator*=(const Matrix4x4 &b) {

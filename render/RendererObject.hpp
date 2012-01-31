@@ -16,10 +16,10 @@ public:
     RendererObject();
     RendererObject(const RendererObject& orig);
     virtual ~RendererObject();
-    virtual T *getValue() const;
-    virtual void setValue(T *value);
+    virtual T getValue() const;
+    virtual void setValue(T value);
 private:
-    T *value;
+    T value;
 };
 
 #endif	/* RENDEREROBJECT_HPP */
