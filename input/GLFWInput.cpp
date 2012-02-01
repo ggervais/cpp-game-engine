@@ -5,6 +5,8 @@
  * Created on January 22, 2012, 1:51 AM
  */
 
+#include <GL/glfw.h>
+
 #include "GLFWInput.hpp"
 
 GLFWInput::GLFWInput() {

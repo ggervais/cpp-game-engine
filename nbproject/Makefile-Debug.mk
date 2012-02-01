@@ -45,9 +45,10 @@ OBJECTFILES= \
 	${OBJECTDIR}/input/Input.o \
 	${OBJECTDIR}/timing/Timer.o \
 	${OBJECTDIR}/render/Viewport.o \
+	${OBJECTDIR}/render/GLVertexBuffer.o \
+	${OBJECTDIR}/render/VertexBuffer.o \
 	${OBJECTDIR}/ui/GLFWCanvas.o \
-	${OBJECTDIR}/game/Game.o \
-	${OBJECTDIR}/render/RendererObject.o
+	${OBJECTDIR}/game/Game.o
 
 
 # C Compiler Flags
@@ -129,6 +130,16 @@ ${OBJECTDIR}/render/Viewport.o: render/Viewport.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/render/Viewport.o render/Viewport.cpp
 
+${OBJECTDIR}/render/GLVertexBuffer.o: render/GLVertexBuffer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/render
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/render/GLVertexBuffer.o render/GLVertexBuffer.cpp
+
+${OBJECTDIR}/render/VertexBuffer.o: render/VertexBuffer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/render
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/render/VertexBuffer.o render/VertexBuffer.cpp
+
 ${OBJECTDIR}/ui/GLFWCanvas.o: ui/GLFWCanvas.cpp 
 	${MKDIR} -p ${OBJECTDIR}/ui
 	${RM} $@.d
@@ -138,11 +149,6 @@ ${OBJECTDIR}/game/Game.o: game/Game.cpp
 	${MKDIR} -p ${OBJECTDIR}/game
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/game/Game.o game/Game.cpp
-
-${OBJECTDIR}/render/RendererObject.o: render/RendererObject.cpp 
-	${MKDIR} -p ${OBJECTDIR}/render
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/render/RendererObject.o render/RendererObject.cpp
 
 # Subprojects
 .build-subprojects:

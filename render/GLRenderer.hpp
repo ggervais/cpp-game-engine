@@ -10,8 +10,7 @@
 
 #include <GL/glew.h>
 #include "Renderer.hpp"
-#include <GL/glut.h>
-
+#include "GLVertexBuffer.hpp"
 
 class GLRenderer : public Renderer {
 public:
@@ -19,6 +18,9 @@ public:
     GLRenderer(const GLRenderer& orig);
     bool init();
     virtual ~GLRenderer();
+    VertexBuffer* createVertexBuffer();
+    void updateVertexBufferData(VertexBuffer *buffer);
+    void deleteVertexBuffer(VertexBuffer *buffer);
 private:
     void updateViewport();
     void doRender();

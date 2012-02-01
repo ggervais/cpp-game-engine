@@ -10,16 +10,10 @@
 
 #include <iostream>
 
-template<typename T>
 class RendererObject {
 public:
-    RendererObject();
-    RendererObject(const RendererObject& orig);
-    virtual ~RendererObject();
-    virtual T getValue() const;
-    virtual void setValue(T value);
-private:
-    T value;
+    virtual void* getValue() const = 0;
+    virtual void setValue(void *value) = 0;
 };
 
 #endif	/* RENDEREROBJECT_HPP */

@@ -8,22 +8,26 @@
 #include "Game.hpp"
 
 Game::Game(Renderer *renderer, Timer *timer, Input *input) :
-        renderer(renderer), timer(timer), input(input)
+        renderer(renderer), timer(timer), input(input), vertexBuffer(NULL)
 {
 }
 
 Game::Game(const Game& orig) :
         renderer(orig.renderer),
         timer(orig.timer),
-        input(orig.input)
+        input(orig.input),
+        vertexBuffer(orig.vertexBuffer)
 {
 }
 
 Game::~Game() {
+    this->renderer->deleteVertexBuffer(this->vertexBuffer);
 }
 
 void Game::init() {
     this->renderer->init();
+    this->vertexBuffer = this->renderer->createVertexBuffer();
+    std::cout << "Game initialized. " << this->vertexBuffer << std::endl;
 }
 
 void Game::mainLoop() {
@@ -40,7 +44,10 @@ void Game::mainLoop() {
         double timeDifference = currentTime - previousTime;
         
         if (timeDifference > quantum) {
+            std::cout << "Will now update VBO data." << std::endl;
+            this->renderer->updateVertexBufferData(this->vertexBuffer);
             this->renderer->render();
+            
             previousTime = currentTime;
         } else {
             double sleepTime = quantum - timeDifference;

@@ -31,10 +31,13 @@
       <logicalFolder name="render" displayName="render" projectFiles="true">
         <itemPath>render/GLRenderer.cpp</itemPath>
         <itemPath>render/GLRenderer.hpp</itemPath>
+        <itemPath>render/GLVertexBuffer.cpp</itemPath>
+        <itemPath>render/GLVertexBuffer.hpp</itemPath>
         <itemPath>render/Renderer.cpp</itemPath>
         <itemPath>src/render/Renderer.hpp</itemPath>
-        <itemPath>render/RendererObject.cpp</itemPath>
         <itemPath>render/RendererObject.hpp</itemPath>
+        <itemPath>render/VertexBuffer.cpp</itemPath>
+        <itemPath>render/VertexBuffer.hpp</itemPath>
         <itemPath>render/Viewport.cpp</itemPath>
         <itemPath>render/Viewport.hpp</itemPath>
       </logicalFolder>

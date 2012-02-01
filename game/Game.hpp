@@ -21,9 +21,12 @@ public:
     void mainLoop();
 private:
     static const int QUANTUM = 17;
+    
     Renderer *renderer;
     Timer *timer;
     Input *input;
+    VertexBuffer *vertexBuffer;
+    
 };
 
 #endif	/* GAME_HPP */

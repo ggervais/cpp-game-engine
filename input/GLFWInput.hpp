@@ -9,7 +9,6 @@
 #define	GLFWINPUT_HPP
 
 #include "Input.hpp"
-#include <GL/glfw.h>
 
 class GLFWInput : public Input {
 public:
