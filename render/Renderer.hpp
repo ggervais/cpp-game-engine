@@ -24,9 +24,9 @@ public:
     bool isWindowOpened();
     void render();
     
-    virtual VertexBuffer* createVertexBuffer() = 0;
-    virtual void updateVertexBufferData(VertexBuffer *buffer) = 0;
-    virtual void deleteVertexBuffer(VertexBuffer *buffer) = 0;
+    virtual void createVertexBuffer(VertexBuffer &buffer) = 0;
+    virtual void updateVertexBufferData(VertexBuffer &buffer) = 0;
+    virtual void deleteVertexBuffer(VertexBuffer &buffer) = 0;
     
 protected:
     virtual void updateViewport() = 0;

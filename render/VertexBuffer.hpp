@@ -10,13 +10,15 @@
 
 #include "RendererObject.hpp"
 
-class VertexBuffer : public RendererObject {
+class VertexBuffer {
 public:
     VertexBuffer();
     VertexBuffer(const VertexBuffer& orig);
     virtual ~VertexBuffer();
+    RendererObject *getHandle() const;
+    void setHandle(RendererObject *handle);
 private:
-    
+    RendererObject *handle;
 };
 
 #endif	/* VERTEXBUFFER_HPP */

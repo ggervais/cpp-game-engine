@@ -5,6 +5,7 @@ build/Debug/MinGW-Windows/game/Game.o: game/Game.cpp game/Game.hpp \
  game/../render/../math/../utils/optional.hpp \
  game/../render/../math/Vector3D.hpp game/../render/VertexBuffer.hpp \
  game/../render/RendererObject.hpp game/../timing/Timer.hpp \
+ game/../input/Input.hpp game/../input/GLFWInput.hpp \
  game/../input/Input.hpp
 
 game/Game.hpp:
@@ -26,5 +27,9 @@ game/../render/VertexBuffer.hpp:
 game/../render/RendererObject.hpp:
 
 game/../timing/Timer.hpp:
+
+game/../input/Input.hpp:
+
+game/../input/GLFWInput.hpp:
 
 game/../input/Input.hpp:

@@ -19,11 +19,11 @@ public:
     virtual void repaint() = 0;
     virtual bool isWindowOpened() const = 0;
     virtual bool init();
+    virtual ~Canvas();
     
 protected:
     Canvas(std::string title, int width, int height, bool fullscreen);
     Canvas(const Canvas& orig);
-    virtual ~Canvas();
     
     std::string title;
     

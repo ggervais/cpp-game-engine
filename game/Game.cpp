@@ -6,28 +6,31 @@
  */
 
 #include "Game.hpp"
+#include "../input/GLFWInput.hpp"
 
 Game::Game(Renderer *renderer, Timer *timer, Input *input) :
-        renderer(renderer), timer(timer), input(input), vertexBuffer(NULL)
+        renderer(renderer), timer(timer), input(input)
 {
 }
 
 Game::Game(const Game& orig) :
         renderer(orig.renderer),
         timer(orig.timer),
-        input(orig.input),
-        vertexBuffer(orig.vertexBuffer)
+        input(orig.input)
 {
 }
 
 Game::~Game() {
-    this->renderer->deleteVertexBuffer(this->vertexBuffer);
 }
 
 void Game::init() {
     this->renderer->init();
-    this->vertexBuffer = this->renderer->createVertexBuffer();
-    std::cout << "Game initialized. " << this->vertexBuffer << std::endl;
+    this->renderer->createVertexBuffer(this->vertexBuffer);
+    std::cout << "Game initialized." << std::endl;
+}
+
+void Game::dispose() {
+    this->renderer->deleteVertexBuffer(this->vertexBuffer);
 }
 
 void Game::mainLoop() {
@@ -54,6 +57,6 @@ void Game::mainLoop() {
             this->timer->sleep(sleepTime);
         }
         
-        running = !this->input->isEscapePressed() && this->renderer->isWindowOpened();
+        running = !input->isEscapePressed() && this->renderer->isWindowOpened();
     }
 }

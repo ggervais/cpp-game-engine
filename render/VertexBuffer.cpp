@@ -7,12 +7,22 @@
 
 #include "VertexBuffer.hpp"
 
-VertexBuffer::VertexBuffer() {
+VertexBuffer::VertexBuffer() : handle(NULL) {
+    std::cout << "Creating VertexBuffer" << std::endl;
 }
 
-VertexBuffer::VertexBuffer(const VertexBuffer& orig) {
+VertexBuffer::VertexBuffer(const VertexBuffer& orig) :
+    handle(orig.handle) 
+{
 }
 
 VertexBuffer::~VertexBuffer() {
 }
 
+RendererObject *VertexBuffer::getHandle() const {
+    return this->handle;
+}
+
+void VertexBuffer::setHandle(RendererObject *handle) {
+    this->handle = handle;
+}

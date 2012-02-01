@@ -38,6 +38,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/timing/GLFWTimer.o \
 	${OBJECTDIR}/ui/Canvas.o \
 	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/render/GLRendererObject.o \
 	${OBJECTDIR}/math/Matrix4x4.o \
 	${OBJECTDIR}/input/GLFWInput.o \
 	${OBJECTDIR}/render/Renderer.o \
@@ -45,7 +46,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/input/Input.o \
 	${OBJECTDIR}/timing/Timer.o \
 	${OBJECTDIR}/render/Viewport.o \
-	${OBJECTDIR}/render/GLVertexBuffer.o \
 	${OBJECTDIR}/render/VertexBuffer.o \
 	${OBJECTDIR}/ui/GLFWCanvas.o \
 	${OBJECTDIR}/game/Game.o
@@ -95,6 +95,11 @@ ${OBJECTDIR}/main.o: main.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
 
+${OBJECTDIR}/render/GLRendererObject.o: render/GLRendererObject.cpp 
+	${MKDIR} -p ${OBJECTDIR}/render
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/render/GLRendererObject.o render/GLRendererObject.cpp
+
 ${OBJECTDIR}/math/Matrix4x4.o: math/Matrix4x4.cpp 
 	${MKDIR} -p ${OBJECTDIR}/math
 	${RM} $@.d
@@ -129,11 +134,6 @@ ${OBJECTDIR}/render/Viewport.o: render/Viewport.cpp
 	${MKDIR} -p ${OBJECTDIR}/render
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/render/Viewport.o render/Viewport.cpp
-
-${OBJECTDIR}/render/GLVertexBuffer.o: render/GLVertexBuffer.cpp 
-	${MKDIR} -p ${OBJECTDIR}/render
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/render/GLVertexBuffer.o render/GLVertexBuffer.cpp
 
 ${OBJECTDIR}/render/VertexBuffer.o: render/VertexBuffer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/render

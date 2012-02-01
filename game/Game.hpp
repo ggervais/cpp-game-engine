@@ -18,6 +18,7 @@ public:
     Game(const Game& orig);
     virtual ~Game();
     void init();
+    void dispose();
     void mainLoop();
 private:
     static const int QUANTUM = 17;
@@ -25,7 +26,7 @@ private:
     Renderer *renderer;
     Timer *timer;
     Input *input;
-    VertexBuffer *vertexBuffer;
+    VertexBuffer vertexBuffer;
     
 };
 

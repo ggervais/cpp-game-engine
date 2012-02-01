@@ -7,6 +7,7 @@
 
 #include "GLRenderer.hpp"
 #include "RendererObject.hpp"
+#include "GLRendererObject.hpp"
 
 float rotation;
 
@@ -138,7 +139,7 @@ void GLRenderer::updateViewport() {
     }
 }
 
-VertexBuffer* GLRenderer::createVertexBuffer() {
+void GLRenderer::createVertexBuffer(VertexBuffer &buffer) {
     
     GLuint vboId = 0; // TEMP
     
@@ -148,18 +149,18 @@ VertexBuffer* GLRenderer::createVertexBuffer() {
     //glBufferData(GL_ARRAY_BUFFER, size, 0, GL_STREAM_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
-    VertexBuffer *result = new GLVertexBuffer();
-    result->setValue(&vboId);
+    RendererObject *object = new GLRendererObject();
+    object->setValue(&vboId);
+    buffer.setHandle(object);
     
     std::cout << "Created VBO with id " << vboId << std::endl;
-    
-    return result;
 }
 
 
-void GLRenderer::updateVertexBufferData(VertexBuffer *vertexBuffer) {
+void GLRenderer::updateVertexBufferData(VertexBuffer &buffer) {
     
-    GLuint vboId = *((GLuint *) vertexBuffer->getValue());
+    RendererObject *object = buffer.getHandle();
+    GLuint vboId = *((GLuint*) object->getValue());
     
     std::cout << "VBO id is " << vboId << std::endl;
     
@@ -172,14 +173,16 @@ void GLRenderer::updateVertexBufferData(VertexBuffer *vertexBuffer) {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void GLRenderer::deleteVertexBuffer(VertexBuffer *vertexBuffer) {
-    GLuint vboId = *((GLuint *) vertexBuffer->getValue());
+void GLRenderer::deleteVertexBuffer(VertexBuffer &buffer) {
+    
+    RendererObject *object = buffer.getHandle();
+    GLuint vboId = *((GLuint*) object->getValue());
     
     if (vboId > 0) {
         glDeleteBuffers(1, &vboId);
     }
     
-    delete vertexBuffer;
+    delete object;
     
-    std::cout << "Deleted VBO with id " << vboId << " " << vertexBuffer << std::endl;
+    std::cout << "Deleted VBO with id " << vboId << " " << object << std::endl;
 }

@@ -89,14 +89,22 @@ int main(int argc, char* argv[]) {
     optional<int> value = 10;
     std::cout << "Optional value is " << *value << std::endl;
     
-    GLFWCanvas canvas("Guillaume Gervais' C++ Game Engine", 1440, 900, false);
-    GLRenderer renderer(&canvas);
-    GLFWTimer timer(0.017);
-    GLFWInput input;
+    Canvas * canvas = new GLFWCanvas("Guillaume Gervais' C++ Game Engine", 1440, 900, false);
+    Renderer * renderer = new GLRenderer(canvas);
+    Timer *timer = new GLFWTimer(0.017);
+    Input * input = new GLFWInput();
    
-    Game game(&renderer, &timer, &input);
+    Game game(renderer, timer, input);
     game.init();
     game.mainLoop();
+    game.dispose();
+    
+    delete input;
+    delete timer;
+    delete canvas;
+    delete renderer;
+    
+    std::cout << "Deleted all objects." << std::endl;
     
     return EXIT_SUCCESS;
 }

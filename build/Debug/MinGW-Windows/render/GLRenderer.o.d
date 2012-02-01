@@ -3,7 +3,7 @@ build/Debug/MinGW-Windows/render/GLRenderer.o: render/GLRenderer.cpp \
  render/../ui/../render/Viewport.hpp render/../math/Matrix4x4.hpp \
  render/../math/../utils/optional.hpp render/../math/Vector3D.hpp \
  render/VertexBuffer.hpp render/RendererObject.hpp \
- render/GLVertexBuffer.hpp
+ render/GLRendererObject.hpp
 
 render/GLRenderer.hpp:
 
@@ -23,4 +23,4 @@ render/VertexBuffer.hpp:
 
 render/RendererObject.hpp:
 
-render/GLVertexBuffer.hpp:
+render/GLRendererObject.hpp:
