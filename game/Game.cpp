@@ -26,6 +26,32 @@ Game::~Game() {
 void Game::init() {
     this->renderer->init();
     this->renderer->createVertexBuffer(this->vertexBuffer);
+    
+    Vertex v;
+    v.x = 0.5;
+    v.y = 0.5;
+    v.z = 0;
+    v.r = 1.0;
+    v.g = 0.0;
+    v.b = 0.0;
+    v.a = 1.0;
+    this->vertexBuffer.addVertex(v);
+    
+    v.x = 0.0;
+    v.y = 0.0;
+    v.r = 0.0;
+    v.g = 1.0;
+    this->vertexBuffer.addVertex(v);
+    
+    v.x = 1.0;
+    v.g = 0.0;
+    v.b = 1.0;
+    this->vertexBuffer.addVertex(v);
+    
+    this->vertexBuffer.addIndex(0);
+    this->vertexBuffer.addIndex(1);
+    this->vertexBuffer.addIndex(2);
+    
     std::cout << "Game initialized." << std::endl;
 }
 
@@ -47,9 +73,8 @@ void Game::mainLoop() {
         double timeDifference = currentTime - previousTime;
         
         if (timeDifference > quantum) {
-            std::cout << "Will now update VBO data." << std::endl;
             this->renderer->updateVertexBufferData(this->vertexBuffer);
-            this->renderer->render();
+            this->renderer->render(vertexBuffer);
             
             previousTime = currentTime;
         } else {

@@ -9,6 +9,7 @@
 #define	RENDEREROBJECT_HPP
 
 #include <iostream>
+#include <vector>
 
 class RendererObject {
 public:

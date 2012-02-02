@@ -52,13 +52,14 @@ bool GLRenderer::init() {
         }
     }
     
+    
     std::cout << "GLEW version: " << glewVersion << std::endl;
     std::cout << "OpenGL version: " << glVersion << std::endl;
     std::cout << "GLSL version: " << glslVersion << std::endl;
     std::cout << "OpenGL extensions: " << std::endl << extensionString << std::endl;
 }
 
-void GLRenderer::doRender() {
+void GLRenderer::doRender(VertexBuffer &vertexBuffer) {
     
     float PI = 3.14159265;
     
@@ -88,7 +89,8 @@ void GLRenderer::doRender() {
     
     glMatrixMode(GL_PROJECTION);
     glLoadMatrixf(projection);
-    Matrix4x4 viewMatrix = Matrix4x4::createView(Vector3D(5, rotation / 10, 10), Vector3D(0, 0, 0), Vector3D(0, 1, 0));
+    
+    Matrix4x4 viewMatrix = Matrix4x4::createView(Vector3D(5, 10, 10), Vector3D(0, 0, 0), Vector3D(0, 1, 0));
     Matrix4x4 viewCol = Matrix4x4::createColumnMajor(viewMatrix);
     const float *view = viewCol.get();
     
@@ -113,11 +115,37 @@ void GLRenderer::doRender() {
     
     glEnd();
     
+    RendererObject *vbo = vertexBuffer.getVBOHandle();
+    GLuint vboId = *((GLuint*) vbo->getValue());
+    
+    RendererObject *ibo = vertexBuffer.getIBOHandle();
+    GLuint iboId = *((GLuint*) ibo->getValue());
+    
+    std::cout << "Renderer VBO ID: " << vboId << ", Size " << vertexBuffer.getVBOSize() << std::endl; 
+    std::cout << "Renderer IBO ID: " << iboId << ", Size " << vertexBuffer.getIBOSize() << std::endl;
+    
+    
+    glEnableClientState(GL_COLOR_ARRAY);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, vboId);
+    
+    glVertexPointer(3, GL_FLOAT, sizeof(Vertex), BUFFER_OFFSET(0));
+    glColorPointer(4, GL_FLOAT, sizeof(Vertex), BUFFER_OFFSET(sizeof(float) * 3));
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
+    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, NULL);
+    
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_COLOR_ARRAY);
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     /*gluPerspective(45, aspectRatio, 0.0001, 1000);
     gluLookAt(0, 0, -2, 0, 0, 0, 0, 1, 0);*/
             
-    
+    /*
     glPushMatrix();
     glRotatef(rotation, 0, 1, 0);
     glColor4f(1,1,1,1);
@@ -128,7 +156,7 @@ void GLRenderer::doRender() {
     glVertex3f(0.5, 0.5, 0);
     glEnd();
     
-    glPopMatrix();
+    glPopMatrix();*/
 }
 
 void GLRenderer::updateViewport() {
@@ -141,48 +169,90 @@ void GLRenderer::updateViewport() {
 
 void GLRenderer::createVertexBuffer(VertexBuffer &buffer) {
     
-    GLuint vboId = 0; // TEMP
+    GLuint vboId = 0;
     
     glGenBuffers(1, &vboId);
     glBindBuffer(GL_ARRAY_BUFFER, vboId);
-    
-    //glBufferData(GL_ARRAY_BUFFER, size, 0, GL_STREAM_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, buffer.getVBOSize() * sizeof(Vertex), NULL, GL_STREAM_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
-    RendererObject *object = new GLRendererObject();
-    object->setValue(&vboId);
-    buffer.setHandle(object);
+    RendererObject *vbo = new GLRendererObject();
+    vbo->setValue(&vboId);
+    buffer.setVBOHandle(vbo);
     
-    std::cout << "Created VBO with id " << vboId << std::endl;
+    
+    GLuint iboId = 0;
+    glGenBuffers(1, &iboId);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer.getIBOSize() * sizeof(unsigned int), NULL, GL_STREAM_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    
+    RendererObject *ibo = new GLRendererObject();
+    ibo->setValue(&iboId);
+    buffer.setIBOHandle(ibo);
+    
+    std::cout << "Created VBO with id " << vboId << " and IBO with id " << iboId << std::endl;
 }
 
 
 void GLRenderer::updateVertexBufferData(VertexBuffer &buffer) {
     
-    RendererObject *object = buffer.getHandle();
-    GLuint vboId = *((GLuint*) object->getValue());
-    
-    std::cout << "VBO id is " << vboId << std::endl;
-    
-    if (vboId > 0) {
-        glGenBuffers(1, &vboId);
-        glBindBuffer(GL_ARRAY_BUFFER, vboId);
-        //glBufferSubData(vboId, 0, size, array);
-    
+    if (buffer.isVBODirty() && buffer.getVBOSize() > 0) {
+        RendererObject *object = buffer.getVBOHandle();
+        GLuint vboId = *((GLuint*) object->getValue());
+
+        if (vboId > 0) {
+            std::cout << "VBO id is " << vboId << std::endl;
+            glBindBuffer(GL_ARRAY_BUFFER, vboId);
+            glBufferData(GL_ARRAY_BUFFER, buffer.getVBOSize() * sizeof(Vertex), buffer.getVBOData(), GL_STREAM_DRAW);
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
+        }
+        buffer.setVBODirty(false);
     }
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
+    if (buffer.isIBODirty() && buffer.getIBOSize() > 0) {
+        RendererObject *object = buffer.getIBOHandle();
+        GLuint iboId = *((GLuint*) object->getValue());
+
+        
+        if (iboId > 0) {
+            std::cout << "IBO id is " << iboId << ", size " << buffer.getIBOSize() * sizeof(unsigned int) << std::endl;
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer.getIBOSize() * sizeof(unsigned int), buffer.getIBOData(), GL_STREAM_DRAW);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        }
+        buffer.setIBODirty(false);
+    }
 }
 
 void GLRenderer::deleteVertexBuffer(VertexBuffer &buffer) {
     
-    RendererObject *object = buffer.getHandle();
-    GLuint vboId = *((GLuint*) object->getValue());
+    
+    // Delete vertex buffer.
+    RendererObject *vboObject = buffer.getVBOHandle();
+    GLuint vboId = *((GLuint*) vboObject->getValue());
+    
+    std::cout << "Deleting VBO with id " << vboId << std::endl;
     
     if (vboId > 0) {
         glDeleteBuffers(1, &vboId);
     }
     
-    delete object;
+    std::cout << "VBO Buffer deleted on GPU";
     
-    std::cout << "Deleted VBO with id " << vboId << " " << object << std::endl;
+    delete vboObject;
+    
+    // Delete index buffer.
+    RendererObject *iboObject = buffer.getIBOHandle();
+    GLuint iboId = *((GLuint*) iboObject->getValue());
+    
+    std::cout << "Deleting IBO with id " << iboId << std::endl;
+    
+    if (iboId > 0) {
+        glDeleteBuffers(1, &iboId);
+    }
+    
+    delete iboObject;
+    
+    std::cout << "Deleted VBO with id " << vboId << " and IBO with id " << iboId << std::endl;
 }

@@ -21,13 +21,11 @@ Renderer::~Renderer() {}
 
 bool Renderer::init() {}
 
-void Renderer::render() {
-    std::cout << "Before render() (Renderer.hpp)." << std::endl;
+void Renderer::render(VertexBuffer &vertexBuffer) {
     updateViewport();
-    doRender();
+    doRender(vertexBuffer);
     canvas->centerCursor();
     canvas->repaint();
-    std::cout << "After render() (Renderer.hpp)." << std::endl;
     
 }
 

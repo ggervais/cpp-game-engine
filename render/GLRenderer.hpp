@@ -11,6 +11,8 @@
 #include <GL/glew.h>
 #include "Renderer.hpp"
 
+#define BUFFER_OFFSET(a) ((char*)NULL + (a))
+
 class GLRenderer : public Renderer {
 public:
     GLRenderer(Canvas *canvas);
@@ -22,7 +24,7 @@ public:
     void deleteVertexBuffer(VertexBuffer &buffer);
 private:
     void updateViewport();
-    void doRender();
+    void doRender(VertexBuffer &vertexBuffer);
 };
 
 #endif	/* GLRENDERER_HPP */

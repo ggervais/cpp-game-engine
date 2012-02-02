@@ -22,7 +22,7 @@ public:
     virtual ~Renderer();
     virtual bool init();
     bool isWindowOpened();
-    void render();
+    void render(VertexBuffer &vertexBuffer);
     
     virtual void createVertexBuffer(VertexBuffer &buffer) = 0;
     virtual void updateVertexBufferData(VertexBuffer &buffer) = 0;
@@ -30,7 +30,7 @@ public:
     
 protected:
     virtual void updateViewport() = 0;
-    virtual void doRender() = 0;
+    virtual void doRender(VertexBuffer &vertexBuffer) = 0;
     Canvas *canvas;
     
 };
