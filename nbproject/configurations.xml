@@ -29,6 +29,10 @@
         <itemPath>math/Vector3D.hpp</itemPath>
       </logicalFolder>
       <logicalFolder name="render" displayName="render" projectFiles="true">
+        <logicalFolder name="f1" displayName="scenegraph" projectFiles="true">
+          <itemPath>render/scenegraph/SceneNode.cpp</itemPath>
+          <itemPath>render/scenegraph/SceneNode.hpp</itemPath>
+        </logicalFolder>
         <itemPath>render/GLRenderer.cpp</itemPath>
         <itemPath>render/GLRenderer.hpp</itemPath>
         <itemPath>render/GLRendererObject.cpp</itemPath>

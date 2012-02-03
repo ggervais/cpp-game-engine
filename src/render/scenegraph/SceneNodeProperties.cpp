@@ -1,0 +1,31 @@
+#include "SceneNodeProperties.hpp"
+
+
+SceneNodeProperties::SceneNodeProperties(void) {}
+SceneNodeProperties::~SceneNodeProperties(void) {}
+
+Matrix4x4 const &SceneNodeProperties::getToWorldMatrix() const {
+    return this->toWorld;
+}
+
+Matrix4x4 const &SceneNodeProperties::getFromWorldMatrix() const {
+    return this->fromWorld;
+}
+
+void SceneNodeProperties::transform(Matrix4x4 *toWorld, Matrix4x4 *fromWorld) const {
+    if (toWorld) {
+        *toWorld = this->toWorld;
+    }
+
+    if (fromWorld) {
+        *fromWorld = this->fromWorld;
+    }
+}
+
+std::string SceneNodeProperties::getName() const {
+    return this->name;
+}
+
+float SceneNodeProperties::getRadius() const {
+    return this->radius;
+}
