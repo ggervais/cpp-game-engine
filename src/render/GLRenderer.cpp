@@ -56,7 +56,7 @@ bool GLRenderer::init() {
     std::cout << "GLEW version: " << glewVersion << std::endl;
     std::cout << "OpenGL version: " << glVersion << std::endl;
     std::cout << "GLSL version: " << glslVersion << std::endl;
-    std::cout << "OpenGL extensions: " << std::endl << extensionString << std::endl;
+   // std::cout << "OpenGL extensions: " << std::endl << extensionString << std::endl;
 
 	return true;
 }

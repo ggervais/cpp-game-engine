@@ -369,3 +369,13 @@ std::ostream &operator<<(std::ostream &out, const Matrix4x4 &matrix) {
     return out;
 }
 
+Vector3D Matrix4x4::getPosition() const {
+	Vector3D result;
+
+	result.x(get(0, 2));
+	result.y(get(1, 2));
+	result.z(get(2, 2));
+
+	return result;
+}
+

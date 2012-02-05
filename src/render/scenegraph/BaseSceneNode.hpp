@@ -3,7 +3,6 @@
 #define	BASESCENENODE_HPP
 
 #include "SceneNode.hpp"
-#include "SceneNodeProperties.hpp"
 #include <assert.h>
 
 typedef std::vector<SceneNode*> SceneNodeList;
@@ -15,14 +14,20 @@ class BaseSceneNode : public SceneNode
 public:
     BaseSceneNode(std::string name, const Matrix4x4 *toMatrix, const Matrix4x4 *fromMatrix = NULL);
     ~BaseSceneNode();
+
     virtual void setTransform(const Matrix4x4 *toMatrix, const Matrix4x4 *fromMatrix);
-    virtual const SceneNodeProperties* const get() const;
+    
     void setRadius(float radius);
     void setEffect(Effect *effect);
 
-    virtual void preRender(Scene *scene, Renderer *renderer);
-    virtual void postRender(Scene *scene, Renderer *renderer);
+	virtual const SceneNodeProperties* const get() const;
+    virtual void preRender(Scene *scene);
+    virtual void postRender(Scene *scene);
     virtual void update(Scene *scene, double time);
+	virtual void render(Scene *scene);
+    virtual void renderChildren(Scene *scene);
+	virtual void addChild(SceneNode *child);
+	virtual bool isVisible(Scene *scene) const;
 
 
 protected:

@@ -43,8 +43,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/input/GLFWInput.o \
 	${OBJECTDIR}/render/Renderer.o \
 	${OBJECTDIR}/math/Vector3D.o \
-	${OBJECTDIR}/input/Input.o \
 	${OBJECTDIR}/timing/Timer.o \
+	${OBJECTDIR}/input/Input.o \
+	${OBJECTDIR}/render/scenegraph/SceneNode.o \
 	${OBJECTDIR}/render/Viewport.o \
 	${OBJECTDIR}/render/VertexBuffer.o \
 	${OBJECTDIR}/ui/GLFWCanvas.o \
@@ -120,15 +121,20 @@ ${OBJECTDIR}/math/Vector3D.o: math/Vector3D.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/math/Vector3D.o math/Vector3D.cpp
 
+${OBJECTDIR}/timing/Timer.o: timing/Timer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/timing
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/timing/Timer.o timing/Timer.cpp
+
 ${OBJECTDIR}/input/Input.o: input/Input.cpp 
 	${MKDIR} -p ${OBJECTDIR}/input
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/input/Input.o input/Input.cpp
 
-${OBJECTDIR}/timing/Timer.o: timing/Timer.cpp 
-	${MKDIR} -p ${OBJECTDIR}/timing
+${OBJECTDIR}/render/scenegraph/SceneNode.o: render/scenegraph/SceneNode.cpp 
+	${MKDIR} -p ${OBJECTDIR}/render/scenegraph
 	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/timing/Timer.o timing/Timer.cpp
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/render/scenegraph/SceneNode.o render/scenegraph/SceneNode.cpp
 
 ${OBJECTDIR}/render/Viewport.o: render/Viewport.cpp 
 	${MKDIR} -p ${OBJECTDIR}/render

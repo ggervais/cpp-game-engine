@@ -5,7 +5,6 @@
 #include <iostream>
 #include <string>
 
-#include "SceneNode.hpp"
 #include "../Effect.hpp"
 #include "../../math/Matrix4x4.hpp"
 

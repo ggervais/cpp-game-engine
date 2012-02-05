@@ -36,6 +36,8 @@ public:
     Matrix4x4 operator*(const Matrix4x4 &b) const;
     friend std::ostream &operator<<(std::ostream &out, const Matrix4x4 &matrix);
     Matrix4x4& operator=(const Matrix4x4 &other);
+	
+	Vector3D getPosition() const;
 private:
     float m[16];
 };
