@@ -1,7 +1,8 @@
 #include "BaseSceneNode.hpp"
 
 
-BaseSceneNode::BaseSceneNode(std::string name, const Matrix4x4 *toMatrix, const Matrix4x4 *fromMatrix) {
+BaseSceneNode::BaseSceneNode(std::string name, const Matrix4x4 *toMatrix, const Matrix4x4 *fromMatrix) :
+	  parent(NULL) {
     this->parent = NULL;
     this->properties.name = name;
     setTransform(toMatrix, fromMatrix);
@@ -32,7 +33,16 @@ void BaseSceneNode::setRadius(float radius) {
 }
 
 void BaseSceneNode::setEffect(Effect *effect) {
-    this->properties.effect = effect;
+    
+	this->properties.effect = effect;
+	
+	for (SceneNodeList::iterator it = this->children.begin(); it != this->children.end(); it++) {
+		SceneNode *child = *it;
+		if (!child->get()->effect) {
+			std::cout << "Setting effect for " << child->get()->name << std::endl;
+			child->setEffect(effect);
+		}
+	}
 }
 
 void BaseSceneNode::preRender(Scene *scene) {
@@ -78,16 +88,25 @@ void BaseSceneNode::update(Scene *scene, double time) {
     }
 }
 
+void BaseSceneNode::setParent(SceneNode *parent) {
+	this->parent = parent;
+}
+
 void BaseSceneNode::addChild(SceneNode *child) {
 	std::cout << "Called addChild() for " << this->properties.name << std::endl;
 	this->children.push_back(child);
+	child->setParent(this);
+
 	Vector3D childPosition = child->get()->getToWorldMatrix().getPosition();
 	Vector3D direction = childPosition - this->properties.toWorld.getPosition();
 	float newRadius = direction.length() + child->get()->getRadius();
 	if (newRadius > this->properties.radius) {
 		this->properties.radius = newRadius;
 	}
-
+	if (this->properties.effect && !child->get()->effect) {
+		std::cout << "Adding effect for " << child->get()->name << std::endl;
+		child->setEffect(this->properties.effect);
+	}
 }
 
 bool BaseSceneNode::isVisible(Scene *scene) const {

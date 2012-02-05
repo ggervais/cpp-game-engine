@@ -24,6 +24,8 @@ public:
     virtual bool isVisible(Scene *scene) const = 0;
     virtual void addChild(SceneNode *child) = 0;
 	virtual const SceneNodeProperties* const get() const = 0;
+	virtual void setEffect(Effect *effect) = 0;
+	virtual void setParent(SceneNode *parent) = 0;
 };
 
 #endif	/* SCENENODE_HPP */

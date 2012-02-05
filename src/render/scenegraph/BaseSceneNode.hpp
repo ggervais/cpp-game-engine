@@ -28,11 +28,12 @@ public:
     virtual void renderChildren(Scene *scene);
 	virtual void addChild(SceneNode *child);
 	virtual bool isVisible(Scene *scene) const;
+	virtual void setParent(SceneNode *parent);
 
 
 protected:
     SceneNodeList children;
-    BaseSceneNode *parent;
+    SceneNode *parent;
     SceneNodeProperties properties;
 };
 

@@ -1,8 +1,11 @@
 #include "SceneNodeProperties.hpp"
 
 
-SceneNodeProperties::SceneNodeProperties(void) {}
-SceneNodeProperties::~SceneNodeProperties(void) {}
+SceneNodeProperties::SceneNodeProperties() :
+	effect(NULL) 
+{}
+
+SceneNodeProperties::~SceneNodeProperties() {}
 
 Matrix4x4 const &SceneNodeProperties::getToWorldMatrix() const {
     return this->toWorld;

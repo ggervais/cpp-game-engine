@@ -104,6 +104,10 @@ int main(int argc, char* argv[]) {
 	BaseSceneNode node2("Node2", &identity);
 	BaseSceneNode node3("Node3", &identity);
 	BaseSceneNode node4("Node4", &identity);
+	
+	Effect effect;
+	node2.setEffect(&effect);
+	
 	scene.addChild(&node1);
 	scene.addChild(&node2);
 	node2.addChild(&node3);
