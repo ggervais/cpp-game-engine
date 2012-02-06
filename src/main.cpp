@@ -23,6 +23,7 @@
 #include "math/Matrix4x4.hpp"
 #include "render/scenegraph/Scene.hpp"
 #include "render/scenegraph/BaseSceneNode.hpp"
+#include "render/GLShader.hpp"
 
 #ifdef __APPLE__
 #  include <GLUT/glut.h>
@@ -108,6 +109,7 @@ int main(int argc, char* argv[]) {
 	Effect effect;
 	node2.setEffect(&effect);
 	
+
 	scene.addChild(&node1);
 	scene.addChild(&node2);
 	node2.addChild(&node3);
@@ -120,19 +122,22 @@ int main(int argc, char* argv[]) {
 	std::cout << std::endl;
 	std::cout << std::endl;
 
+    
+    /*Shader *shader = new GLShader(VERTEX_SHADER, "hello-gl.v.glsl");
+    shader->compile();
+    delete shader;*/
+
    
     Game game(renderer, timer, input);
     game.init();
     game.mainLoop();
     game.dispose();
-    
     delete input;
     delete timer;
     delete canvas;
     delete renderer;
     
     std::cout << "Deleted all objects." << std::endl;
-
 	std::string t;
 	std::cin >> t;
 
