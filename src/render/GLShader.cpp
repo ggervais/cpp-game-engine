@@ -5,22 +5,21 @@ GLShader::GLShader(ShaderType type, std::string filename) :
 {}
 
 GLShader::~GLShader() {
+    std::cout << "Deleting shader " << this->id << "." << std::endl;
+    glDeleteShader(this->id);
 }
 
-bool GLShader::compile() {
+char *GLShader::getErrorLog() const {
+    int infoLogLength = 0;
+    glGetShaderiv(this->id, GL_INFO_LOG_LENGTH, &infoLogLength);
+        
+    char *log = (char *) malloc(infoLogLength * sizeof(char));
+    glGetShaderInfoLog(this->id, infoLogLength, NULL, log);    
 
-    bool success = true;
+    return log;
+}
 
-    std::ifstream file(this->filename);
-    std::string line;
-    std::string shaderSource;
-
-    while(std::getline(file, line)) {
-        shaderSource.append(line).append("\n");
-    }
-
-    std::cout << shaderSource << std::endl;
-    
+GLenum GLShader::getShaderType() const {
     GLenum glShaderType;
     if (this->type == VERTEX_SHADER) {
         glShaderType = GL_VERTEX_SHADER;
@@ -29,11 +28,26 @@ bool GLShader::compile() {
     } else {
         glShaderType = GL_FRAGMENT_SHADER;
     }
+    return glShaderType;
+}
+
+bool GLShader::compile() {
+
+    bool success = true;
+
+    std::string shaderSource = loadSource();
+
+    if (shaderSource.length() == 0) {
+        return false;
+    }
+    
+    GLenum glShaderType = getShaderType();
 
     const char *source = shaderSource.c_str();
     const GLint length = shaderSource.length();
 
     this->id = glCreateShader(glShaderType);
+    
     glShaderSource(this->id, 1, &source, &length); 
 
     glCompileShader(this->id);
@@ -45,18 +59,23 @@ bool GLShader::compile() {
         
         success = false;
 
-        int infoLogLength = 0;
-        glGetShaderiv(this->id, GL_INFO_LOG_LENGTH, &infoLogLength);
+        char *errorLog = getErrorLog();
         
-        char *log = (char *) malloc(infoLogLength * sizeof(char));
-        glGetShaderInfoLog(this->id, infoLogLength, NULL, log);
+        std::cerr << "Shader compilation failed: " << std::endl;
+        std::cerr << errorLog << std::endl;
         
-        std::cout << log << std::endl;
-        
-        free(log);
+        free(errorLog);
 
     }
 
 
     return success;
+}
+
+void* GLShader::getValue() const {
+    return (void *) &this->id;
+}
+
+void GLShader::setValue(void *value) {
+    this->id = *((GLuint *) value);
 }

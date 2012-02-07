@@ -260,3 +260,20 @@ void GLRenderer::deleteVertexBuffer(VertexBuffer &buffer) {
     
     std::cout << "Deleted VBO with id " << vboId << " and IBO with id " << iboId << std::endl;
 }
+
+
+Shader *GLRenderer::createShader(ShaderType type, std::string filename) {
+    return new GLShader(type, filename);
+}
+
+void GLRenderer::deleteShader(Shader *shader) {
+    delete shader;
+}
+
+Program *GLRenderer::createProgram(Shader *vertexShader, Shader *fragmentShader) {
+    return new GLProgram(vertexShader, fragmentShader);
+}
+
+void GLRenderer::deleteProgram(Program *program) {
+    delete program;
+}

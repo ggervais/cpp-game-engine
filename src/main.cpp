@@ -24,6 +24,7 @@
 #include "render/scenegraph/Scene.hpp"
 #include "render/scenegraph/BaseSceneNode.hpp"
 #include "render/GLShader.hpp"
+#include "render/GLProgram.hpp"
 
 #ifdef __APPLE__
 #  include <GLUT/glut.h>
@@ -123,15 +124,31 @@ int main(int argc, char* argv[]) {
 	std::cout << std::endl;
 
     
-    /*Shader *shader = new GLShader(VERTEX_SHADER, "hello-gl.v.glsl");
-    shader->compile();
-    delete shader;*/
 
    
     Game game(renderer, timer, input);
     game.init();
+
+    
+    Shader *vertexShader = renderer->createShader(VERTEX_SHADER, "hello-gl.v.glsl");
+    Shader *fragmentShader = renderer->createShader(FRAGMENT_SHADER, "hello-gl.f.glsl");
+    vertexShader->compile();
+    fragmentShader->compile();
+
+    Program *program = renderer->createProgram(vertexShader, fragmentShader);
+    program->link();
+    program->registerAttribute("color");
+    program->registerUniform("modelViewMatrix");
+    program->registerUniform("projectionMatrix");
+
+    delete program;
+    delete fragmentShader;
+    delete vertexShader;
+    
+
     game.mainLoop();
     game.dispose();
+
     delete input;
     delete timer;
     delete canvas;

@@ -12,6 +12,8 @@
 #include "../ui/Canvas.hpp"
 #include "../math/Matrix4x4.hpp"
 #include "VertexBuffer.hpp"
+#include "Shader.hpp"
+#include "Program.hpp"
 
 const float PI = 3.14159265f;
 
@@ -27,6 +29,12 @@ public:
     virtual void createVertexBuffer(VertexBuffer &buffer) = 0;
     virtual void updateVertexBufferData(VertexBuffer &buffer) = 0;
     virtual void deleteVertexBuffer(VertexBuffer &buffer) = 0;
+
+    virtual Shader *createShader(ShaderType type, std::string filename) = 0;
+    virtual void deleteShader(Shader *shader) = 0;
+ 
+    virtual Program *createProgram(Shader *vertexShader, Shader *fragmentShader) = 0;
+    virtual void deleteProgram(Program *program) = 0;
     
 protected:
     virtual void updateViewport() = 0;
