@@ -30,6 +30,8 @@ public:
 
     Program *createProgram(Shader *vertexShader, Shader *fragmentShader);
     void deleteProgram(Program *program);
+
+    void renderIndexedVBO(VertexBuffer &vertexBuffer);
 private:
     void updateViewport();
     void doRender(VertexBuffer &vertexBuffer);

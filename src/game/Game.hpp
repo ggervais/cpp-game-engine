@@ -11,10 +11,11 @@
 #include "../render/Renderer.hpp"
 #include "../timing/Timer.hpp"
 #include "../input/Input.hpp"
+#include "../render/scenegraph/Scene.hpp"
 
 class Game {
 public:
-    Game(Renderer *renderer, Timer *timer, Input *input);
+    Game(Scene *scene, Renderer *renderer, Timer *timer, Input *input);
     Game(const Game& orig);
     virtual ~Game();
     void init();
@@ -23,6 +24,7 @@ public:
 private:
     static const int QUANTUM = 17;
     
+    Scene *scene;
     Renderer *renderer;
     Timer *timer;
     Input *input;

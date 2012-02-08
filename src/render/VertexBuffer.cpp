@@ -76,3 +76,7 @@ Vertex *VertexBuffer::getVBOData() {
 unsigned int *VertexBuffer::getIBOData() {
     return &this->indices[0];
 }
+
+bool VertexBuffer::isInitialized() {
+    return this->iboHandle != NULL && this->vboHandle != NULL;
+}

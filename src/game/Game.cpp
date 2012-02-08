@@ -8,8 +8,8 @@
 #include "Game.hpp"
 #include "../input/GLFWInput.hpp"
 
-Game::Game(Renderer *renderer, Timer *timer, Input *input) :
-        renderer(renderer), timer(timer), input(input)
+Game::Game(Scene *scene, Renderer *renderer, Timer *timer, Input *input) :
+        scene(scene), renderer(renderer), timer(timer), input(input)
 {
 }
 
@@ -74,7 +74,10 @@ void Game::mainLoop() {
         
         if (timeDifference > quantum) {
             this->renderer->updateVertexBufferData(this->vertexBuffer);
-            this->renderer->render(vertexBuffer);
+            this->scene->update(currentTime);
+            this->scene->render();
+
+            this->renderer->render(this->vertexBuffer);
             
             previousTime = currentTime;
         } else {

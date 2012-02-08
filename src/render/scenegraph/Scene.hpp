@@ -23,12 +23,14 @@ public:
     ~Scene(void);
     void pushAndSetMatrix(Matrix4x4 &matrix);
     void popMatrix();
+    Matrix4x4 getTopMatrix();
 	Effect *getEffect(std::string name);
 	void setCamera(CameraNode *camera);
     CameraNode *getCamera();
 	void addChild(SceneNode *child);
 	void render();
 	void update(double time);
+    Renderer *getRenderer() const;
 
 protected:
 	CameraNode *camera;

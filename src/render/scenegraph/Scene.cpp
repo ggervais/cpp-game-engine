@@ -21,12 +21,15 @@ void Scene::pushAndSetMatrix(Matrix4x4 &matrix) {
 
 	Matrix4x4 multiplied = topMatrix * matrix;
 	this->matrixStack.push(multiplied);
-	std::cout << "pushAndSetMatrix() called, nb. matrices=" << this->matrixStack.size() << std::endl;
 }
 
 void Scene::popMatrix() {
 	this->matrixStack.pop();
-	std::cout << "popMatrix() called, nb. matrices=" << this->matrixStack.size() << std::endl;
+}
+
+Matrix4x4 Scene::getTopMatrix() {
+    return this->matrixStack.top();
+    
 }
 
 Effect* Scene::getEffect(std::string name) {
@@ -46,7 +49,6 @@ void Scene::addChild(SceneNode *child) {
 }
 
 void Scene::update(double time) {
-	std::cout << "Rendering scene at time=" << time << std::endl;
 	this->root->update(this, time);
 }
 
@@ -55,4 +57,8 @@ void Scene::render() {
 	this->root->render(this);
 	this->root->renderChildren(this);
 	this->root->postRender(this);
+}
+
+Renderer *Scene::getRenderer() const {
+    return this->renderer;
 }

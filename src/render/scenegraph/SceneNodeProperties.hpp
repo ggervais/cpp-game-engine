@@ -20,6 +20,8 @@ public:
     void transform(Matrix4x4 *toWorld, Matrix4x4 *fromWorld) const;
     std::string getName() const;
     float getRadius() const;
+    Effect const * const getEffect() const;
+    void setEffect(Effect *effect);
 
 private:
     std::string name;       // The name of the node.

@@ -15,6 +15,15 @@ Matrix4x4 const &SceneNodeProperties::getFromWorldMatrix() const {
     return this->fromWorld;
 }
 
+Effect const * const SceneNodeProperties::getEffect() const {
+    return this->effect;
+}
+
+
+void SceneNodeProperties::setEffect(Effect *effect) {
+    this->effect = effect;
+}
+
 void SceneNodeProperties::transform(Matrix4x4 *toWorld, Matrix4x4 *fromWorld) const {
     if (toWorld) {
         *toWorld = this->toWorld;

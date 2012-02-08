@@ -25,7 +25,9 @@ public:
     
     void addVertex(Vertex v);
     void addIndex(unsigned int i);
-    
+   
+    bool isInitialized();
+
     int getVBOSize();
     int getIBOSize();
     

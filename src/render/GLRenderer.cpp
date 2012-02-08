@@ -61,8 +61,32 @@ bool GLRenderer::init() {
 	return true;
 }
 
+void GLRenderer::renderIndexedVBO(VertexBuffer &vertexBuffer) {
+    
+    // TODO put this code somewhere else!
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClearColor(0, 0, 0, 1);
+
+    RendererObject *vbo = vertexBuffer.getVBOHandle();
+    GLuint vboId = *((GLuint*) vbo->getValue());
+    
+    RendererObject *ibo = vertexBuffer.getIBOHandle();
+    GLuint iboId = *((GLuint*) ibo->getValue());
+
+    GLint currentlyBoundVBO = 0;
+    glGetIntegerv(GL_ARRAY_BUFFER_BINDING, &currentlyBoundVBO);
+
+    if (currentlyBoundVBO != vboId) {
+        glBindBuffer(GL_ARRAY_BUFFER, vboId);
+    }
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
+    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, NULL);
+    
+}
+
 void GLRenderer::doRender(VertexBuffer &vertexBuffer) {
     
+    /*
     float PI = 3.14159265f;
     
     rotation += 1;
@@ -121,7 +145,7 @@ void GLRenderer::doRender(VertexBuffer &vertexBuffer) {
     GLuint vboId = *((GLuint*) vbo->getValue());
     
     RendererObject *ibo = vertexBuffer.getIBOHandle();
-    GLuint iboId = *((GLuint*) ibo->getValue());
+    GLuint iboId = *((GLuint*) ibo->getValue());    
     
     std::cout << "Renderer VBO ID: " << vboId << ", Size " << vertexBuffer.getVBOSize() << std::endl; 
     std::cout << "Renderer IBO ID: " << iboId << ", Size " << vertexBuffer.getIBOSize() << std::endl;
@@ -145,7 +169,7 @@ void GLRenderer::doRender(VertexBuffer &vertexBuffer) {
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    
+    */
     /*gluPerspective(45, aspectRatio, 0.0001, 1000);
     gluLookAt(0, 0, -2, 0, 0, 0, 0, 1, 0);*/
             

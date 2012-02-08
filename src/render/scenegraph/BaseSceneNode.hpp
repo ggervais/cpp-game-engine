@@ -15,7 +15,7 @@ public:
     BaseSceneNode(std::string name, const Matrix4x4 *toMatrix, const Matrix4x4 *fromMatrix = NULL);
     ~BaseSceneNode();
 
-    virtual void setTransform(const Matrix4x4 *toMatrix, const Matrix4x4 *fromMatrix);
+    virtual void setTransform(const Matrix4x4 *toMatrix, const Matrix4x4 *fromMatrix = NULL);
     
     void setRadius(float radius);
     void setEffect(Effect *effect);

@@ -16,7 +16,6 @@ GLFWInput::~GLFWInput() {
 }
 
 bool GLFWInput::isEscapePressed() const {
-	std::cout << "Is Escape Pressed: " << glfwGetKey(GLFW_KEY_ESC) << std::endl;
     return glfwGetKey(GLFW_KEY_ESC) == 1;
 }
 

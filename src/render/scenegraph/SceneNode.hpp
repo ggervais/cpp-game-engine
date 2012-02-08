@@ -11,6 +11,7 @@
 
 #include "Scene.hpp"
 #include "SceneNodeProperties.hpp"
+#include "../VertexBuffer.hpp"
 
 class Scene;
 
