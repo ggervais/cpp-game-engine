@@ -58,6 +58,7 @@ int main(int argc, char* argv[]) {
     v.x = 0.5;
     v.y = 0.5;
     v.z = 0;
+    v.w = 1;
     v.r = 1.0;
     v.g = 0.0;
     v.b = 0.0;

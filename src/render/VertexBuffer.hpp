@@ -11,6 +11,14 @@
 #include "RendererObject.hpp"
 #include "vertex.hpp"
 
+enum VertexAttributes {
+  POSITION                           = (1<<0),
+  COLOR                              = (1<<2),        
+  NORMAL                             = (1<<3),        
+  TEXCOORDS                          = (1<<4)
+};
+
+
 class VertexBuffer {
 public:
     VertexBuffer();

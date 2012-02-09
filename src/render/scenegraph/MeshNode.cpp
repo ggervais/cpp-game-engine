@@ -44,11 +44,13 @@ void MeshNode::render(Scene *scene) {
     program->setMatrix4x4Uniform("projectionMatrix", projectionMatrix);
     program->setMatrix4x4Uniform("modelViewMatrix", viewMatrix);
 
-    program->enableAttributes(this->vertexBuffer);
+    int attributesFlag = POSITION | COLOR;
+
+    program->enableAttributes(this->vertexBuffer, attributesFlag);
 
     renderer->renderIndexedVBO(this->vertexBuffer);
 
-    program->disableAttributes(this->vertexBuffer);
+    program->disableAttributes(this->vertexBuffer, attributesFlag);
 
     program->deactivate();
 }

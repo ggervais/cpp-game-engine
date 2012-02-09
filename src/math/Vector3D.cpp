@@ -12,19 +12,21 @@ Vector3D::Vector3D()
     v[0] = 0;
     v[1] = 0;
     v[2] = 0;
+    v[3] = 1;
 }
 
-Vector3D::Vector3D(float x, float y, float z)
-{
+Vector3D::Vector3D(float x, float y, float z) {
     v[0] = x;
     v[1] = y;
     v[2] = z;
+    v[3] = 1;
 }
 
 Vector3D::Vector3D(const Vector3D& orig) {
     v[0] = orig.v[0];
     v[1] = orig.v[1];
     v[2] = orig.v[2];
+    v[3] = orig.v[3];
 }
 
 float Vector3D::dot(Vector3D &other) {
@@ -62,6 +64,10 @@ float Vector3D::z() const {
     return v[2];
 }
 
+float Vector3D::w() const {
+    return v[3];
+}
+
 void Vector3D::x(float x) {
     v[0] = x;
 }
@@ -72,6 +78,10 @@ void Vector3D::y(float y) {
 
 void Vector3D::z(float z) {
     v[2] = z;
+}
+
+void Vector3D::w(float w) {
+    v[2] = w;
 }
 
 float *Vector3D::get() {

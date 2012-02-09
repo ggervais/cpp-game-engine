@@ -99,7 +99,7 @@ void GLProgram::disableAttribute(std::string name) {
     glDisableVertexAttribArray(this->attributes[name]);
 }
 
-void GLProgram::enableAttributes(VertexBuffer &vertexBuffer) {
+void GLProgram::enableAttributes(VertexBuffer &vertexBuffer, int vertexAttributes) {
     
     RendererObject *vbo = vertexBuffer.getVBOHandle();
     GLuint vboId = *((GLuint*) vbo->getValue());
@@ -111,20 +111,31 @@ void GLProgram::enableAttributes(VertexBuffer &vertexBuffer) {
         glBindBuffer(GL_ARRAY_BUFFER, vboId);
     }
 
-    glVertexAttribPointer(this->attributes["position"], 3, GL_FLOAT, false, sizeof(Vertex), BUFFER_OFFSET(0));
-    glVertexAttribPointer(this->attributes["color"], 4, GL_FLOAT, false, sizeof(Vertex), BUFFER_OFFSET(sizeof(float) * 3));
-    glEnableVertexAttribArray(this->attributes["position"]);
-    glEnableVertexAttribArray(this->attributes["color"]);
+    if (vertexAttributes & POSITION) {
+        glVertexAttribPointer(this->attributes["position"], 4, GL_FLOAT, false, sizeof(Vertex), BUFFER_OFFSET(0));
+        glEnableVertexAttribArray(this->attributes["position"]);
+    }
+
+    if (vertexAttributes & COLOR) {
+        glVertexAttribPointer(this->attributes["color"], 4, GL_FLOAT, false, sizeof(Vertex), BUFFER_OFFSET(sizeof(float) * 4));
+        glEnableVertexAttribArray(this->attributes["color"]);
+    }
+    
     /*for (std::map<std::string, GLuint>::iterator it = this->attributes.begin(); it != this->attributes.end(); it++) {
         std::string key = (*it).first;
         enableAttribute(key);
     }*/
 }
 
-void GLProgram::disableAttributes(VertexBuffer &vertexBuffer) {
+void GLProgram::disableAttributes(VertexBuffer &vertexBuffer, int vertexAttributes) {
     
-    glDisableVertexAttribArray(this->attributes["color"]);
-    glDisableVertexAttribArray(this->attributes["position"]);
+    if (vertexAttributes & POSITION) {
+        glDisableVertexAttribArray(this->attributes["color"]);
+    }
+
+    if (vertexAttributes & POSITION) {
+        glDisableVertexAttribArray(this->attributes["position"]);
+    }
     /*for (std::map<std::string, GLuint>::iterator it = this->attributes.begin(); it != this->attributes.end(); it++) {
         std::string key = (*it).first;
         disableAttribute(key);

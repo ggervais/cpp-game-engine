@@ -28,8 +28,8 @@ public:
     void enableAttribute(std::string name);
     void disableAttribute(std::string name);
 
-    void enableAttributes(VertexBuffer &vertexBuffer);
-    void disableAttributes(VertexBuffer &vertexBuffer);
+    void enableAttributes(VertexBuffer &vertexBuffer, int vertexAttributes);
+    void disableAttributes(VertexBuffer &vertexBuffer, int vertexAttributes);
 
     void activate();
     void deactivate();

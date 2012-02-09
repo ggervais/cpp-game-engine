@@ -9,7 +9,7 @@
 #define	VERTEX_HPP
 
 struct Vertex {
-    float x, y, z;      // Position.
+    float x, y, z, w;      // Position.
     float r, g, b, a;   // Color.
     float nx, ny, nz;   // Normal.
     float tu, tv;       // Texcoords.

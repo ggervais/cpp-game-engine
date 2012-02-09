@@ -34,10 +34,12 @@ public:
     float x() const;
     float y() const;
     float z() const;
+    float w() const;
     
     void x(float x);
     void y(float y);
     void z(float z);
+    void w(float w);
     
     float *get();
     float dot(Vector3D &other);
@@ -48,7 +50,7 @@ public:
     void normalize();
     Vector3D normalized();
 private:
-    float v[3];
+    float v[4];
 };
 
 #endif	/* VECTOR3D_HPP */
