@@ -1,7 +1,8 @@
 #version 110
 
 uniform mat4 projectionMatrix;
-uniform mat4 modelViewMatrix;
+uniform mat4 viewMatrix;
+uniform mat4 worldMatrix;
 attribute vec4 position;
 attribute vec4 color;
 attribute vec3 normal;
@@ -17,7 +18,8 @@ const vec4 spotPosition = vec4(0.0, 0.0, 0.0, 10000.0);
 
 void main(void) {
 
-    vec4 eyePosition = modelViewMatrix * position;
+	mat4 viewModelMatrix = worldMatrix * viewMatrix;
+    vec4 eyePosition = viewModelMatrix * position;
     vec4 specular = vec4(1.0, 1.0, 0.75, 0.0);
     float shininess = 4.0;
 
@@ -25,7 +27,7 @@ void main(void) {
 
     fragModelViewLightDirection = lightDir;
 
-    fragNormal = (modelViewMatrix * vec4(normal, 0)).xyz;
+    fragNormal = (viewModelMatrix * vec4(normal, 0)).xyz;
     fragTexCoords = texCoords;
     fragPosition = eyePosition.xyz;
     fragSpecular = specular;

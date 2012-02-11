@@ -226,25 +226,25 @@ optional<Matrix4x4> Matrix4x4::inverse() const {
     b43 *= (1 / det);
     b44 *= (1 / det);
     
-    inverse.set(0, 0, b11);
-    inverse.set(0, 1, b12);
-    inverse.set(0, 2, b13);
-    inverse.set(0, 3, b14);
+    result->set(0, 0, b11);
+    result->set(0, 1, b12);
+    result->set(0, 2, b13);
+    result->set(0, 3, b14);
 
-    inverse.set(1, 0, b21);
-    inverse.set(1, 1, b22);
-    inverse.set(1, 2, b23);
-    inverse.set(1, 3, b24);
+    result->set(1, 0, b21);
+    result->set(1, 1, b22);
+    result->set(1, 2, b23);
+    result->set(1, 3, b24);
 
-    inverse.set(2, 0, b31);
-    inverse.set(2, 1, b32);
-    inverse.set(2, 2, b33);
-    inverse.set(2, 3, b34);
+    result->set(2, 0, b31);
+    result->set(2, 1, b32);
+    result->set(2, 2, b33);
+    result->set(2, 3, b34);
 
-    inverse.set(3, 0, b41);
-    inverse.set(3, 1, b42);
-    inverse.set(3, 2, b43);
-    inverse.set(3, 3, b44);
+    result->set(3, 0, b41);
+    result->set(3, 1, b42);
+    result->set(3, 2, b43);
+    result->set(3, 3, b44);
     
     
     return result;

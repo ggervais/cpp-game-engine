@@ -51,8 +51,8 @@ int main(int argc, char* argv[]) {
     // Setup scene graph
 	Effect effect;
 
-	Matrix4x4 identity = Matrix4x4::createIdentity();
-	MeshNode node1("Node1", &identity);
+	Matrix4x4 world = Matrix4x4::createIdentity();
+	MeshNode node1("Node1", &world);
     VertexBuffer &vb = node1.getVertexBuffer();
     Vertex v;
     v.x = 0.5;
@@ -100,7 +100,8 @@ int main(int argc, char* argv[]) {
     program->registerAttribute("normal");
     program->registerAttribute("texCoords");
 
-    program->registerUniform("modelViewMatrix");
+    program->registerUniform("worldMatrix");
+    program->registerUniform("viewMatrix");
     program->registerUniform("projectionMatrix");
 
     effect.setProgram(program);

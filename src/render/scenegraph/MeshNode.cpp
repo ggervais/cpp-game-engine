@@ -37,12 +37,26 @@ void MeshNode::render(Scene *scene) {
     float fov = 45 * PI / 180.0f;
     
     Matrix4x4 projectionMatrix = Matrix4x4::createProjection(fov, aspectRatio, near, far);
-    Matrix4x4 viewMatrix = Matrix4x4::createView(Vector3D(5, 10, 10), Vector3D(0, 0, 0), Vector3D(0, 1, 0));
+    Matrix4x4 viewMatrix = Matrix4x4::createView(Vector3D(0, 0, 1), Vector3D(0, 0, 0), Vector3D(0, 1, 0));
+
+    std::cout << "VIEW MATRIX:" << std::endl;
+    std::cout << viewMatrix << std::endl;
+
+    std::cout << "Inversed view:" << std::endl;
+    optional<Matrix4x4> invert = viewMatrix.inverse();
+    if (invert.valid()) {
+        std::cout << *invert << std::endl;
+    } else {
+        std::cout << "Not inversable!" << std::endl;
+    }
 
     program->activate();
     
+    Matrix4x4 worldMatrix = scene->getTopMatrix();
+
     program->setMatrix4x4Uniform("projectionMatrix", projectionMatrix);
-    program->setMatrix4x4Uniform("modelViewMatrix", viewMatrix);
+    program->setMatrix4x4Uniform("viewMatrix", viewMatrix);
+    program->setMatrix4x4Uniform("worldMatrix", worldMatrix);
 
     int attributesFlag = POSITION | COLOR;
 

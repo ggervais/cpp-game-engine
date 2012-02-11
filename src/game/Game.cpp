@@ -56,6 +56,7 @@ void Game::init() {
     std::cout << "Game initialized." << std::endl;
 }
 
+
 void Game::dispose() {
     this->renderer->deleteVertexBuffer(this->vertexBuffer);
 }
