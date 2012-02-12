@@ -6,13 +6,9 @@
 #include "BaseSceneNode.hpp"
 #include <assert.h>
 
-typedef std::vector<SceneNode*> BaseSceneNodeList;
-
-class CameraNode : public SceneNode
-{
-
+class CameraNode : public BaseSceneNode {
 public:
-    CameraNode(std::string name, Viewport const * const viewport, float fieldOfView, float near, float far, const Matrix4x4 *toMatrix, const Matrix4x4 *fromMatrix = NULL);
+    CameraNode(std::string name, Viewport const * const viewport, float fieldOfView, float nearClip, float farClip, const Matrix4x4 *toMatrix, const Matrix4x4 *fromMatrix = NULL);
     ~CameraNode();
     void update(Scene *scene, double time);
     Matrix4x4 getViewMatrix() const;
@@ -20,8 +16,8 @@ public:
 
 protected:
     float fieldOfView;
-    float near;
-    float far;
+    float nearClip;
+    float farClip;
     // The viewport is read-only!
     Viewport const * const viewport;
     Matrix4x4 viewMatrix;

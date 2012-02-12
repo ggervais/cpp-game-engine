@@ -5,13 +5,12 @@
 #include "../../math/Matrix4x4.hpp"
 #include "../Renderer.hpp"
 #include "../Effect.hpp"
-#include "SceneNode.hpp"
+
 #include <stack>
 #include <map>
 
-class SceneNode;
 class CameraNode;
-class SkyNode;
+class SceneNode;
 
 // TODO put this into a real class named EffectManager.
 typedef std::map<std::string, Effect*> EffectManager;

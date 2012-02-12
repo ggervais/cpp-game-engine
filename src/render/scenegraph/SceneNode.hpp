@@ -27,6 +27,7 @@ public:
 	virtual const SceneNodeProperties* const get() const = 0;
 	virtual void setEffect(Effect *effect) = 0;
 	virtual void setParent(SceneNode *parent) = 0;
+    virtual void setTransform(const Matrix4x4 *toWorld, const Matrix4x4 *fromWorld = NULL) = 0;
 };
 
 #endif	/* SCENENODE_HPP */

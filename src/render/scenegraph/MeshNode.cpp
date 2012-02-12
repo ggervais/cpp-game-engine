@@ -1,4 +1,5 @@
 #include "MeshNode.hpp"
+#include "CameraNode.hpp"
 
 MeshNode::MeshNode(std::string name, const Matrix4x4 *toMatrix, const Matrix4x4 *fromMatrix) 
     : BaseSceneNode(name, toMatrix, fromMatrix) {
@@ -36,7 +37,7 @@ void MeshNode::render(Scene *scene) {
     float far = 1000.0f;
     float fov = 45 * PI / 180.0f;
     
-    Matrix4x4 projectionMatrix = Matrix4x4::createProjection(fov, aspectRatio, near, far);
+    /*Matrix4x4 projectionMatrix = Matrix4x4::createProjection(fov, aspectRatio, near, far);
     Matrix4x4 viewMatrix = Matrix4x4::createView(Vector3D(0, 0, 1), Vector3D(0, 0, 0), Vector3D(0, 1, 0));
 
     std::cout << "VIEW MATRIX:" << std::endl;
@@ -49,6 +50,10 @@ void MeshNode::render(Scene *scene) {
     } else {
         std::cout << "Not inversable!" << std::endl;
     }
+    */
+    CameraNode *camera = scene->getCamera();
+    Matrix4x4 viewMatrix = camera->getViewMatrix();
+    Matrix4x4 projectionMatrix = camera->getProjectionMatrix();
 
     program->activate();
     

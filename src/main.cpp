@@ -21,8 +21,10 @@
 #include "input/GLFWInput.hpp"
 #include "math/Vector3D.hpp"
 #include "math/Matrix4x4.hpp"
+
 #include "render/scenegraph/Scene.hpp"
 #include "render/scenegraph/MeshNode.hpp"
+#include "render/scenegraph/CameraNode.hpp"
 #include "render/GLShader.hpp"
 #include "render/GLProgram.hpp"
 
@@ -42,7 +44,19 @@ int main(int argc, char* argv[]) {
     Renderer *renderer = new GLRenderer(canvas);
     Timer *timer = new GLFWTimer(0.017);
     Input * input = new GLFWInput();
+
+    Matrix4x4 viewMatrix = Matrix4x4::createView(Vector3D(0, 0, 1), Vector3D(0, 0, 0), Vector3D(0, 1, 0));
+    optional<Matrix4x4> viewWorldMatrix = viewMatrix.inverse();
+    Matrix4x4 cameraTransformationMatrix = Matrix4x4::createIdentity();
+    if (viewWorldMatrix.valid() ) {
+        cameraTransformationMatrix = *viewWorldMatrix;
+    }
+
+
     Scene scene(renderer);
+    CameraNode *camera = new CameraNode("Camera", &(canvas->getViewport()), 0.785398163, 0.0001, 1000, &cameraTransformationMatrix);
+    scene.setCamera(camera);
+
 
     // Setup game
     Game game(&scene, renderer, timer, input);
@@ -51,8 +65,15 @@ int main(int argc, char* argv[]) {
     // Setup scene graph
 	Effect effect;
 
-	Matrix4x4 world = Matrix4x4::createIdentity();
-	MeshNode node1("Node1", &world);
+    
+    Matrix4x4 world0 = Matrix4x4::createIdentity();
+    world0.set(0, 3, -0.50);
+
+	Matrix4x4 world1 = Matrix4x4::createIdentity();
+
+    BaseSceneNode node0("Node0", &world0);
+
+	MeshNode node1("Node1", &world1);
     VertexBuffer &vb = node1.getVertexBuffer();
     Vertex v;
     v.x = 0.5;
@@ -80,11 +101,11 @@ int main(int argc, char* argv[]) {
     vb.addIndex(1);
     vb.addIndex(2);
 
-
-
-    node1.setEffect(&effect);
+    node0.setEffect(&effect);
 	
-	scene.addChild(&node1);
+    node0.addChild(&node1);
+
+	scene.addChild(&node0);
 
     
     // Setup shader

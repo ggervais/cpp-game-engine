@@ -1,9 +1,9 @@
 #include "Scene.hpp"
 #include "BaseSceneNode.hpp"
+#include "CameraNode.hpp"
 
 
-Scene::Scene(Renderer *renderer) {
-	this->renderer = renderer;
+Scene::Scene(Renderer *renderer) : renderer(renderer), camera(NULL) {
 	Matrix4x4 identity = Matrix4x4::createIdentity();
 	this->root = new BaseSceneNode("Root node", &identity);
 }
@@ -49,7 +49,8 @@ void Scene::addChild(SceneNode *child) {
 }
 
 void Scene::update(double time) {
-	this->root->update(this, time);
+    this->root->update(this, time);
+    this->camera->update(this, time);
 }
 
 void Scene::render() {
