@@ -9,14 +9,17 @@
 #define	GLFWINPUT_HPP
 
 #include "Input.hpp"
+#include <map>
+
+typedef int GLFWKey;
 
 class GLFWInput : public Input {
 public:
     GLFWInput();
     virtual ~GLFWInput();
-    bool isEscapePressed() const;
+    bool isKeyPressed(Key key) const;
 private:
-
+    std::map<Key, GLFWKey> glfwKeyMapping;
 };
 
 #endif	/* GLFWINPUT_HPP */

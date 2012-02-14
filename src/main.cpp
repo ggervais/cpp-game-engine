@@ -124,6 +124,8 @@ int main(int argc, char* argv[]) {
     program->registerUniform("worldMatrix");
     program->registerUniform("viewMatrix");
     program->registerUniform("projectionMatrix");
+    program->registerUniform("useTexture");
+    program->registerUniform("useLighting");
 
     effect.setProgram(program);
        

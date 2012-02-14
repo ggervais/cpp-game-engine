@@ -9,13 +9,30 @@
 
 #include "GLFWInput.hpp"
 
-GLFWInput::GLFWInput() {
+GLFWInput::GLFWInput() : 
+    Input() {
+
+    this->glfwKeyMapping[W] = 'W';
+    this->glfwKeyMapping[A] = 'A';
+    this->glfwKeyMapping[S] = 'S';
+    this->glfwKeyMapping[D] = 'D';
+    this->glfwKeyMapping[ESCAPE] = GLFW_KEY_ESC;
+    this->glfwKeyMapping[SPACEBAR] = GLFW_KEY_SPACE;
 }
 
 GLFWInput::~GLFWInput() {
 }
 
-bool GLFWInput::isEscapePressed() const {
-    return glfwGetKey(GLFW_KEY_ESC) == 1;
-}
 
+bool GLFWInput::isKeyPressed(Key key) const {
+
+    bool isPressed = false;
+
+    std::map<Key, GLFWKey>::const_iterator found = this->glfwKeyMapping.find(key);
+    if (found != this->glfwKeyMapping.end()) {
+        GLFWKey glfwKey = found->second;
+        isPressed = (glfwGetKey(glfwKey) == GLFW_PRESS);
+    }
+
+    return isPressed;
+}

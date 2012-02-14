@@ -4,7 +4,6 @@ CameraNode::CameraNode(std::string name, Viewport const * const viewport, float 
     BaseSceneNode(name, toMatrix, fromMatrix), viewport(viewport), fieldOfView(fieldOfView), nearClip(nearClip), farClip(farClip) {
         float aspectRatio = (float) this->viewport->getWidth() / (float) this->viewport->getHeight();
         this->projectionMatrix = Matrix4x4::createProjection(this->fieldOfView, aspectRatio, this->nearClip, this->farClip);
-        this->y = 0;
 }
 
 void CameraNode::update(Scene *scene, double time) {

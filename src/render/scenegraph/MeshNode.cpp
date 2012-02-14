@@ -59,6 +59,8 @@ void MeshNode::render(Scene *scene) {
     
     Matrix4x4 worldMatrix = scene->getTopMatrix();
 
+    program->setIntegerUniform("useTexture", 1);
+    program->setIntegerUniform("useLighting", 1);
     program->setMatrix4x4Uniform("projectionMatrix", projectionMatrix);
     program->setMatrix4x4Uniform("viewMatrix", viewMatrix);
     program->setMatrix4x4Uniform("worldMatrix", worldMatrix);

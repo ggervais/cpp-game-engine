@@ -46,17 +46,17 @@ void BaseSceneNode::setEffect(Effect *effect) {
 }
 
 void BaseSceneNode::preRender(Scene *scene) {
-	std::cout << "Called preRender() for " << this->properties.name << std::endl;
+	//std::cout << "Called preRender() for " << this->properties.name << std::endl;
     scene->pushAndSetMatrix(this->properties.toWorld);
 }
 
 void BaseSceneNode::render(Scene *scene) {
 	// TODO check for alpha and materials.
-	std::cout << "Called render() for " << this->properties.name << std::endl;
+	//std::cout << "Called render() for " << this->properties.name << std::endl;
 }
 
 void BaseSceneNode::renderChildren(Scene *scene) {
-	std::cout << "Called renderChildren() for " << this->properties.name << std::endl;
+	//std::cout << "Called renderChildren() for " << this->properties.name << std::endl;
 	// Iterate through all child nodes.
 	for (SceneNodeList::iterator it = children.begin(); it != children.end(); it++) {
 		SceneNode *child = *it;
@@ -76,12 +76,12 @@ void BaseSceneNode::renderChildren(Scene *scene) {
 }
 
 void BaseSceneNode::postRender(Scene *scene) {
-	std::cout << "Called postRender() for " << this->properties.name << std::endl;
+	//std::cout << "Called postRender() for " << this->properties.name << std::endl;
     scene->popMatrix();
 }
 
 void BaseSceneNode::update(Scene *scene, double time) {
-	std::cout << "Called update() for " << this->properties.name << std::endl;
+	//std::cout << "Called update() for " << this->properties.name << std::endl;
     for (SceneNodeList::iterator it = this->children.begin(); it != this->children.end(); it++) {
         SceneNode *child = *it;
 		child->update(scene, time);
@@ -110,6 +110,6 @@ void BaseSceneNode::addChild(SceneNode *child) {
 }
 
 bool BaseSceneNode::isVisible(Scene *scene) const {
-	std::cout << "Called isVisible() for " << this->properties.name << std::endl;
+	//std::cout << "Called isVisible() for " << this->properties.name << std::endl;
 	return true;
 }

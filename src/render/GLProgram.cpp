@@ -70,15 +70,15 @@ void GLProgram::registerAttribute(std::string name) {
 }
 
 
-void GLProgram::setIntegerUniform(std::string name, int &value) {
+void GLProgram::setIntegerUniform(std::string name, int value) {
     glUniform1i(this->uniforms[name], value);
 }
 
-void GLProgram::setFloatUniform(std::string name, float &value) {
+void GLProgram::setFloatUniform(std::string name, float value) {
     glUniform1f(this->uniforms[name], value);
 }
 
-void GLProgram::setDoubleUniform(std::string name, double &value) {
+void GLProgram::setDoubleUniform(std::string name, double value) {
     glUniform1d(this->uniforms[name], value);
 }
 

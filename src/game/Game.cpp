@@ -76,6 +76,7 @@ void Game::mainLoop() {
         
         if (timeDifference > quantum) {
             this->renderer->updateVertexBufferData(this->vertexBuffer);
+            this->input->update(currentTime);
             this->scene->update(currentTime);
             this->scene->render();
 

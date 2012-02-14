@@ -19,9 +19,9 @@ public:
     
     void registerUniform(std::string name);
     void registerAttribute(std::string name);
-    void setIntegerUniform(std::string name, int &value);
-    void setFloatUniform(std::string name, float &value);
-    void setDoubleUniform(std::string name, double &value);
+    void setIntegerUniform(std::string name, int value);
+    void setFloatUniform(std::string name, float value);
+    void setDoubleUniform(std::string name, double value);
     void setVector3DUniform(std::string name, Vector3D &value);
     void setMatrix4x4Uniform(std::string name, Matrix4x4 &value);
 
