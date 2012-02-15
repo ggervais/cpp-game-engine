@@ -372,16 +372,16 @@ std::ostream &operator<<(std::ostream &out, const Matrix4x4 &matrix) {
 Vector3D Matrix4x4::getPosition() const {
 	Vector3D result;
 
-	result.x(get(0, 2));
-	result.y(get(1, 2));
-	result.z(get(2, 2));
+	result.x(get(0, 3));
+	result.y(get(1, 3));
+	result.z(get(2, 3));
 
 	return result;
 }
 
 void Matrix4x4::setPosition(Vector3D position) {
     
-    set(0, 2, position.x());
-    set(1, 2, position.y());
-    set(2, 2, position.z());
+    set(0, 3, position.x());
+    set(1, 3, position.y());
+    set(2, 3, position.z());
 }
