@@ -3,13 +3,16 @@
 #define	CAMERANODE_HPP
 
 #include "../Viewport.hpp"
+#include "../../input/KeyboardListener.hpp"
 #include "BaseSceneNode.hpp"
 #include <assert.h>
 
-class CameraNode : public BaseSceneNode {
+class CameraNode : public BaseSceneNode, public KeyboardListener {
 public:
     CameraNode(std::string name, Viewport const * const viewport, float fieldOfView, float nearClip, float farClip, const Matrix4x4 *toMatrix, const Matrix4x4 *fromMatrix = NULL);
     ~CameraNode();
+    void onKeyPressed(KeyboardEvent &keyboardEvent);
+    void onKeyReleased(KeyboardEvent &keyboardEvent);
     void update(Scene *scene, double time);
     Matrix4x4 getViewMatrix() const;
     Matrix4x4 getProjectionMatrix() const;

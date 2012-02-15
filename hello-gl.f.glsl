@@ -3,6 +3,8 @@
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 worldMatrix;
+uniform int useTexture;
+uniform int useLighting;
 
 varying vec2 fragTexCoords;
 varying vec3 fragNormal;
@@ -28,8 +30,6 @@ float warpDiffuse(float d)
 
 void main()
 {
-	int useTexture = 0;
-    int useLighting = 1;
 	vec3 lightDir = normalize(fragModelViewLightDirection);
     vec3 normal = normalize(fragNormal);
     vec3 eye = normalize(fragPosition);
@@ -37,12 +37,13 @@ void main()
 
     vec4 color = gl_Color;
 
-    //vec4 textureColor = texture2D(texture, fragTexCoords);
-
+    
     vec4 fragDiffuse = color;
 
     if (useTexture == 1) {
-        fragDiffuse *= vec4(1, 1, 1, 1);//textureColor;
+	    //vec4 textureColor = texture2D(texture, fragTexCoords);
+		//fragDiffuse *= textureColor;
+		fragDiffuse *= vec4(1, 1, 1, 1);
     }
 
     vec4 finalColor = fragDiffuse;

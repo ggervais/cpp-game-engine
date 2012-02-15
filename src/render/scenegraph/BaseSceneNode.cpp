@@ -19,8 +19,9 @@ void BaseSceneNode::setTransform(const Matrix4x4 *toMatrix, const Matrix4x4 *fro
         this->properties.fromWorld = *fromMatrix;
     } else {
         optional<Matrix4x4> inverseOfToMatrix = this->properties.toWorld.inverse();
-        assert(inverseOfToMatrix.valid());
-        this->properties.fromWorld = *inverseOfToMatrix;
+        if (inverseOfToMatrix.valid()) {
+            this->properties.fromWorld = *inverseOfToMatrix;
+        }
     }
 }
 

@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) {
     Timer *timer = new GLFWTimer(0.017);
     Input * input = new GLFWInput();
 
-    Matrix4x4 viewMatrix = Matrix4x4::createView(Vector3D(0, 0, 1), Vector3D(0, 0, 0), Vector3D(0, 1, 0));
+    Matrix4x4 viewMatrix = Matrix4x4::createView(Vector3D(0, 0, 5), Vector3D(0, 0, -1000), Vector3D(0, 1, 0));
     optional<Matrix4x4> viewWorldMatrix = viewMatrix.inverse();
     Matrix4x4 cameraTransformationMatrix = Matrix4x4::createIdentity();
     if (viewWorldMatrix.valid() ) {
@@ -76,7 +76,7 @@ int main(int argc, char* argv[]) {
 	MeshNode node1("Node1", &world1);
     VertexBuffer &vb = node1.getVertexBuffer();
     Vertex v;
-    v.x = 0.5;
+    v.x = 0;
     v.y = 0.5;
     v.z = 0;
     v.w = 1;
@@ -86,7 +86,7 @@ int main(int argc, char* argv[]) {
     v.a = 1.0;
     vb.addVertex(v);
     
-    v.x = 0.0;
+    v.x = -1.0;
     v.y = 0.0;
     v.r = 0.0;
     v.g = 1.0;
@@ -105,8 +105,9 @@ int main(int argc, char* argv[]) {
 	
     node0.addChild(&node1);
 
-	scene.addChild(&node0);
+	scene.addChild(&node1);
 
+    input->addKeyboardListener(camera);
     
     // Setup shader
     Shader *vertexShader = renderer->createShader(VERTEX_SHADER, "hello-gl.v.glsl");
@@ -137,6 +138,7 @@ int main(int argc, char* argv[]) {
     delete program;
     delete fragmentShader;
     delete vertexShader;
+    delete camera;
     delete input;
     delete timer;
     delete canvas;

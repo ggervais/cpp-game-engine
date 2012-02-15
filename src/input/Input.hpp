@@ -10,6 +10,18 @@
 
 #include <iostream>
 #include <map>
+#include <vector>
+#include "KeyboardListener.hpp"
+
+class KeyboardEvent;
+class KeyboardListener;
+
+const double REPEAT_DELAY = 0.01;
+
+struct KeyState {
+    double lastTimePressed;
+    bool isPressed;
+};
 
 enum Key {
     W,
@@ -27,8 +39,13 @@ public:
     virtual bool isEscapePressed() const;
     virtual void update(double time);
     virtual bool isKeyPressed(Key key) const = 0;
+    void addKeyboardListener(KeyboardListener *listener);
 protected:
-    std::map<Key, bool> keyState;
+    std::map<Key, KeyState> keyStates;
+private:
+    std::vector<KeyboardListener*> keyboardListeners;
+    void fireKeyPressedEvent(Key key);
+    void fireKeyReleasedEvent(Key key);
 };
 
 #endif	/* INPUT_HPP */

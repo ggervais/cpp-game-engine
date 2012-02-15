@@ -379,3 +379,9 @@ Vector3D Matrix4x4::getPosition() const {
 	return result;
 }
 
+void Matrix4x4::setPosition(Vector3D position) {
+    
+    set(0, 2, position.x());
+    set(1, 2, position.y());
+    set(2, 2, position.z());
+}

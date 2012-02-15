@@ -38,6 +38,7 @@ public:
     Matrix4x4& operator=(const Matrix4x4 &other);
 	
 	Vector3D getPosition() const;
+    void setPosition(Vector3D position);
 private:
     float m[16];
 };
