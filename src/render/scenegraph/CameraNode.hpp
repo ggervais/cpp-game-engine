@@ -4,15 +4,17 @@
 
 #include "../Viewport.hpp"
 #include "../../input/KeyboardListener.hpp"
+#include "../../input/MouseMotionListener.hpp"
 #include "BaseSceneNode.hpp"
 #include <assert.h>
 
-class CameraNode : public BaseSceneNode, public KeyboardListener {
+class CameraNode : public BaseSceneNode, public KeyboardListener, public MouseMotionListener {
 public:
     CameraNode(std::string name, Viewport const * const viewport, float fieldOfView, float nearClip, float farClip, const Matrix4x4 *toMatrix, const Matrix4x4 *fromMatrix = NULL);
     ~CameraNode();
     void onKeyPressed(KeyboardEvent &keyboardEvent);
     void onKeyReleased(KeyboardEvent &keyboardEvent);
+    void onMouseMove(MouseMotionEvent &mouseMotionEvent);
     void update(Scene *scene, double time);
     Matrix4x4 getViewMatrix() const;
     Matrix4x4 getProjectionMatrix() const;
@@ -25,6 +27,9 @@ protected:
     Viewport const * const viewport;
     Matrix4x4 viewMatrix;
     Matrix4x4 projectionMatrix;
+
+    Vector3D position;
+    Vector3D direction;
 };
 
 #endif /* CAMERANODE_HPP */

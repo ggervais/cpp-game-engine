@@ -108,6 +108,7 @@ int main(int argc, char* argv[]) {
 	scene.addChild(&node1);
 
     input->addKeyboardListener(camera);
+    input->addMouseMotionListener(camera);
     
     // Setup shader
     Shader *vertexShader = renderer->createShader(VERTEX_SHADER, "hello-gl.v.glsl");

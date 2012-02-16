@@ -7,6 +7,7 @@
 
 #include "Input.hpp"
 #include "KeyboardEvent.hpp"
+#include "MouseMotionEvent.hpp"
 
 Input::Input() {
 
@@ -20,6 +21,12 @@ Input::Input() {
     this->keyStates[D] = defaultKeyState;
     this->keyStates[ESCAPE] = defaultKeyState;
     this->keyStates[SPACEBAR] = defaultKeyState;
+
+    this->mouseX = 0;
+    this->mouseY = 0;
+
+    
+    bool firstUpdate = true;
 }
 
 Input::~Input() {
@@ -53,6 +60,22 @@ void Input::update(double time) {
 
         this->keyStates[key].isPressed = isPressedNow;
     }
+
+    Vector3D mousePosition = getMousePosition();
+    int posX = mousePosition.x();
+    int posY = mousePosition.y();
+
+    int diffX = (!this->firstUpdate ? posX - this->mouseX : 0);
+    int diffY = (!this->firstUpdate ? posY - this->mouseY : 0);
+
+    this->mouseX += diffX;
+    this->mouseY += diffY;
+
+    this->firstUpdate = false;
+
+    if (diffX != 0 && diffY != 0) {
+        fireMouseMotionEvent(diffX, diffY);
+    }
 }
 
 bool Input::isEscapePressed() const {
@@ -70,6 +93,10 @@ void Input::addKeyboardListener(KeyboardListener *listener) {
     this->keyboardListeners.push_back(listener);
 }
 
+void Input::addMouseMotionListener(MouseMotionListener *listener) {
+    this->mouseMotionListeners.push_back(listener);
+}
+
 void Input::fireKeyPressedEvent(Key key) {
     KeyboardEvent keyboardEvent(key);
     std::cout << "fireKeyPressedEvent " << key << std::endl;
@@ -83,5 +110,12 @@ void Input::fireKeyReleasedEvent(Key key) {
     std::cout << "fireKeyReleasedEvent " << key << std::endl;    
     for (std::vector<KeyboardListener*>::iterator it = this->keyboardListeners.begin(); it != this->keyboardListeners.end(); it++) {
         (*it)->onKeyReleased(keyboardEvent);
+    }
+}
+
+void Input::fireMouseMotionEvent(int diffX, int diffY) {
+    MouseMotionEvent mouseMotionEvent(diffX, diffY);
+    for (std::vector<MouseMotionListener*>::iterator it = this->mouseMotionListeners.begin(); it != this->mouseMotionListeners.end(); it++) {
+        (*it)->onMouseMove(mouseMotionEvent);
     }
 }

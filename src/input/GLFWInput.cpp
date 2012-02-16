@@ -36,3 +36,12 @@ bool GLFWInput::isKeyPressed(Key key) const {
 
     return isPressed;
 }
+
+Vector3D GLFWInput::getMousePosition() const {
+    int x = 0;
+    int y = 0;
+
+    glfwGetMousePos(&x, &y);
+
+    return Vector3D(x, y, 0);
+}
