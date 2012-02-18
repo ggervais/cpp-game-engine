@@ -9,7 +9,9 @@
 
 GLFWCanvas::GLFWCanvas(std::string title, int width, int height, bool fullscreen) : 
         Canvas(title, width, height, fullscreen) 
-{}
+{
+    glfwSetMousePos(width / 2, height / 2);        
+}
 
 GLFWCanvas::GLFWCanvas(const GLFWCanvas& orig) :
         Canvas(orig)

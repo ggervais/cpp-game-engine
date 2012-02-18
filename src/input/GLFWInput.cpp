@@ -45,3 +45,12 @@ Vector3D GLFWInput::getMousePosition() const {
 
     return Vector3D(x, y, 0);
 }
+
+Vector3D GLFWInput::getRelativeMousePosition() const {
+    int x = 0;
+    int y = 0;
+
+    glfwGetMousePos(&x, &y);
+
+    return Vector3D(x, y, 0);
+}

@@ -14,6 +14,7 @@
 #include "KeyboardListener.hpp"
 #include "MouseMotionListener.hpp"
 #include "../math/Vector3D.hpp"
+#include "../render/Viewport.hpp"
 
 class KeyboardEvent;
 class KeyboardListener;
@@ -46,10 +47,14 @@ public:
     virtual bool isKeyPressed(Key key) const = 0;
     void addKeyboardListener(KeyboardListener *listener);
     void addMouseMotionListener(MouseMotionListener *listener);
+    void setViewport(Viewport *viewport);
 protected:
     std::map<Key, KeyState> keyStates;
     
 private:
+
+    Viewport *viewport;
+    Vector3D viewportCenter;
 
     bool firstUpdate;
     int mouseX;
@@ -63,6 +68,7 @@ private:
     void fireKeyReleasedEvent(Key key);
     void fireMouseMotionEvent(int diffX, int diffY);
     virtual Vector3D getMousePosition() const = 0;
+    virtual Vector3D getRelativeMousePosition() const = 0;
 };
 
 #endif	/* INPUT_HPP */

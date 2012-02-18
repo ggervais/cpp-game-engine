@@ -25,6 +25,7 @@ Input::Input() {
     this->mouseX = 0;
     this->mouseY = 0;
 
+    this->viewportCenter = Vector3D(0, 0, 0);
     
     bool firstUpdate = true;
 }
@@ -65,8 +66,19 @@ void Input::update(double time) {
     int posX = mousePosition.x();
     int posY = mousePosition.y();
 
-    int diffX = (!this->firstUpdate ? posX - this->mouseX : 0);
-    int diffY = (!this->firstUpdate ? posY - this->mouseY : 0);
+    if (viewport) {
+        viewportCenter.x(this->viewport->getWidth() / 2);
+        viewportCenter.y(this->viewport->getHeight() / 2);
+    }
+
+    int centerX = viewportCenter.x();
+    int centerY = viewportCenter.y();
+    
+    /*int diffX = (!this->firstUpdate ? posX - this->mouseX : 0);
+    int diffY = (!this->firstUpdate ? posY - this->mouseY : 0);*/
+
+    int diffX = (!this->firstUpdate ? posX - centerX : 0);
+    int diffY = (!this->firstUpdate ? posY - centerY : 0);
 
     this->mouseX += diffX;
     this->mouseY += diffY;
@@ -74,6 +86,7 @@ void Input::update(double time) {
     this->firstUpdate = false;
 
     if (diffX != 0 && diffY != 0) {
+        std::cout << "Fire event" << std::endl;
         fireMouseMotionEvent(diffX, diffY);
     }
 }
@@ -118,4 +131,8 @@ void Input::fireMouseMotionEvent(int diffX, int diffY) {
     for (std::vector<MouseMotionListener*>::iterator it = this->mouseMotionListeners.begin(); it != this->mouseMotionListeners.end(); it++) {
         (*it)->onMouseMove(mouseMotionEvent);
     }
+}
+
+void Input::setViewport(Viewport *viewport) {
+    this->viewport = viewport;
 }

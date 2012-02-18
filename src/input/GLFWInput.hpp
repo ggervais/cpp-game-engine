@@ -19,6 +19,7 @@ public:
     virtual ~GLFWInput();
     bool isKeyPressed(Key key) const;
     Vector3D getMousePosition() const;
+    Vector3D getRelativeMousePosition() const;
 private:
     std::map<Key, GLFWKey> glfwKeyMapping;
 };

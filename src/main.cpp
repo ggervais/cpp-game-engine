@@ -45,6 +45,8 @@ int main(int argc, char* argv[]) {
     Timer *timer = new GLFWTimer(0.017);
     Input * input = new GLFWInput();
 
+    input->setViewport(&(canvas->getViewport()));
+
     Matrix4x4 viewMatrix = Matrix4x4::createView(Vector3D(0, 0, 5), Vector3D(0, 0, -1000), Vector3D(0, 1, 0));
     optional<Matrix4x4> viewWorldMatrix = viewMatrix.inverse();
     Matrix4x4 cameraTransformationMatrix = Matrix4x4::createIdentity();

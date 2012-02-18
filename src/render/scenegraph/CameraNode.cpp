@@ -11,6 +11,8 @@ CameraNode::CameraNode(std::string name, Viewport const * const viewport, float 
         float aspectRatio = (float) this->viewport->getWidth() / (float) this->viewport->getHeight();
         this->projectionMatrix = Matrix4x4::createProjection(this->fieldOfView, aspectRatio, this->nearClip, this->farClip);
         this->position = toMatrix->getPosition();
+        this->theta = 0;
+        this->phi = 0;
 }
 
 void CameraNode::update(Scene *scene, double time) {
@@ -64,6 +66,30 @@ void CameraNode::onKeyReleased(KeyboardEvent &keyboardEvent) {
     Key key = keyboardEvent.getKey();
 }
 
+void CameraNode::clampTheta() {
+    if (this->theta < MIN_THETA) {
+		this->theta = MIN_THETA;
+	}
+	if (this->theta > MAX_THETA) {
+		this->theta = MAX_THETA;
+	}    
+}
+
 void CameraNode::onMouseMove(MouseMotionEvent &mouseMotionEvent) {
-    std::cout << "onMouseMove in CameraNode, x " << mouseMotionEvent.getDiffX() << " y " << mouseMotionEvent.getDiffY() << std::endl;
+    
+    int diffX = mouseMotionEvent.getDiffX();
+    int diffY = mouseMotionEvent.getDiffY();
+
+    // Damp the movement.
+    this->phi += diffX * 0.005;
+    this->theta -= diffY * 0.005;
+		
+	clampTheta();
+
+    float rotationX = (float) cos(this->phi) * (float) cos(this->theta);
+    float rotationY = (float) sin(this->theta);
+    float rotationZ = (float) sin(this->phi) * (float) cos(this->theta);
+
+    std::cout << (theta * (180.0 / PI)) << " " << (phi * (180.0 / PI)) << std::endl;
+
 }
