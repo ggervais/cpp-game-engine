@@ -77,15 +77,16 @@ void Input::update(double time) {
     /*int diffX = (!this->firstUpdate ? posX - this->mouseX : 0);
     int diffY = (!this->firstUpdate ? posY - this->mouseY : 0);*/
 
+
     int diffX = (!this->firstUpdate ? posX - centerX : 0);
-    int diffY = (!this->firstUpdate ? posY - centerY : 0);
+    int diffY = (!this->firstUpdate ? centerY - posY : 0); // Screen (0, 0) is top left, but in the game, it is botton left.
 
     this->mouseX += diffX;
     this->mouseY += diffY;
 
     this->firstUpdate = false;
 
-    if (diffX != 0 && diffY != 0) {
+    if (diffX != 0 || diffY != 0) {
         std::cout << "Fire event" << std::endl;
         fireMouseMotionEvent(diffX, diffY);
     }

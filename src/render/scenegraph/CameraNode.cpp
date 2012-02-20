@@ -13,6 +13,9 @@ CameraNode::CameraNode(std::string name, Viewport const * const viewport, float 
         this->position = toMatrix->getPosition();
         this->theta = 0;
         this->phi = 0;
+        this->direction = Vector3D(0, 0, -1);
+        this->right = Vector3D(1, 0, 0);
+        this->up = Vector3D(0, 1, 0);
 }
 
 void CameraNode::update(Scene *scene, double time) {
@@ -42,24 +45,29 @@ void CameraNode::onKeyPressed(KeyboardEvent &keyboardEvent) {
     Key key = keyboardEvent.getKey();
     Matrix4x4 toWorld = this->properties.getToWorldMatrix();
 
+    float k = 0.1;
+    Vector3D velocity;
+
     switch (key) {
         case W:
-            this->position.z(this->position.z() - 0.1);
-        break;
+            velocity += this->direction * -k;
+            break;
             
         case A:
-            this->position.x(this->position.x() - 0.1);
+            velocity += this->right * k;
             break;
             
         case S:
-            this->position.z(this->position.z() + 0.1);
+            velocity += this->direction * k;
             break;
 
         case D:
-            this->position.x(this->position.x() + 0.1);
+            velocity += this->right * -k;
             break;
     }
     
+    this->position += velocity;
+
 }
 
 void CameraNode::onKeyReleased(KeyboardEvent &keyboardEvent) {
@@ -82,14 +90,38 @@ void CameraNode::onMouseMove(MouseMotionEvent &mouseMotionEvent) {
 
     // Damp the movement.
     this->phi += diffX * 0.005;
-    this->theta -= diffY * 0.005;
+    this->theta += diffY * 0.005;
 		
 	clampTheta();
 
-    float rotationX = (float) cos(this->phi) * (float) cos(this->theta);
-    float rotationY = (float) sin(this->theta);
-    float rotationZ = (float) sin(this->phi) * (float) cos(this->theta);
+    // YAW PITCH ROLL
+    // Y    X    Z
 
-    std::cout << (theta * (180.0 / PI)) << " " << (phi * (180.0 / PI)) << std::endl;
+    //theta = 0;
+    //phi = 0;
 
+    //phi = 0;
+    //theta = PI / 4;
+
+    float phiToUseInConversion = this->phi + PI / 2;
+    float minusTheta = -this->theta;
+
+    std::cout << (phi * 180 / PI) << " " << (minusTheta * 180 / PI) << std::endl;
+
+    
+
+    float rotationX = (float) cos(minusTheta) * (float) cos(phiToUseInConversion);
+    float rotationY = (float) sin(minusTheta);
+    float rotationZ = (float) cos(minusTheta) * sin(phiToUseInConversion);
+    //this->phi += 0.01745;
+    
+    this->direction = Vector3D(rotationX, rotationY, rotationZ).normalized();
+    this->right = (this->direction * this->up).normalized();
+
+    std::cout << this->direction << " " << this->right << std::endl;
+
+
+    Matrix4x4 transformMatrix = Matrix4x4::createRotationFromXYZ(theta, -phi, 0);
+    transformMatrix.setPosition(this->position);
+    setTransform(&transformMatrix);
 }

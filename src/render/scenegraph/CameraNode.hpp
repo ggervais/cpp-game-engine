@@ -34,6 +34,8 @@ protected:
 
     Vector3D position;
     Vector3D direction;
+    Vector3D up;
+    Vector3D right;
 
 private:
     float theta;

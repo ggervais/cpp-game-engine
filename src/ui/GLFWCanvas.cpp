@@ -33,6 +33,7 @@ void GLFWCALL GLFWCanvas::resizeCanvas(GLsizei width, GLsizei height) {
 
 void GLFWCanvas::centerCursor() {
     Viewport &viewport = getViewport();
+    glfwDisable(GLFW_MOUSE_CURSOR);
     glfwSetMousePos(viewport.getWidth() / 2, viewport.getHeight() / 2);
 }
 
@@ -57,6 +58,8 @@ bool GLFWCanvas::init() {
     
     glfwOpenWindowHint(GLFW_FSAA_SAMPLES, 4);
     
+    //glfwDisable(GLFW_MOUSE_CURSOR);
+
     // Create a window
     if(!glfwOpenWindow(viewport.getWidth(), viewport.getHeight(), redBits, greenBits, blueBits, alphaBits, depthBits, stencilBits, (viewport.isFullscreen() ? GLFW_FULLSCREEN : GLFW_WINDOW))) {
         std::cerr << "Failed to open window!" << std::endl;

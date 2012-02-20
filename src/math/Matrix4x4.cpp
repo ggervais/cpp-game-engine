@@ -385,3 +385,40 @@ void Matrix4x4::setPosition(Vector3D position) {
     set(1, 3, position.y());
     set(2, 3, position.z());
 }
+
+Matrix4x4 Matrix4x4::createRotationFromXYZ(float x, float y, float z) {
+        
+    float yaw = y;
+    float pitch = x;
+    float roll = z;
+    
+    Matrix4x4 yawMatrix;
+	Matrix4x4 pitchMatrix;
+	Matrix4x4 rollMatrix;
+		
+	// Around Y (yaw)
+	yawMatrix.set(0, 0, cos(yaw));
+	yawMatrix.set(0, 2, sin(yaw));
+	yawMatrix.set(2, 0, -sin(yaw));
+	yawMatrix.set(2, 2, cos(yaw));
+		
+	// Around X (pitch)
+	pitchMatrix.set(1, 1, cos(pitch));
+	pitchMatrix.set(1, 2, -sin(pitch));
+	pitchMatrix.set(2, 1, sin(pitch));
+	pitchMatrix.set(2, 2, cos(pitch));
+		
+	// Around Z (roll)
+	rollMatrix.set(0, 0, cos(roll));
+	rollMatrix.set(0, 1, -sin(roll));
+	rollMatrix.set(1, 0, sin(roll));
+	rollMatrix.set(1, 1, cos(roll));
+		
+    Matrix4x4 result;
+
+    result *= yawMatrix;
+    result *= pitchMatrix;
+    result *= rollMatrix;
+
+    return result;
+}

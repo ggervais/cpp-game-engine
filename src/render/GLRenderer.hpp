@@ -20,6 +20,8 @@ public:
     GLRenderer(Canvas *canvas);
     GLRenderer(const GLRenderer& orig);
     bool init();
+    
+    void clearScreen();
     virtual ~GLRenderer();
     void createVertexBuffer(VertexBuffer &buffer);
     void updateVertexBufferData(VertexBuffer &buffer);

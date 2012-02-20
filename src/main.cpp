@@ -47,7 +47,9 @@ int main(int argc, char* argv[]) {
 
     input->setViewport(&(canvas->getViewport()));
 
-    Matrix4x4 viewMatrix = Matrix4x4::createView(Vector3D(0, 0, 5), Vector3D(0, 0, -1000), Vector3D(0, 1, 0));
+    //Matrix4x4 viewMatrix = Matrix4x4::createView(Vector3D(0, 0, 5), Vector3D(0, 0, -1000), Vector3D(0, 1, 0));
+    Matrix4x4 viewMatrix = Matrix4x4::createIdentity();
+    viewMatrix.setPosition(Vector3D(0, 0, 0));
     optional<Matrix4x4> viewWorldMatrix = viewMatrix.inverse();
     Matrix4x4 cameraTransformationMatrix = Matrix4x4::createIdentity();
     if (viewWorldMatrix.valid() ) {
@@ -69,45 +71,123 @@ int main(int argc, char* argv[]) {
 
     
     Matrix4x4 world0 = Matrix4x4::createIdentity();
-    world0.set(0, 3, -0.50);
 
 	Matrix4x4 world1 = Matrix4x4::createIdentity();
 
     BaseSceneNode node0("Node0", &world0);
 
 	MeshNode node1("Node1", &world1);
-    VertexBuffer &vb = node1.getVertexBuffer();
+    VertexBuffer &vb1 = node1.getVertexBuffer();
     Vertex v;
     v.x = 0;
     v.y = 0.5;
-    v.z = 0;
+    v.z = -5;
     v.w = 1;
     v.r = 1.0;
     v.g = 0.0;
     v.b = 0.0;
     v.a = 1.0;
-    vb.addVertex(v);
+    vb1.addVertex(v);
     
-    v.x = -1.0;
+    v.x = -0.5;
     v.y = 0.0;
+    vb1.addVertex(v);
+    
+    v.x = 0.5;
+    vb1.addVertex(v);
+    
+    vb1.addIndex(0);
+    vb1.addIndex(1);
+    vb1.addIndex(2);
+
+    
+    Matrix4x4 world2 = Matrix4x4::createIdentity();
+    MeshNode node2("Node2", &world2);
+    VertexBuffer &vb2 = node2.getVertexBuffer();
+
+    v.x = 5;
+    v.y = 0.5;
+    v.z = 0;
+    v.w = 1;
     v.r = 0.0;
     v.g = 1.0;
-    vb.addVertex(v);
+    v.b = 0.0;
+    v.a = 1.0;
+    vb2.addVertex(v);
     
-    v.x = 1.0;
+    v.y = 0.0;
+    v.z = -0.5;
+    vb2.addVertex(v);
+    
+    v.z = 0.5;
+    vb2.addVertex(v);
+    
+    vb2.addIndex(0);
+    vb2.addIndex(1);
+    vb2.addIndex(2);
+
+
+    Matrix4x4 world3 = Matrix4x4::createIdentity();
+    MeshNode node3("Node3", &world3);
+    VertexBuffer &vb3 = node3.getVertexBuffer();
+
+    v.x = 0;
+    v.y = 0.5;
+    v.z = 5;
+    v.w = 1;
+    v.r = 0.0;
     v.g = 0.0;
     v.b = 1.0;
-    vb.addVertex(v);
+    v.a = 1.0;
+    vb3.addVertex(v);
     
-    vb.addIndex(0);
-    vb.addIndex(1);
-    vb.addIndex(2);
+    v.x = -0.5;
+    v.y = 0.0;
+    vb3.addVertex(v);
+    
+    v.x = 0.5;
+    vb3.addVertex(v);
+    
+    vb3.addIndex(0);
+    vb3.addIndex(1);
+    vb3.addIndex(2);
+    
 
-    node0.setEffect(&effect);
-	
-    node0.addChild(&node1);
+    Matrix4x4 world4 = Matrix4x4::createIdentity();
+    MeshNode node4("Node4", &world3);
+    VertexBuffer &vb4 = node4.getVertexBuffer();
 
-	scene.addChild(&node1);
+    v.x = -5;
+    v.y = 0.5;
+    v.z = 0;
+    v.w = 1;
+    v.r = 1.0;
+    v.g = 0.0;
+    v.b = 1.0;
+    v.a = 1.0;
+    vb4.addVertex(v);
+    
+    v.y = 0.0;
+    v.z = -0.5;
+    vb4.addVertex(v);
+    
+    v.z = 0.5;
+    vb4.addVertex(v);
+    
+    vb4.addIndex(0);
+    vb4.addIndex(1);
+    vb4.addIndex(2);
+
+
+    node1.setEffect(&effect);
+    node2.setEffect(&effect);
+    node3.setEffect(&effect);
+    node4.setEffect(&effect);
+
+    scene.addChild(&node1);
+	scene.addChild(&node2);
+	scene.addChild(&node3);
+    scene.addChild(&node4);
 
     input->addKeyboardListener(camera);
     input->addMouseMotionListener(camera);
@@ -136,7 +216,10 @@ int main(int argc, char* argv[]) {
     game.mainLoop();
     game.dispose();
     
-    renderer->deleteVertexBuffer(vb);
+    renderer->deleteVertexBuffer(vb1);
+    renderer->deleteVertexBuffer(vb2);
+    renderer->deleteVertexBuffer(vb3);
+    renderer->deleteVertexBuffer(vb4);
 
     delete program;
     delete fragmentShader;

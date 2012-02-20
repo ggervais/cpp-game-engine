@@ -24,10 +24,12 @@ public:
     Vector3D& operator+=(const Vector3D &other);
     Vector3D& operator-=(const Vector3D &other);
     Vector3D& operator*=(const Vector3D &other);
+    Vector3D& operator*=(const float &k);
     
     Vector3D operator+(const Vector3D &other) const;
     Vector3D operator-(const Vector3D &other) const;
     Vector3D operator*(const Vector3D &other) const;
+    Vector3D operator*(const float &other) const;
     
     friend std::ostream &operator<<(std::ostream &out, const Vector3D &vector);
     

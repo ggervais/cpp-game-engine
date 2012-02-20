@@ -58,15 +58,18 @@ bool GLRenderer::init() {
     std::cout << "GLSL version: " << glslVersion << std::endl;
    // std::cout << "OpenGL extensions: " << std::endl << extensionString << std::endl;
 
+    glEnable(GL_DEPTH_TEST);
+
 	return true;
+}
+
+void GLRenderer::clearScreen() {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClearColor(0, 0, 0, 1);
 }
 
 void GLRenderer::renderIndexedVBO(VertexBuffer &vertexBuffer) {
     
-    // TODO put this code somewhere else!
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glClearColor(0, 0, 0, 1);
-
     RendererObject *vbo = vertexBuffer.getVBOHandle();
     GLuint vboId = *((GLuint*) vbo->getValue());
     

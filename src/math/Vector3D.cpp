@@ -139,6 +139,20 @@ Vector3D& Vector3D::operator*=(const Vector3D &other) {
     return *this;
 }
 
+// Cross product
+Vector3D& Vector3D::operator*=(const float &k) {
+    
+    float xValue = x();
+    float yValue = y();
+    float zValue = z();
+    
+    x(xValue * k);
+    y(yValue * k);
+    z(zValue * k);
+    
+    return *this;
+}
+
 Vector3D Vector3D::operator+(const Vector3D &other) const {
     Vector3D result = *this;
     result += other;
@@ -154,6 +168,12 @@ Vector3D Vector3D::operator-(const Vector3D &other) const {
 Vector3D Vector3D::operator*(const Vector3D &other) const {
     Vector3D result = *this;
     result *= other;
+    return result;
+}
+
+Vector3D Vector3D::operator*(const float &k) const {
+    Vector3D result = *this;
+    result *= k;
     return result;
 }
 

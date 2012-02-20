@@ -23,6 +23,7 @@ public:
     static Matrix4x4 createIdentity();
     static Matrix4x4 createProjection(float angle, float aspectRatio, float near, float far);
     static Matrix4x4 createView(Vector3D eye, Vector3D lookAt, Vector3D up);
+    static Matrix4x4 createRotationFromXYZ(float x, float y, float z);
     static const Matrix4x4 createColumnMajor(Matrix4x4 &orig);
     const float *get();
     

@@ -21,6 +21,7 @@ Renderer::~Renderer() {}
 
 void Renderer::render(VertexBuffer &vertexBuffer) {
     updateViewport();
+    //clearScreen();
     doRender(vertexBuffer);
     canvas->centerCursor();
     canvas->repaint();

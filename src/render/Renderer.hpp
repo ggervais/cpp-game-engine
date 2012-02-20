@@ -26,6 +26,8 @@ public:
     bool isWindowOpened();
     void render(VertexBuffer &vertexBuffer);
     
+    virtual void clearScreen() = 0;
+
     virtual void createVertexBuffer(VertexBuffer &buffer) = 0;
     virtual void updateVertexBufferData(VertexBuffer &buffer) = 0;
     virtual void deleteVertexBuffer(VertexBuffer &buffer) = 0;
