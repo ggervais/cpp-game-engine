@@ -1,12 +1,14 @@
-#version 130
+#version 110
 
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 worldMatrix;
+
 attribute vec4 position;
 attribute vec4 color;
 attribute vec3 normal;
 attribute vec2 texCoords;
+
 varying vec2 fragTexCoords;
 varying vec3 fragNormal;
 varying vec3 fragPosition;
@@ -18,10 +20,32 @@ const vec4 spotPosition = vec4(0.0, 0.0, 0.0, 10000.0);
 
 void main(void) {
 
-	vec4 center = worldMatrix * vec4(0, 0, 0, 1);
-	vec4 transformedCenter = viewMatrix * center;
+	vec2 offset;
+	vec4 center = (0, 0, 0, 1);
+	float radius = 1;
 
-	mat4 viewModelMatrix = viewMatrix * worldMatrix;
+	switch (gl_VertexID) {
+		case 0:
+			offset = vec2(-radius, radius);
+			break;
+		case 1:
+			offset = vec2(-radius, -radius);
+			break;
+		case 2:
+			offset = vec2(radius, -radius);
+			break;
+		case 3:
+			offset = vec2(radius, -radius);
+			break;
+		case 4:
+			offset = vec2(radius, radius);
+			break;
+		case 5:
+			offset = vec2(-radius, radius);
+			break;
+	}
+
+	mat4 viewModelMatrix = worldMatrix * viewMatrix;
     vec4 eyePosition = viewModelMatrix * position;
     vec4 specular = vec4(1.0, 1.0, 0.75, 0.0);
     float shininess = 4.0;
@@ -36,16 +60,9 @@ void main(void) {
     fragSpecular = specular;
     fragShininess = shininess;
 
+	vec4 actualPosition = center;
+	actualPosition.xy += offset;
+
     gl_FrontColor = color;
-
-	if (gl_VertexID == 0) {
-		gl_Position = projectionMatrix * transformedCenter + vec4(0, 1, 0, 1);	
-	} else if (gl_VertexID == 1) {
-		gl_Position = projectionMatrix * transformedCenter + vec4(-1, -1, 0, 1);
-	} else if (gl_VertexID == 2) {
-		gl_Position = projectionMatrix * transformedCenter + vec4(1, -1, 0, 1);
-	} else {
-		gl_Position = projectionMatrix * eyePosition;
-	}
-
+    gl_Position = projectionMatrix * actualPosition;
 }

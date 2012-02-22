@@ -71,8 +71,10 @@ int main(int argc, char* argv[]) {
 
     
     Matrix4x4 world0 = Matrix4x4::createIdentity();
+    world0.setPosition(Vector3D(0, 0, 0));
 
 	Matrix4x4 world1 = Matrix4x4::createIdentity();
+    world1.setPosition(Vector3D(0, 0, -5));
 
     BaseSceneNode node0("Node0", &world0);
 
@@ -81,7 +83,7 @@ int main(int argc, char* argv[]) {
     Vertex v;
     v.x = 0;
     v.y = 0.5;
-    v.z = -5;
+    v.z = 0;
     v.w = 1;
     v.r = 1.0;
     v.g = 0.0;
@@ -102,10 +104,12 @@ int main(int argc, char* argv[]) {
 
     
     Matrix4x4 world2 = Matrix4x4::createIdentity();
+    world2.setPosition(Vector3D(5, 0, 0));
+
     MeshNode node2("Node2", &world2);
     VertexBuffer &vb2 = node2.getVertexBuffer();
 
-    v.x = 5;
+    v.x = 0;
     v.y = 0.5;
     v.z = 0;
     v.w = 1;
@@ -128,12 +132,14 @@ int main(int argc, char* argv[]) {
 
 
     Matrix4x4 world3 = Matrix4x4::createIdentity();
+    world3.setPosition(Vector3D(0, 0, 5));
+
     MeshNode node3("Node3", &world3);
     VertexBuffer &vb3 = node3.getVertexBuffer();
 
     v.x = 0;
     v.y = 0.5;
-    v.z = 5;
+    v.z = 0;
     v.w = 1;
     v.r = 0.0;
     v.g = 0.0;
@@ -154,10 +160,12 @@ int main(int argc, char* argv[]) {
     
 
     Matrix4x4 world4 = Matrix4x4::createIdentity();
-    MeshNode node4("Node4", &world3);
+    world4.setPosition(Vector3D(-5, 0, 0));
+
+    MeshNode node4("Node2", &world4);
     VertexBuffer &vb4 = node4.getVertexBuffer();
 
-    v.x = -5;
+    v.x = 0;
     v.y = 0.5;
     v.z = 0;
     v.w = 1;
@@ -178,41 +186,45 @@ int main(int argc, char* argv[]) {
     vb4.addIndex(1);
     vb4.addIndex(2);
 
+    node0.addChild(&node1);
+	node0.addChild(&node2);
+	node0.addChild(&node3);
+    node0.addChild(&node4);
 
-    node1.setEffect(&effect);
-    node2.setEffect(&effect);
-    node3.setEffect(&effect);
-    node4.setEffect(&effect);
+    scene.addChild(&node0);
 
-    scene.addChild(&node1);
-	scene.addChild(&node2);
-	scene.addChild(&node3);
-    scene.addChild(&node4);
+    node0.setEffect(&effect);
 
     input->addKeyboardListener(camera);
     input->addMouseMotionListener(camera);
     
     // Setup shader
-    Shader *vertexShader = renderer->createShader(VERTEX_SHADER, "hello-gl.v.glsl");
-    Shader *fragmentShader = renderer->createShader(FRAGMENT_SHADER, "hello-gl.f.glsl");
-    vertexShader->compile();
-    fragmentShader->compile();
+    Shader *baseVertexShader = renderer->createShader(VERTEX_SHADER, "hello-gl.v.glsl");
+    Shader *baseFragmentShader = renderer->createShader(FRAGMENT_SHADER, "hello-gl.f.glsl");
 
-    Program *program = renderer->createProgram(vertexShader, fragmentShader);
-    program->link();
-    program->registerAttribute("position");
-    program->registerAttribute("color");
-    program->registerAttribute("normal");
-    program->registerAttribute("texCoords");
+    baseVertexShader->compile();
+    baseFragmentShader->compile();
 
-    program->registerUniform("worldMatrix");
-    program->registerUniform("viewMatrix");
-    program->registerUniform("projectionMatrix");
-    program->registerUniform("useTexture");
-    program->registerUniform("useLighting");
+    Program *baseProgram = renderer->createProgram(baseVertexShader, baseFragmentShader);
+    baseProgram->link();
+    
+    baseProgram->registerAttribute("position");
+    baseProgram->registerAttribute("color");
+    baseProgram->registerAttribute("normal");
+    baseProgram->registerAttribute("texCoords");
 
-    effect.setProgram(program);
+    baseProgram->registerUniform("worldMatrix");
+    baseProgram->registerUniform("viewMatrix");
+    baseProgram->registerUniform("projectionMatrix");
+    baseProgram->registerUniform("useTexture");
+    baseProgram->registerUniform("useLighting");
+
+    effect.setProgram(baseProgram);
        
+
+    
+
+
     game.mainLoop();
     game.dispose();
     
@@ -221,9 +233,9 @@ int main(int argc, char* argv[]) {
     renderer->deleteVertexBuffer(vb3);
     renderer->deleteVertexBuffer(vb4);
 
-    delete program;
-    delete fragmentShader;
-    delete vertexShader;
+    delete baseProgram;
+    delete baseFragmentShader;
+    delete baseVertexShader;
     delete camera;
     delete input;
     delete timer;
