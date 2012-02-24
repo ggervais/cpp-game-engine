@@ -3,6 +3,11 @@
 GLProgram::GLProgram(Shader *vertexShader, Shader *fragmentShader) :
     Program(vertexShader, fragmentShader)
 {}
+    
+GLProgram::GLProgram(Shader *vertexShader, Shader *geometryShader, Shader *fragmentShader) :
+    Program(vertexShader, geometryShader, fragmentShader)
+{}
+
 
 GLProgram::~GLProgram() {
     std::cout << "Deleting program " << this->id << "." << std::endl;
@@ -28,12 +33,23 @@ bool GLProgram::link() {
         GLuint vertexShaderId = *((GLuint *) this->vertexShader->getValue());
         GLuint fragmentShaderId = *((GLuint *) this->fragmentShader->getValue());
         
+        
         std::cout << "Linking vertex shader id " << vertexShaderId 
                   << " and fragment shader id " << fragmentShaderId 
                   << " into program id " << this->id
                   << "." << std::endl;
 
         glAttachShader(this->id, vertexShaderId);
+
+        if (this->geometryShader) {
+            GLuint geometryShaderId = *((GLuint *) this->geometryShader->getValue());
+            
+            std::cout << "Also linking geometry shader id " << geometryShaderId << std::endl;
+
+            glAttachShader(this->id, geometryShaderId);
+        }
+
+
         glAttachShader(this->id, fragmentShaderId);
         glLinkProgram(this->id);
 

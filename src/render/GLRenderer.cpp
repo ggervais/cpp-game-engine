@@ -301,6 +301,10 @@ Program *GLRenderer::createProgram(Shader *vertexShader, Shader *fragmentShader)
     return new GLProgram(vertexShader, fragmentShader);
 }
 
+Program *GLRenderer::createProgram(Shader *vertexShader, Shader *geometryShader, Shader *fragmentShader) {
+    return new GLProgram(vertexShader, geometryShader, fragmentShader);
+}
+
 void GLRenderer::deleteProgram(Program *program) {
     delete program;
 }

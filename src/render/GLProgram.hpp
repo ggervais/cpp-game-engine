@@ -14,6 +14,7 @@
 class GLProgram : public Program {
 public:
     GLProgram(Shader *vertexShader, Shader *fragmentShader);
+    GLProgram(Shader *vertexShader, Shader *geometryShader, Shader *fragmentShader);
     ~GLProgram();
     bool link();
     

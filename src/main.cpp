@@ -200,40 +200,46 @@ int main(int argc, char* argv[]) {
     
     // Setup shader
     Shader *baseVertexShader = renderer->createShader(VERTEX_SHADER, "hello-gl.v.glsl");
+    Shader *baseGeometryShader = renderer->createShader(GEOMETRY_SHADER, "pass-through.g.glsl");
     Shader *baseFragmentShader = renderer->createShader(FRAGMENT_SHADER, "hello-gl.f.glsl");
 
-    baseVertexShader->compile();
-    baseFragmentShader->compile();
+    bool vertexCompiled = baseVertexShader->compile();
+    bool geometryCompiled = baseGeometryShader->compile();
+    bool fragmentCompiled = baseFragmentShader->compile();
 
-    Program *baseProgram = renderer->createProgram(baseVertexShader, baseFragmentShader);
-    baseProgram->link();
+    if (vertexCompiled && geometryCompiled && fragmentCompiled) {
+
+        Program *baseProgram = renderer->createProgram(baseVertexShader, baseGeometryShader, baseFragmentShader);
+        bool programLinked = baseProgram->link();
     
-    baseProgram->registerAttribute("position");
-    baseProgram->registerAttribute("color");
-    baseProgram->registerAttribute("normal");
-    baseProgram->registerAttribute("texCoords");
+        if (programLinked) {
+            baseProgram->registerAttribute("position");
+            baseProgram->registerAttribute("color");
+            baseProgram->registerAttribute("normal");
+            baseProgram->registerAttribute("texCoords");
 
-    baseProgram->registerUniform("worldMatrix");
-    baseProgram->registerUniform("viewMatrix");
-    baseProgram->registerUniform("projectionMatrix");
-    baseProgram->registerUniform("useTexture");
-    baseProgram->registerUniform("useLighting");
+            baseProgram->registerUniform("worldMatrix");
+            baseProgram->registerUniform("viewMatrix");
+            baseProgram->registerUniform("projectionMatrix");
+            baseProgram->registerUniform("useTexture");
+            baseProgram->registerUniform("useLighting");
 
-    effect.setProgram(baseProgram);
+            effect.setProgram(baseProgram);
        
+            game.mainLoop();
+        }
 
-    
+        delete baseProgram;
+    }
 
-
-    game.mainLoop();
     game.dispose();
     
+
     renderer->deleteVertexBuffer(vb1);
     renderer->deleteVertexBuffer(vb2);
     renderer->deleteVertexBuffer(vb3);
     renderer->deleteVertexBuffer(vb4);
 
-    delete baseProgram;
     delete baseFragmentShader;
     delete baseVertexShader;
     delete camera;

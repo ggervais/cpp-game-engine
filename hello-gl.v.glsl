@@ -7,6 +7,7 @@ attribute vec4 position;
 attribute vec4 color;
 attribute vec3 normal;
 attribute vec2 texCoords;
+
 varying vec2 fragTexCoords;
 varying vec3 fragNormal;
 varying vec3 fragPosition;
@@ -38,7 +39,7 @@ void main(void) {
 
     gl_FrontColor = color;
 
-	if (gl_VertexID == 0) {
+	/*if (gl_VertexID == 0) {
 		gl_Position = projectionMatrix * transformedCenter + vec4(0, 1, 0, 1);	
 	} else if (gl_VertexID == 1) {
 		gl_Position = projectionMatrix * transformedCenter + vec4(-1, -1, 0, 1);
@@ -46,6 +47,7 @@ void main(void) {
 		gl_Position = projectionMatrix * transformedCenter + vec4(1, -1, 0, 1);
 	} else {
 		gl_Position = projectionMatrix * eyePosition;
-	}
+	}*/
 
+	gl_Position = projectionMatrix * eyePosition;
 }

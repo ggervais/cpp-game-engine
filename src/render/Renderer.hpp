@@ -36,6 +36,7 @@ public:
     virtual void deleteShader(Shader *shader) = 0;
  
     virtual Program *createProgram(Shader *vertexShader, Shader *fragmentShader) = 0;
+    virtual Program *createProgram(Shader *vertexShader, Shader *geometryShader, Shader *fragmentShader) = 0;
     virtual void deleteProgram(Program *program) = 0;
 
     virtual void renderIndexedVBO(VertexBuffer &vertexBuffer) = 0;

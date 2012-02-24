@@ -14,6 +14,7 @@
 class Program : public RendererObject {
 public:
     Program(Shader *vertexShader, Shader *fragmentShader);
+    Program(Shader *vertexShader, Shader *geometryShader, Shader *fragmentShader);
     virtual ~Program();
     virtual bool link() = 0;
     virtual void registerUniform(std::string name) = 0;
@@ -41,6 +42,7 @@ public:
 
 protected:
     Shader *vertexShader;
+    Shader *geometryShader;
     Shader *fragmentShader;
 };
 
