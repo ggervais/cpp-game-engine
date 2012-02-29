@@ -49,7 +49,6 @@ bool GLProgram::link() {
             glAttachShader(this->id, geometryShaderId);
         }
 
-
         glAttachShader(this->id, fragmentShaderId);
         glLinkProgram(this->id);
 
@@ -67,6 +66,8 @@ bool GLProgram::link() {
         
             free(errorLog);
 
+        } else {
+            std::cout << "Link succeeded!" << std::endl;
         }
     }
 

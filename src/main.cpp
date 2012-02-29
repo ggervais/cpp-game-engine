@@ -24,6 +24,7 @@
 
 #include "render/scenegraph/Scene.hpp"
 #include "render/scenegraph/MeshNode.hpp"
+#include "render/scenegraph/SphereNode.hpp"
 #include "render/scenegraph/CameraNode.hpp"
 #include "render/GLShader.hpp"
 #include "render/GLProgram.hpp"
@@ -186,11 +187,15 @@ int main(int argc, char* argv[]) {
     vb4.addIndex(1);
     vb4.addIndex(2);
 
+    Matrix4x4 sphereWorld = Matrix4x4::createIdentity();
+    SphereNode sphere("Sphere", &sphereWorld);
+
     node0.addChild(&node1);
 	node0.addChild(&node2);
 	node0.addChild(&node3);
     node0.addChild(&node4);
-
+    
+    scene.addChild(&sphere);
     scene.addChild(&node0);
 
     node0.setEffect(&effect);
@@ -209,7 +214,7 @@ int main(int argc, char* argv[]) {
 
     if (vertexCompiled && geometryCompiled && fragmentCompiled) {
 
-        Program *baseProgram = renderer->createProgram(baseVertexShader, baseGeometryShader, baseFragmentShader);
+        Program *baseProgram = renderer->createProgram(baseVertexShader, baseFragmentShader);
         bool programLinked = baseProgram->link();
     
         if (programLinked) {
@@ -226,22 +231,59 @@ int main(int argc, char* argv[]) {
 
             effect.setProgram(baseProgram);
        
-            game.mainLoop();
+
+            Effect imposterEffect;
+            Shader *imposterVertexShader = renderer->createShader(VERTEX_SHADER, "imposter.v.glsl");
+            Shader *imposterGeometryShader = renderer->createShader(GEOMETRY_SHADER, "imposter.g.glsl");
+            Shader *imposterFragmentShader = renderer->createShader(FRAGMENT_SHADER, "imposter.f.glsl");
+            
+            vertexCompiled = imposterVertexShader->compile();
+            geometryCompiled = imposterGeometryShader->compile();
+            fragmentCompiled = imposterFragmentShader->compile();
+
+            if (vertexCompiled && geometryCompiled && fragmentCompiled) {
+                Program *imposterProgram = renderer->createProgram(imposterVertexShader, imposterGeometryShader, imposterFragmentShader);    
+            
+                programLinked = imposterProgram->link();
+                if (programLinked) {
+                    imposterProgram->registerAttribute("position");
+                    imposterProgram->registerAttribute("color");
+                    imposterProgram->registerAttribute("normal");
+                    imposterProgram->registerAttribute("texCoords");
+                    imposterProgram->registerUniform("worldMatrix");
+                    imposterProgram->registerUniform("viewMatrix");
+                    imposterProgram->registerUniform("projectionMatrix");
+
+                    imposterEffect.setProgram(imposterProgram);
+                    sphere.setEffect(&imposterEffect);
+
+                    
+                    game.mainLoop();
+                }
+
+                delete imposterProgram;
+            }
+            
+            delete imposterFragmentShader;
+            delete imposterGeometryShader;
+            delete imposterVertexShader;
+
         }
 
         delete baseProgram;
     }
 
+    delete baseGeometryShader;
+    delete baseFragmentShader;
+    delete baseVertexShader;
+
     game.dispose();
     
-
     renderer->deleteVertexBuffer(vb1);
     renderer->deleteVertexBuffer(vb2);
     renderer->deleteVertexBuffer(vb3);
     renderer->deleteVertexBuffer(vb4);
 
-    delete baseFragmentShader;
-    delete baseVertexShader;
     delete camera;
     delete input;
     delete timer;

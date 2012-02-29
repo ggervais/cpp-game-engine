@@ -1,31 +1,36 @@
-#include "MeshNode.hpp"
+#include "SphereNode.hpp"
 #include "CameraNode.hpp"
 
-MeshNode::MeshNode(std::string name, const Matrix4x4 *toMatrix, const Matrix4x4 *fromMatrix) 
+SphereNode::SphereNode(std::string name, const Matrix4x4 *toMatrix, const Matrix4x4 *fromMatrix) 
     : BaseSceneNode(name, toMatrix, fromMatrix) {
         this->properties.setEffect(NULL);
+
+        Vertex v;
+        v.x = 0;
+        v.y = 0;
+        v.z = 0;
+
+        this->vertexBuffer.addVertex(v);
+        this->vertexBuffer.addIndex(0);
         
 }
 
-MeshNode::~MeshNode() {
+SphereNode::~SphereNode() {
 }
 
-MeshNode::MeshNode(std::string name, Effect *effect, const Matrix4x4 *toMatrix, const Matrix4x4 *fromMatrix) :
+SphereNode::SphereNode(std::string name, Effect *effect, const Matrix4x4 *toMatrix, const Matrix4x4 *fromMatrix) :
    BaseSceneNode(name, toMatrix, fromMatrix) {
        this->properties.setEffect(effect);
 }
 
-VertexBuffer &MeshNode::getVertexBuffer() {
-    return this->vertexBuffer;
-}
-
-void MeshNode::render(Scene *scene) {
+void SphereNode::render(Scene *scene) {
 
     Renderer *renderer = scene->getRenderer();
     if (!this->vertexBuffer.isInitialized()) {
         renderer->createVertexBuffer(this->vertexBuffer);
         renderer->updateVertexBufferData(this->vertexBuffer);
     }
+
     Program *program = this->properties.getEffect()->getProgram();
 
     CameraNode *camera = scene->getCamera();
@@ -36,17 +41,15 @@ void MeshNode::render(Scene *scene) {
     
     Matrix4x4 worldMatrix = scene->getTopMatrix();
 
-    program->setIntegerUniform("useTexture", 0);
-    program->setIntegerUniform("useLighting", 1);
     program->setMatrix4x4Uniform("projectionMatrix", projectionMatrix);
     program->setMatrix4x4Uniform("viewMatrix", viewMatrix);
     program->setMatrix4x4Uniform("worldMatrix", worldMatrix);
 
-    int attributesFlag = POSITION | COLOR;
+    int attributesFlag = POSITION;
 
     program->enableAttributes(this->vertexBuffer, attributesFlag);
 
-    renderer->renderIndexedVBO(this->vertexBuffer, PRIMITIVE_TRIANGLE);
+    renderer->renderIndexedVBO(this->vertexBuffer, PRIMITIVE_POINT);
 
     program->disableAttributes(this->vertexBuffer, attributesFlag);
 

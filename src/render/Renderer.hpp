@@ -17,6 +17,15 @@
 
 const float PI = 3.14159265f;
 
+enum PrimitiveType {
+    PRIMITIVE_TRIANGLE,
+    PRIMITIVE_TRIANGLE_STRIP,
+    PRIMITIVE_TRIANGLE_FAN,
+    PRIMITIVE_QUAD,
+    PRIMITIVE_POINT,
+    PRIMITIVE_LINE
+};
+
 class Renderer {
 public:
     Renderer(Canvas *canvas);
@@ -39,7 +48,7 @@ public:
     virtual Program *createProgram(Shader *vertexShader, Shader *geometryShader, Shader *fragmentShader) = 0;
     virtual void deleteProgram(Program *program) = 0;
 
-    virtual void renderIndexedVBO(VertexBuffer &vertexBuffer) = 0;
+    virtual void renderIndexedVBO(VertexBuffer &vertexBuffer, PrimitiveType primitiveType) = 0;
     
 protected:
     virtual void updateViewport() = 0;

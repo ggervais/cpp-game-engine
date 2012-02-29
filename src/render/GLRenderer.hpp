@@ -34,7 +34,7 @@ public:
     Program *createProgram(Shader *vertexShader, Shader *geometryShader, Shader *fragmentShader);
     void deleteProgram(Program *program);
 
-    void renderIndexedVBO(VertexBuffer &vertexBuffer);
+    void renderIndexedVBO(VertexBuffer &vertexBuffer, PrimitiveType primitiveType);
 private:
     void updateViewport();
     void doRender(VertexBuffer &vertexBuffer);

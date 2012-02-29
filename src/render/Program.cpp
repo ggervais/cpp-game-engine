@@ -7,7 +7,7 @@ Program::Program(Shader *vertexShader, Shader *geometryShader, Shader *fragmentS
 }
 
 Program::Program(Shader *vertexShader, Shader *fragmentShader) :
-    vertexShader(vertexShader), fragmentShader(fragmentShader)
+    vertexShader(vertexShader), geometryShader(NULL), fragmentShader(fragmentShader)
 {
     assert(vertexShader && fragmentShader);
 }

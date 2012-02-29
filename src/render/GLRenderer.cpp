@@ -68,8 +68,26 @@ void GLRenderer::clearScreen() {
     glClearColor(0, 0, 0, 1);
 }
 
-void GLRenderer::renderIndexedVBO(VertexBuffer &vertexBuffer) {
+void GLRenderer::renderIndexedVBO(VertexBuffer &vertexBuffer, PrimitiveType primitiveType) {
     
+
+    GLenum glPrimitiveType = GL_TRIANGLES;
+
+    switch (primitiveType) {
+        case PRIMITIVE_TRIANGLE:
+            glPrimitiveType = GL_TRIANGLES;
+            break;
+        case PRIMITIVE_POINT:
+            glPrimitiveType = GL_POINTS;
+            break;
+        case PRIMITIVE_LINE:
+            glPrimitiveType = GL_LINES;
+            break;
+        case PRIMITIVE_QUAD:
+            glPrimitiveType = GL_QUADS;
+            break;
+    };
+
     RendererObject *vbo = vertexBuffer.getVBOHandle();
     GLuint vboId = *((GLuint*) vbo->getValue());
     
@@ -83,7 +101,7 @@ void GLRenderer::renderIndexedVBO(VertexBuffer &vertexBuffer) {
         glBindBuffer(GL_ARRAY_BUFFER, vboId);
     }
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
-    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, NULL);
+    glDrawElements(glPrimitiveType, 3, GL_UNSIGNED_INT, NULL);
     
 }
 
@@ -233,7 +251,7 @@ void GLRenderer::updateVertexBufferData(VertexBuffer &buffer) {
         GLuint vboId = *((GLuint*) object->getValue());
 
         if (vboId > 0) {
-            std::cout << "VBO id is " << vboId << std::endl;
+            std::cout << "VBO id is " << vboId << " and size is " << buffer.getVBOSize() << std::endl;
             glBindBuffer(GL_ARRAY_BUFFER, vboId);
             glBufferData(GL_ARRAY_BUFFER, buffer.getVBOSize() * sizeof(Vertex), buffer.getVBOData(), GL_STREAM_DRAW);
             glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -247,7 +265,7 @@ void GLRenderer::updateVertexBufferData(VertexBuffer &buffer) {
 
         
         if (iboId > 0) {
-            std::cout << "IBO id is " << iboId << ", size " << buffer.getIBOSize() * sizeof(unsigned int) << std::endl;
+            std::cout << "IBO id is " << iboId << " and size " << buffer.getIBOSize() << std::endl;
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer.getIBOSize() * sizeof(unsigned int), buffer.getIBOData(), GL_STREAM_DRAW);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);

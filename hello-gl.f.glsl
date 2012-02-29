@@ -6,12 +6,12 @@ uniform mat4 worldMatrix;
 uniform int useTexture;
 uniform int useLighting;
 
-varying vec2 ofragTexCoords;
-varying vec3 ofragNormal;
-varying vec3 ofragPosition;
-varying vec4 ofragSpecular;
-varying vec3 ofragModelViewLightDirection;
-varying float ofragShininess;
+varying vec2 fragTexCoords;
+varying vec3 fragNormal;
+varying vec3 fragPosition;
+varying vec4 fragSpecular;
+varying vec3 fragModelViewLightDirection;
+varying float fragShininess;
 
 //const vec3 lightDirection = vec3(0.408248, -0.816497, -0.408248);
 const vec4 lightDiffuse = vec4(0.8, 0.8, 0.8, 0.0);
@@ -30,28 +30,28 @@ float warpDiffuse(float d)
 
 void main()
 {
-	vec3 lightDir = normalize(ofragModelViewLightDirection);
-    vec3 normal = normalize(ofragNormal);
-    vec3 eye = normalize(ofragPosition);
+	vec3 lightDir = normalize(fragModelViewLightDirection);
+    vec3 normal = normalize(fragNormal);
+    vec3 eye = normalize(fragPosition);
     vec3 reflection = reflect(lightDir, normal);
 
     vec4 color = gl_Color;
 
     
-    vec4 ofragDiffuse = color;
+    vec4 fragDiffuse = color;
 
     if (useTexture == 1) {
-	    //vec4 textureColor = texture2D(texture, ofragTexCoords);
-		//ofragDiffuse *= textureColor;
-		ofragDiffuse *= vec4(1, 1, 1, 1);
+	    //vec4 textureColor = texture2D(texture, fragTexCoords);
+		//fragDiffuse *= textureColor;
+		fragDiffuse *= vec4(1, 1, 1, 1);
     }
 
-    vec4 finalColor = ofragDiffuse;
+    vec4 finalColor = fragDiffuse;
     if (useLighting == 1) {
         vec4 diffuseFactor = max(warpDiffuse(-dot(normal, lightDir)), 0.0) * lightDiffuse;
         vec4 ambientDiffuseFactor = diffuseFactor + lightAmbient;
-        vec4 specularFactor = max(pow(-dot(reflection, eye), ofragShininess), 0.0) * lightSpecular;
-        finalColor = specularFactor * ofragSpecular + ambientDiffuseFactor * ofragDiffuse;
+        vec4 specularFactor = max(pow(-dot(reflection, eye), fragShininess), 0.0) * lightSpecular;
+        finalColor = specularFactor * fragSpecular + ambientDiffuseFactor * fragDiffuse;
     }
     gl_FragColor = finalColor;
 }
