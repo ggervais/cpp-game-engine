@@ -386,6 +386,13 @@ void Matrix4x4::setPosition(Vector3D position) {
     set(2, 3, position.z());
 }
 
+void Matrix4x4::setScale(Vector3D scale) {
+   
+    set(0, 0, scale.x() * get(0, 0));
+    set(1, 1, scale.y() * get(1, 1));
+    set(2, 2, scale.z() * get(2, 2));
+}
+
 Matrix4x4 Matrix4x4::createRotationFromXYZ(float x, float y, float z) {
         
     float yaw = y;

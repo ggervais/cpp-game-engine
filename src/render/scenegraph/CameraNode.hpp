@@ -40,6 +40,7 @@ protected:
 private:
     float theta;
     float phi;
+    float bob;
     void clampTheta();
 };
 

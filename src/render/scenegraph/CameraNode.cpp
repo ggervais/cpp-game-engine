@@ -16,6 +16,7 @@ CameraNode::CameraNode(std::string name, Viewport const * const viewport, float 
         this->direction = Vector3D(0, 0, -1);
         this->right = Vector3D(1, 0, 0);
         this->up = Vector3D(0, 1, 0);
+        this->bob = 0;
 }
 
 void CameraNode::update(Scene *scene, double time) {
@@ -65,7 +66,14 @@ void CameraNode::onKeyPressed(KeyboardEvent &keyboardEvent) {
             velocity += this->right * -k;
             break;
     }
+
+    Vector3D realUp = this->right * this->direction;
+
     
+    this->bob += 20 * 0.0174532925;
+
+    velocity += realUp * (0.01 * sin(this->bob));
+
     this->position += velocity;
 
 }

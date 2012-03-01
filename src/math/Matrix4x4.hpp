@@ -40,6 +40,7 @@ public:
 	
 	Vector3D getPosition() const;
     void setPosition(Vector3D position);
+    void setScale(Vector3D scale);
 private:
     float m[16];
 };

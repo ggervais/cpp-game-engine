@@ -16,25 +16,25 @@ void main() {
 
   // Bottom left
   gl_Position = projectionMatrix * (transformedCenter + vec4(-0.5, -0.5, 0.0, 1.0));	
-  gl_FrontColor = vec4(1, 0, 1, 1);
+  gl_FrontColor = vec4(0.4, 0.6, 0.8, 1);
   mapping = vec2(-1, -1);
   EmitVertex();
 
   // Top left
   gl_Position = projectionMatrix * (transformedCenter + vec4(-0.5, 0.5, 0.0, 1.0));	
-  gl_FrontColor = vec4(1, 1, 0, 1);
+  gl_FrontColor = vec4(0.4, 0.6, 0.8, 1);
   mapping = vec2(-1, 1);
   EmitVertex();
 
   // Bottom right
   gl_Position = projectionMatrix * (transformedCenter + vec4(0.5, -0.5, 0.0, 1.0));	
-  gl_FrontColor = vec4(0, 1, 1, 1);
+  gl_FrontColor = vec4(0.4, 0.6, 0.8, 1);
   mapping = vec2(1, -1);
   EmitVertex();
 
   // Top right
   gl_Position = projectionMatrix * (transformedCenter + vec4(0.5, 0.5, 0.0, 1.0));	
-  gl_FrontColor = vec4(1, 1, 1, 1);
+  gl_FrontColor = vec4(0.4, 0.6, 0.8, 1);
   mapping = vec2(1, 1);
   EmitVertex();
 

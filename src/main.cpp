@@ -161,13 +161,14 @@ int main(int argc, char* argv[]) {
     
 
     Matrix4x4 world4 = Matrix4x4::createIdentity();
-    world4.setPosition(Vector3D(-5, 0, 0));
+    world4.setPosition(Vector3D(0, 0, 0));
+    world4.setScale(Vector3D(10, 10, 10));
 
     MeshNode node4("Node2", &world4);
     VertexBuffer &vb4 = node4.getVertexBuffer();
 
-    v.x = 0;
-    v.y = 0.5;
+    v.x = -0.5;
+    v.y = 0;
     v.z = 0;
     v.w = 1;
     v.r = 1.0;
@@ -176,7 +177,7 @@ int main(int argc, char* argv[]) {
     v.a = 1.0;
     vb4.addVertex(v);
     
-    v.y = 0.0;
+    v.x = 0.5;
     v.z = -0.5;
     vb4.addVertex(v);
     
